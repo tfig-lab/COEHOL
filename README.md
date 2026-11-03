@@ -1,8 +1,8 @@
 # Painel COE Holambra
 
-Painel do desenho pré-implementação do Centro de Excelência Operacional (COE) da Cooperativa Agroindustrial Holambra.
+### 👉 [Abrir o painel: tfig-lab.github.io/COEHOL](https://tfig-lab.github.io/COEHOL/)
 
-**Acesse o painel:** https://tfig-lab.github.io/COEHOL/
+Painel do desenho pré-implementação do Centro de Excelência Operacional (COE) da Cooperativa Agroindustrial Holambra.
 
 - Modelo 3D da Unidade Avaré: https://tfig-lab.github.io/COEHOL/holambra-avare-3d/
 - Arquitetura To-Be em 3D: https://tfig-lab.github.io/COEHOL/arq3d/
