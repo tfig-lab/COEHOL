@@ -604,12 +604,12 @@ conveyor(ctx,V(935,128,43),V(980,128,25.5),{mat:BELT,skipEnds:true});          /
 conveyor(ctx,V(980,128,25.5),V(1126,128,25.5),{mat:BELT,skipEnds:true,w:1.8,h:1.6});
 conveyor(ctx,V(935,150,40),V(933,171,31),{mat:BELT});
 conveyor(ctx,V(933,171,31),V(1132,171,31),{mat:BELT,skipEnds:true});            // galeria sobre os silos
-conveyor(ctx,V(1132,171,31),V(1140,178,31),{mat:BELT});
+conveyor(ctx,V(1120,171,31),V(1127,166,31),{mat:BELT});
 // postes
 [[400,115],[500,116],[440,180],[520,196],[540,212],[600,200],[660,226],[760,224],[860,222],[960,222],[1060,224],[1160,208]].forEach(([x,y])=>pole(x,y));
 // caminhões
 truck(497,204,0,0); truck(500,220.5,180,1); truck(430,170,0,3); truck(430,180,0,2); truck(460,170,0,4);
-truck(866,217,-55,1); truck(1165,148,90,0); truck(1165.5,193,90,3); truck(760,229,0,2); truck(610,121,180,4); truck(1060,229,180,3);
+truck(866,217,-55,1); truck(1155,165,90,0); truck(1147,191,90,3); truck(1136,190,90,2); truck(760,229,0,2); truck(610,121,180,4); truck(1060,229,180,3);
 
 // ---------- infraestruturas em destaque ----------
 const ITEMS = [
@@ -672,28 +672,35 @@ const ITEMS = [
    desc:"Bateria de oito silos metálicos em linha, encostada no armazém, com galeria transportadora sobre os telhados.",
    build:(g,ms)=>{ const x0=933,x1=1126,n=8,step=(x1-x0)/n; for(let i=0;i<n;i++) silo(g,ms,x0+step*(i+.5),171.5,step*.46,24); }},
   {id:"expedicao", cat:"exp", name:"Expedição",
-   desc:"Estrutura de carregamento ao longo da pista leste, junto ao bosque, com três dosadores que descarregam direto nos caminhões. Os dosadores recebem o grão por transportadores que saem da torre de distribuição, alimentada pela torre de saída do armazém e pela galeria dos silos.",
+   desc:"Conjunto de expedição na extremidade leste do armazém, conforme imagem de satélite: torre com plataforma na saída do armazém, transportador ao longo da parede leste até a torre de distribuição no encontro com os silos, e três dosadores que descarregam direto nos caminhões. Ao longo do bosque, a estrutura de carregamento.",
    build:(g,ms)=>{
-     // torre de saída do armazém (extremidade leste) e torre de distribuição (encontro armazém/silos) — mais esbeltas
-     tower(g,ms,1130,127,1137,134,26); stair(g,1137,127.5,1137,133.5,26);
-     tower(g,ms,1138,175,1145,182,33); stair(g,1145,175.5,1145,181.5,33);
-     conveyor(g,V(1133.5,134,24),V(1141.5,175,30),{mat:SHARED.steel,w:1.5,h:1.3});          // armazém → distribuição
-     // estrutura longitudinal sobre a pista leste (pórtico aberto com passarela)
-     const X1=1159, X2=1171, Y1=122, Y2=214, H=12;
-     for(let y=Y1;y<=Y2;y+=11.5){ [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.3,y-.3,x+.3,y+.3,H)); rectBox(g,ms.metal,X1,y-.25,X2,y+.25,.6,H-.6); }
-     [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.35,Y1,x+.35,Y2,.7,H));            // vigas longitudinais
-     rectBox(g,SHARED.steel,1163.5,Y1,1166.5,Y2,.25,H+.7);                       // passarela
-     [1163.4,1166.4].forEach(x=>rectBox(g,SHARED.yellow,x,Y1,x+.2,Y2,1,H+.95));  // guarda-corpo
-     // dosadores: torre fina + caixa dosadora + bica sobre o caminhão
-     const DOS=[[1165,148],[1165.5,193],[1162,206]];
+     // 1. torre de saída do armazém com plataforma (gradil) avançando para leste
+     tower(g,ms,1129,121,1135,127,26); stair(g,1135,121.5,1135,126.5,26);
+     rectBox(g,ms.metal,1128,119,1143,129,.6,27.5);                                   // plataforma
+     [[1128,119,1143,119.25],[1128,128.75,1143,129],[1142.75,119,1143,129]].forEach(([x1,y1,x2,y2])=>rectBox(g,SHARED.yellow,x1,y1,x2,y2,1.1,28.1));
+     [[1142.5,119.5],[1142.5,128.5]].forEach(([x,y])=>rectBox(g,ms.metal,x-.3,y-.3,x+.3,y+.3,27.5));
+     // 2. transportador ao longo da parede leste do armazém até a torre de distribuição
+     conveyor(g,V(1133,127,25),V(1133,161,30),{mat:SHARED.steel,w:1.6,h:1.4});
+     // 3. torre de distribuição no canto armazém/silos
+     tower(g,ms,1127,161,1133,167,34); stair(g,1133,161.5,1133,166.5,34);
+     // 4. galpões de carregamento (cobertura sobre as baias)
+     gable(g,ms,1140,176,1153,188,7,1.6); gable(g,ms,1140,197,1155,211,7,1.6);
+     // 5. estrutura ao longo do bosque
+     const X1=1157, X2=1164, Y1=135, Y2=203, H=10;
+     for(let y=Y1;y<=Y2;y+=8.5){ [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.25,y-.25,x+.25,y+.25,H)); rectBox(g,ms.metal,X1,y-.2,X2,y+.2,.5,H-.5); }
+     [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.3,Y1,x+.3,Y2,.6,H));
+     rectBox(g,ms.flat,X1-.6,Y1-.6,X2+.6,Y2+.6,.35,H+.6);
+     // 6. dosadores (círculos da imagem): torre fina, caixa dosadora e bica sobre o caminhão
+     const DOS=[[1155,165,"Dosador 1"],[1147,191,"Dosador 2"],[1136,190,"Dosador 3"]];
      DOS.forEach(([x,y],k)=>{
-       const [a,b]=P(x,y);
-       [[-1.4,-1.4],[1.4,-1.4],[-1.4,1.4],[1.4,1.4]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,(H+9)/2,b+dy,.35,H+9,.35));
-       box(g,ms.wall,a,H+5,b,3.6,4.5,3.6);                                        // caixa dosadora
-       const cone=new THREE.Mesh(new THREE.ConeGeometry(2.3,2.6,4),ms.solid); cone.rotation.set(Math.PI,Math.PI/4,0); cone.position.set(a,H+1.5,b); add(g,cone);
-       box(g,ms.flat,a,H+7.6,b,4.2,.5,4.2);                                       // tampa
-       const sp=new THREE.Mesh(new THREE.CylinderGeometry(.35,.6,5,10),ms.metal); sp.position.set(a,H-2.5,b); add(g,sp);
-       conveyor(g,V(1141.5,178.5,31-k*1.5),V(x,y,H+7.8),{mat:SHARED.steel,w:1.2,h:1,skipEnds:true});   // distribuição → dosador
+       const [a,b]=P(x,y), HD=13;
+       [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,HD/2,b+dy,.3,HD,.3));
+       const bin=new THREE.Mesh(new THREE.CylinderGeometry(2,2,4,20),ms.wall); bin.position.set(a,HD+2,b); add(g,bin);
+       const cone=new THREE.Mesh(new THREE.ConeGeometry(2,2.2,20),ms.solid); cone.rotation.x=Math.PI; cone.position.set(a,HD-1.1,b); add(g,cone);
+       const top=new THREE.Mesh(new THREE.ConeGeometry(2.1,.9,20),ms.flat); top.position.set(a,HD+4.45,b); add(g,top);
+       const sp=new THREE.Mesh(new THREE.CylinderGeometry(.3,.55,4.5,10),ms.metal); sp.position.set(a,HD-4.4,b); add(g,sp);
+       // 7. transportadores da torre de distribuição até cada dosador
+       conveyor(g,V(1130,164,32-k*1.2),V(x,y,HD+4.6),{mat:SHARED.steel,w:1.2,h:1,skipEnds:true});
      });
    }},
 ];
