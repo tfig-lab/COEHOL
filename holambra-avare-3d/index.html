@@ -310,6 +310,7 @@ const SHARED = {
   conc: new THREE.MeshLambertMaterial({color:0xc9c6bf}),
   white:new THREE.MeshLambertMaterial({color:0xf2f2ef}),
   black:new THREE.MeshLambertMaterial({color:0x222222}),
+  yellow:new THREE.MeshLambertMaterial({color:0xE8B92E}),
 };
 const CTX = matSet(0xf3f4f6);
 
@@ -363,6 +364,12 @@ function tower(g,ms,x1,y1,x2,y2,h,opt={}){
   rectBox(g,ms.metal,x1-.6,y1-.6,x2+.6,y2+.6,2.5,h);                    // cabeça
   const [a,b]=P(x2,y1); box(g,SHARED.steel,a+.9,h/2,b+1.5,.3,h,1.2);   // escada
 }
+// escada externa em zigue-zague (lance a cada 4 m) na face leste de uma torre
+function stair(g,x,y1,x2,y2,h){ const w=1.2;
+  for(let z=0,k=0;z<h-1;z+=4,k++){ const ya=k%2?y2:y1, yb=k%2?y1:y2; const [a,b]=P(x+.2+w/2,ya),[c,d]=P(x+.2+w/2,yb);
+    const p1=new THREE.Vector3(a,z+.2,b), p2=new THREE.Vector3(c,z+4,d); beam(g,SHARED.yellow,p1,p2,w,.25);
+    box(g,SHARED.yellow,c,z+4,d,w,.15,1.6); }
+  rectBox(g,SHARED.yellow,x+.2,y1-.8,x+.2+w,y2+.8,.1,h); }
 // silo com anéis, telhado cônico, escada e mureta
 function silo(g,ms,x,y,r,h){
   const [cx,cz]=P(x,y);
@@ -666,11 +673,23 @@ const ITEMS = [
    desc:"Bateria de oito silos metálicos em linha, encostada no armazém, com galeria transportadora sobre os telhados.",
    build:(g,ms)=>{ const x0=933,x1=1126,n=8,step=(x1-x0)/n; for(let i=0;i<n;i++) silo(g,ms,x0+step*(i+.5),171.5,step*.46,24); }},
   {id:"expedicao", cat:"exp", name:"Expedição",
-   desc:"Torre de carregamento de caminhões, alimentada pelos silos e pela saída leste do armazém.",
-   build:(g,ms)=>{ tower(g,ms,1137,176,1150,190,30); rectBox(g,ms.wall,1137,190,1150,200,22);
-     rectBox(g,ms.metal,1135,196,1162,204,.8,7.5);                           // bica de carregamento sobre a pista
-     const [x,z]=P(1156,200); const sp=new THREE.Mesh(new THREE.CylinderGeometry(.5,.9,4,10),ms.metal); sp.position.set(x,5.5,z); add(g,sp);
-     tower(g,ms,1128,124,1141,139,26); flatRoof(g,ms,1137,204,1150,214,4,{period:3}); }},
+   desc:"Torre de expedição alimentada pela galeria dos silos e pela saída leste do armazém, com pórtico de carregamento sobre a pista de caminhões e bicas de descarga.",
+   build:(g,ms)=>{
+     // torre principal (concreto + estrutura metálica), com escada externa amarela
+     tower(g,ms,1137,175,1149,189,32); stair(g,1149,176,1149,188,32);
+     // ponte transportadora da torre até o pórtico
+     conveyor(g,V(1149,186,17),V(1154,192,16.4),{mat:ms.metal,w:2,h:1.6});
+     // pórtico de carregamento cobrindo toda a pista (x 1150–1163), com pilares dos dois lados
+     [[1150,191],[1150,209],[1163,191],[1163,209],[1150,200],[1163,200]].forEach(([x,y])=>rectBox(g,ms.metal,x-.35,y-.35,x+.35,y+.35,12));
+     rectBox(g,ms.metal,1149.4,190.5,1163.6,209.5,1.4,12);                  // viga/plataforma
+     rectBox(g,ms.flat,1148.6,189.8,1164.4,210.2,.5,15.2);                  // cobertura
+     rectBox(g,ms.wall,1151,192,1162,208,1.8,13.4);                         // casa de máquinas / silo pulmão
+     [[1156.5,196],[1156.5,204]].forEach(([x,y])=>{ const [a,b]=P(x,y); const sp=new THREE.Mesh(new THREE.CylinderGeometry(.45,.8,5.5,10),ms.metal); sp.position.set(a,9.2,b); add(g,sp); });
+     // guarda-corpo da plataforma
+     [[1149.4,190.5,1163.6,190.8],[1149.4,209.2,1163.6,209.5]].forEach(([x1,y1,x2,y2])=>rectBox(g,SHARED.yellow,x1,y1,x2,y2,1.1,13.4));
+     // torre de saída do armazém (extremidade leste)
+     tower(g,ms,1128,124,1141,139,26); stair(g,1141,125,1141,138,26);
+   }},
 ];
 
 const groups={};
