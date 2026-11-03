@@ -923,7 +923,7 @@ function flyTo(target,pos){ anim={t0:performance.now(),dur:matchMedia("(prefers-
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let down=null;
 renderer.domElement.addEventListener("pointerdown",e=>down=[e.clientX,e.clientY]);
 renderer.domElement.addEventListener("pointerup",e=>{ if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return; if(window.CAMEDIT&&CAMEDIT.placing()){ CAMEDIT.place(e); return; } const hit=pick(e); select(hit,!!hit); });
-renderer.domElement.addEventListener("pointermove",e=>{ if(e.buttons)return; if(window.CAMEDIT&&CAMEDIT.placing()){renderer.domElement.style.cursor="crosshair";return;} renderer.domElement.style.cursor=pick(e)?"pointer":"grab"; });
+renderer.domElement.addEventListener("pointermove",e=>{ if(e.buttons)return; if(window.CAMEDIT&&CAMEDIT.placing()){renderer.domElement.style.cursor="crosshair";return;} if(window.CAMEDIT&&CAMEDIT.dragging&&CAMEDIT.dragging())return; renderer.domElement.style.cursor=pick(e)?"pointer":"grab"; });
 function pick(e){ const r=renderer.domElement.getBoundingClientRect();
   mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
   const hits=ray.intersectObjects((camOn?CAM_MARKERS:[]).concat(Object.values(groups)),true);
@@ -1174,6 +1174,25 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
     else { draft.t=[mx,my,+Math.max(0,pt.y).toFixed(1)]; }
     placingWhat=null; hint(); document.querySelectorAll("[data-pick]").forEach(x=>x.classList.remove("on")); syncInputs(); preview();
   }
+  // arrastar a câmera no mapa (modo de edição)
+  let drag=null; const dragPlane=new THREE.Plane(), dp=new THREE.Vector3();
+  function camUnder(e){ if(!EDIT||!camOn||!canWrite||mode==="pending") return null;
+    const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
+    const hits=ray.intersectObjects(CAMS.filter(c=>!c.deleted&&c.g).map(c=>c.g),true);
+    for(const h of hits){ let o=h.object; while(o&&!o.userData.id) o=o.parent; if(o){ const c=CAMS[+o.userData.id.slice(4)]; if(c&&!c.deleted) return c; } } return null; }
+  host.addEventListener("pointerdown",e=>{ if(e.button!==0||placingWhat) return; const c=camUnder(e); if(!c) return;
+    const i=CAMS.indexOf(c); if(!draft||draft.id!==c.id){ selectCam(i,false); }
+    if(!draft||draft.id!==c.id) return;
+    controls.enabled=false; dragPlane.set(new THREE.Vector3(0,1,0),-c.pos.y);
+    ray.ray.intersectPlane(dragPlane,dp); const [mx,my]=W2M(dp);
+    drag={id:c.id,ox:draft.p[0]-mx,oy:draft.p[1]-my,moved:false,pid:e.pointerId}; renderer.domElement.style.cursor="grabbing"; e.preventDefault(); },true);
+  addEventListener("pointermove",e=>{
+    if(!drag){ if(EDIT&&!e.buttons&&!placingWhat&&camUnder(e)) renderer.domElement.style.cursor="move"; return; }
+    const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
+    if(!ray.ray.intersectPlane(dragPlane,dp)) return; const [mx,my]=W2M(dp);
+    const nx=+(mx+drag.ox).toFixed(1), ny=+(my+drag.oy).toFixed(1), dx=nx-draft.p[0], dy=ny-draft.p[1]; if(!dx&&!dy) return;
+    draft.p[0]=nx; draft.p[1]=ny; draft.t[0]=+(draft.t[0]+dx).toFixed(1); draft.t[1]=+(draft.t[1]+dy).toFixed(1); drag.moved=true; syncInputs(); preview(); });
+  addEventListener("pointerup",()=>{ if(!drag) return; drag=null; controls.enabled=true; renderer.domElement.style.cursor="move"; });
   // nova câmera no centro da vista
   let adding=false;
   document.getElementById("ceAdd").onclick=()=>{
@@ -1204,7 +1223,7 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
     if(mode==="shared") toParent({type:"download",filename:fn,data:csv});
     else { const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); }
   };
-  window.CAMEDIT={ card, placing:()=>EDIT&&!!placingWhat, place,
+  window.CAMEDIT={ dragging:()=>!!drag, card, placing:()=>EDIT&&!!placingWhat, place,
     tag:c=>c.edited?(c.status==="ok"?"Posição validada pelo time":"Posição ajustada pelo time"):"Posição estimada a partir do mapa de câmeras" };
   // ao trocar de câmera, descarta rascunho não salvo
   const _sel=selectCam;
