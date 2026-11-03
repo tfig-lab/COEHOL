@@ -609,7 +609,7 @@ conveyor(ctx,V(1120,171,31),V(1127,166,31),{mat:BELT});
 [[400,115],[500,116],[440,180],[520,196],[540,212],[600,200],[660,226],[760,224],[860,222],[960,222],[1060,224],[1160,208]].forEach(([x,y])=>pole(x,y));
 // caminhões
 truck(497,204,0,0); truck(500,220.5,180,1); truck(430,170,0,3); truck(430,180,0,2); truck(460,170,0,4);
-truck(866,217,-55,1); truck(1155,165,90,0); truck(1147,191,90,3); truck(1136,190,90,2); truck(760,229,0,2); truck(610,121,180,4); truck(1060,229,180,3);
+truck(866,217,-55,1); truck(1155,165,90,0); truck(760,229,0,2); truck(610,121,180,4); truck(1060,229,180,3);
 
 // ---------- infraestruturas em destaque ----------
 const ITEMS = [
@@ -684,7 +684,7 @@ const ITEMS = [
      // 3. torre de distribuição no canto armazém/silos
      tower(g,ms,1127,161,1133,167,34); stair(g,1133,161.5,1133,166.5,34);
      // 4. galpões de carregamento (cobertura sobre as baias)
-     gable(g,ms,1140,176,1153,188,7,1.6); gable(g,ms,1140,197,1155,211,7,1.6);
+     gable(g,ms,1131,176,1153,196,7,1.6); gable(g,ms,1140,198,1155,211,7,1.6);   // galpão de carregamento (dosadores 2 e 3 sobre o telhado)
      // 5. estrutura ao longo do bosque
      const X1=1157, X2=1164, Y1=135, Y2=203, H=10;
      for(let y=Y1;y<=Y2;y+=8.5){ [X1,X2].forEach(x=>rectBox(g,ms.metal,x-.25,y-.25,x+.25,y+.25,H)); rectBox(g,ms.metal,X1,y-.2,X2,y+.2,.5,H-.5); }
@@ -693,12 +693,14 @@ const ITEMS = [
      // 6. dosadores (círculos da imagem): torre fina, caixa dosadora e bica sobre o caminhão
      const DOS=[[1155,165,"Dosador 1"],[1147,191,"Dosador 2"],[1136,190,"Dosador 3"]];
      DOS.forEach(([x,y],k)=>{
-       const [a,b]=P(x,y), HD=13;
-       [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,HD/2,b+dy,.3,HD,.3));
+       const [a,b]=P(x,y), onRoof=k>0, HD=onRoof?11.2:13;
+       if(onRoof){ [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,8.4+(HD-8.4)/2,b+dy,.3,HD-8.4,.3));
+         box(g,ms.metal,a,8.3,b,3.4,.3,3.4); }                                         // base sobre o telhado
+       else { [[-1.2,-1.2],[1.2,-1.2],[-1.2,1.2],[1.2,1.2]].forEach(([dx,dy])=>box(g,ms.metal,a+dx,HD/2,b+dy,.3,HD,.3));
+         const sp=new THREE.Mesh(new THREE.CylinderGeometry(.3,.55,4.5,10),ms.metal); sp.position.set(a,HD-4.4,b); add(g,sp); }
        const bin=new THREE.Mesh(new THREE.CylinderGeometry(2,2,4,20),ms.wall); bin.position.set(a,HD+2,b); add(g,bin);
        const cone=new THREE.Mesh(new THREE.ConeGeometry(2,2.2,20),ms.solid); cone.rotation.x=Math.PI; cone.position.set(a,HD-1.1,b); add(g,cone);
        const top=new THREE.Mesh(new THREE.ConeGeometry(2.1,.9,20),ms.flat); top.position.set(a,HD+4.45,b); add(g,top);
-       const sp=new THREE.Mesh(new THREE.CylinderGeometry(.3,.55,4.5,10),ms.metal); sp.position.set(a,HD-4.4,b); add(g,sp);
        // 7. transportadores da torre de distribuição até cada dosador
        conveyor(g,V(1130,164,32-k*1.2),V(x,y,HD+4.6),{mat:SHARED.steel,w:1.2,h:1,skipEnds:true});
      });
