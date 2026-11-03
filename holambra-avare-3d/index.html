@@ -736,7 +736,10 @@ const camLabels=document.createElement("div"); camLabels.className="labels camla
 function makeCam(c){
   const p=V(c.p[0],c.p[1],c.p[2]), t=V(c.t[0],c.t[1],c.t[2]); c.pos=p; c.tgt=t;
   const g=new THREE.Group(); g.userData.id="cam:"+CAMS.indexOf(c);
-  if(c.pole){ const pl=new THREE.Mesh(new THREE.CylinderGeometry(.15,.2,Math.max(p.y,.2),6),SHARED.steel); pl.position.set(p.x,p.y/2,p.z); g.add(pl); }
+  if(c.pole&&p.y>0){ const pl=new THREE.Mesh(new THREE.CylinderGeometry(.15,.2,Math.max(p.y,.2),6),SHARED.steel); pl.position.set(p.x,p.y/2,p.z); g.add(pl); }
+  if(p.y<0){ const gd=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(p.x,0.05,p.z),p.clone()]);
+    const ln=new THREE.Line(gd,new THREE.LineDashedMaterial({color:camColor(),dashSize:.6,gapSize:.4})); ln.computeLineDistances(); g.add(ln);
+    const ring=new THREE.Mesh(new THREE.RingGeometry(1.6,2.1,32),new THREE.MeshBasicMaterial({color:camColor(),transparent:true,opacity:.7,side:THREE.DoubleSide,depthWrite:false})); ring.rotation.x=-Math.PI/2; ring.position.set(p.x,.06,p.z); g.add(ring); }
   const body=new THREE.Mesh(new THREE.BoxGeometry(.7,.7,1.4),camBody); body.position.copy(p); if(t.distanceTo(p)>.01) body.lookAt(t); g.add(body);
   const dot=new THREE.Mesh(new THREE.SphereGeometry(1.3,16,12),camMat.clone()); dot.position.copy(p); dot.position.y+=1.1; g.add(dot); c.dot=dot;
   camLayer.add(g); c.g=g;
@@ -773,7 +776,7 @@ function selectCam(i,fly){
   const c=CAMS[i], area=CAM_AREAS.find(a=>a.id===c.a);
   card.style.setProperty("--cc","var(--c-cam)");
   card.innerHTML=`<button class="x" aria-label="Fechar">×</button><div class="cat">Câmera · ${area.name}</div><h2>${c.code}</h2><p>${c.d}</p>
-    <dl><dt>Instalação</dt><dd>${c.pole?"poste":"estrutura"}, ~${Math.round(c.p[2])} m</dd><dt>Área</dt><dd>${area.name}</dd></dl>
+    <dl><dt>Instalação</dt><dd>${c.p[2]<0?"subterrânea":c.pole?"poste":"estrutura"}, ${c.p[2]<0?Math.abs(Math.round(c.p[2]))+" m abaixo do solo":"~"+Math.round(c.p[2])+" m"}</dd><dt>Área</dt><dd>${area.name}</dd></dl>
     <span class="tag">${window.CAMEDIT?CAMEDIT.tag(c):"Posição estimada a partir do mapa de câmeras"}</span>`;
   card.classList.remove("wide");
   card.querySelector(".x").onclick=()=>selectCam(null); card.hidden=false;
@@ -941,7 +944,7 @@ function loop(now){
     controls.target.lerpVectors(anim.fT,anim.tT,e); camera.position.lerpVectors(anim.fP,anim.tP,e); if(k===1)anim=null; }
   controls.update(); renderer.render(scene,camera);
   if(!labelsEl.hidden||camOn){ const w=host.clientWidth,h=host.clientHeight;
-    ITEMS.concat(CTX_LABELS,camOn?CAMS:[]).forEach(it=>{ v.copy(it.anchor).project(camera); const vis=v.z<1&&Math.abs(v.x)<1.1&&Math.abs(v.y)<1.1;
+    ITEMS.concat(CTX_LABELS,camOn?CAMS.filter(c=>!c.deleted):[]).forEach(it=>{ v.copy(it.anchor).project(camera); const vis=v.z<1&&Math.abs(v.x)<1.1&&Math.abs(v.y)<1.1;
       it.lbl.style.display=vis?"":"none"; if(vis){it.lbl.style.left=((v.x+1)/2*w)+"px"; it.lbl.style.top=((1-v.y)/2*h)+"px";} }); }
   requestAnimationFrame(loop);
 }
@@ -1043,7 +1046,7 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
     return c;
   }
   function applyAll(){
-    CAMS.forEach(c=>{ const f=docs[c.id]; if(f) applyFields(c,f); else if(c.status||c.deleted||c.edited) revert(c); c.edited=!!f; });
+    CAMS.forEach(c=>{ const f=docs[c.id]; if(f) applyFields(c,f); else if(c.isNew&&!c.edited){ /* nova, ainda não salva */ } else if(c.status&&c.status!=="validar"||c.deleted||c.edited) revert(c); c.edited=!!f; });
     Object.entries(docs).forEach(([id,f])=>{ if(!camById(id)&&f&&f.isNew&&!f.deleted){ const c=newCam(id,f); applyFields(c,f); c.edited=true; } });
     rebuildMarkers(); relist();
     if(selCam!==null&&CAMS[selCam]&&!draftDirty()) selectCam(CAMS[selCam].deleted?null:selCam,false);
@@ -1082,7 +1085,7 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
   document.getElementById("camEdit").onchange=e=>{ EDIT=e.target.checked; tools.hidden=!EDIT; document.body.classList.toggle("cam-editing",EDIT); if(EDIT&&!camOn) setCams(true); setInfo(); relist(); if(selCam!==null) selectCam(selCam,false); };
   function relist(){
     camPane.querySelectorAll("h3,.item.cam").forEach(x=>x.remove());
-    const sumEl=camPane.querySelector(".camsum b"); if(sumEl) sumEl.textContent=CAMS.filter(c=>!c.deleted).length;
+    const sumEl=camPane.querySelector(".camsum b"); if(sumEl) sumEl.textContent=CAMS.filter(c=>!c.deleted).length; const tc=document.getElementById("tabCam"); if(tc) tc.textContent="Câmeras ("+CAMS.filter(c=>!c.deleted).length+")";
     CAM_AREAS.forEach(a=>{ const cs=CAMS.filter(c=>c.a===a.id&&!c.deleted);
       const h=document.createElement("h3"); h.style.setProperty("--cc","var(--c-cam)"); h.innerHTML=`<i></i>${esc(a.name)}<span class="ct">${cs.length}</span>`; camPane.appendChild(h);
       cs.forEach(c=>{ const b=document.createElement("button"); b.className="item cam"; b.id="cam-"+c.id; const s=ST[c.status||"validar"];
@@ -1108,12 +1111,12 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
       <label class="w">Área<select id="ed-a">${CAM_AREAS.map(a=>`<option value="${a.id}"${a.id===draft.a?" selected":""}>${esc(a.name)}</option>`).join("")}</select></label>
       <div class="ced-h">Posição da câmera <button type="button" class="ced-pick${placingWhat==="p"?" on":""}" data-pick="p">⌖ Clicar no mapa</button></div>
       <div class="ced-g"><label>X (m)${num("ed-px",draft.p[0])}</label><label>Y (m)${num("ed-py",draft.p[1])}</label><label>Altura (m)${num("ed-ph",draft.p[2])}</label></div>
-      <div class="ced-nudge" aria-label="Ajuste fino da posição"><button type="button" data-n="px-">←</button><button type="button" data-n="py-">↑</button><button type="button" data-n="py+">↓</button><button type="button" data-n="px+">→</button><span>1 m por clique</span></div>
+      <div class="ced-nudge" aria-label="Ajuste fino da posição"><button type="button" data-n="px+" title="Em direção ao armazém">↑</button><button type="button" data-n="px-" title="Em direção à classificação">↓</button><button type="button" data-n="py-" title="Para a esquerda (olhando para o armazém)">←</button><button type="button" data-n="py+" title="Para a direita (olhando para o armazém)">→</button><span>↑ armazém · ↓ classificação · 1 m por clique</span></div>
       <div class="ced-h">Para onde aponta <button type="button" class="ced-pick${placingWhat==="t"?" on":""}" data-pick="t">◎ Clicar no mapa</button></div>
       <div class="ced-g"><label>X (m)${num("ed-tx",draft.t[0])}</label><label>Y (m)${num("ed-ty",draft.t[1])}</label><label>Altura (m)${num("ed-th",draft.t[2])}</label></div>
       <div class="ced-nudge"><button type="button" data-r="-15" title="Girar 15° à esquerda">⟲ 15°</button><button type="button" data-r="15" title="Girar 15° à direita">⟳ 15°</button><button type="button" data-tl="2" title="Inclinar para cima">▲ inclinar</button><button type="button" data-tl="-2" title="Inclinar para baixo">▼ inclinar</button></div>
       <p class="ced-aim" id="ed-aim"></p>
-      <label class="w">Instalação<select id="ed-pole"><option value="1"${draft.pole?" selected":""}>Poste</option><option value="0"${draft.pole?"":" selected"}>Fixada em estrutura</option></select></label>
+      <label class="w">Instalação<select id="ed-pole"><option value="1">Poste</option><option value="0">Fixada em estrutura</option><option value="sub">Subterrânea (abaixo do solo)</option></select></label>
       <label class="w">Situação<select id="ed-st">${Object.entries(ST).map(([k,v])=>`<option value="${k}"${k===draft.status?" selected":""}>${v[0]}</option>`).join("")}</select></label>
       <label class="w">Observações<textarea id="ed-obs" rows="2" maxlength="500" placeholder="Ex.: fixar na coluna sul da moega, cobrir a grelha inteira">${esc(draft.obs)}</textarea></label>
       <div class="ced-act"><button type="button" class="t primary" id="ed-save">Salvar</button><button type="button" class="t" id="ed-undo">Descartar</button>
@@ -1127,13 +1130,15 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
     const el=document.getElementById("ed-aim"); if(el) el.textContent=`Direção ${Math.round(az)}° (0° = norte do mapa) · inclinação ${Math.round(tilt)}° · distância ${Math.round(Math.hypot(dist,dh))} m`; }
   function preview(){ const c=camById(draft.id); if(!c) return; c.p=draft.p.slice(); c.t=draft.t.slice(); c.pole=draft.pole; c.a=draft.a;
     dropCam(c); makeCam(c); rebuildMarkers(); c.cone.material.opacity=.32; c.dot.scale.setScalar(1.6); draft.dirty=true; aimText(); }
+  function syncInst(){ const sel=document.getElementById("ed-pole"); if(sel) sel.value=draft.p[2]<0?"sub":draft.pole?"1":"0"; }
   function syncInputs(){ [["ed-px",draft.p,0],["ed-py",draft.p,1],["ed-ph",draft.p,2],["ed-tx",draft.t,0],["ed-ty",draft.t,1],["ed-th",draft.t,2]].forEach(([id,arr,k])=>{ const el=document.getElementById(id); if(el) el.value=+arr[k].toFixed(1); }); }
   function wire(c){
     const el=cardEl(), q=s=>el.querySelector(s);
-    [["ed-px","p",0],["ed-py","p",1],["ed-ph","p",2],["ed-tx","t",0],["ed-ty","t",1],["ed-th","t",2]].forEach(([id,key,k])=>{ const inp=q("#"+id); inp.oninput=()=>{ const v=parseFloat(inp.value); if(isFinite(v)){ draft[key][k]=key==="p"&&k===2?Math.max(0,v):v; preview(); } }; });
+    [["ed-px","p",0],["ed-py","p",1],["ed-ph","p",2],["ed-tx","t",0],["ed-ty","t",1],["ed-th","t",2]].forEach(([id,key,k])=>{ const inp=q("#"+id); inp.oninput=()=>{ const v=parseFloat(inp.value); if(isFinite(v)){ draft[key][k]=v; if(key==="p"&&k===2){ if(v<0) draft.pole=false; syncInst(); } preview(); } }; });
     q("#ed-d").oninput=e=>{ draft.d=e.target.value; draft.dirty=true; };
     q("#ed-a").onchange=e=>{ draft.a=e.target.value; draft.dirty=true; };
-    q("#ed-pole").onchange=e=>{ draft.pole=e.target.value==="1"; preview(); };
+    q("#ed-pole").onchange=e=>{ const v=e.target.value; draft.pole=v==="1"; if(v==="sub"&&draft.p[2]>=0){ draft.p[2]=-3; } else if(v!=="sub"&&draft.p[2]<0){ draft.p[2]=v==="1"?7:3; } syncInputs(); preview(); };
+    syncInst();
     q("#ed-st").onchange=e=>{ draft.status=e.target.value; draft.dirty=true; };
     q("#ed-obs").oninput=e=>{ draft.obs=e.target.value; draft.dirty=true; };
     el.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{ placingWhat=placingWhat===b.dataset.pick?null:b.dataset.pick; el.querySelectorAll("[data-pick]").forEach(x=>x.classList.toggle("on",x.dataset.pick===placingWhat)); hint(); });
@@ -1146,42 +1151,52 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
       draft=null; placingWhat=null; hint(); store(c.id,f); };
     q("#ed-undo").onclick=()=>{ draft=null; placingWhat=null; hint(); const f=docs[c.id]; if(f) applyFields(c,f); else revert(c); rebuildMarkers(); selectCam(CAMS.indexOf(c),false); };
     q("#ed-reset").onclick=()=>{ draft=null; placingWhat=null; hint();
-      if(c.isNew) store(c.id,Object.assign({},docs[c.id]||c.orig,{isNew:true,deleted:true}));
+      if(c.isNew&&!docs[c.id]){ c.deleted=true; dropCam(c); makeCam(c); c.lbl.style.display="none"; rebuildMarkers(); relist(); }
+      else if(c.isNew) store(c.id,Object.assign({},docs[c.id],{isNew:true,deleted:true}));
       else if(c.edited) unstore(c.id);
       else store(c.id,Object.assign({},c.orig,{deleted:true,status:"validar",obs:""}));
       selectCam(null); };
   }
   // dica de posicionamento
   const tip=document.createElement("div"); tip.className="ce-tip"; tip.hidden=true; document.getElementById("app").appendChild(tip);
-  function hint(){ tip.hidden=!placingWhat; tip.textContent=placingWhat==="p"?"Clique no mapa onde a câmera será instalada. Em uma estrutura, ela fica fixada na superfície.":placingWhat==="t"?"Clique no ponto que a câmera deve enxergar.":""; }
-  addEventListener("keydown",e=>{ if(e.key==="Escape"&&placingWhat){ placingWhat=null; hint(); document.querySelectorAll("[data-pick]").forEach(x=>x.classList.remove("on")); } });
+  function hint(){ tip.hidden=!placingWhat; tip.textContent=placingWhat==="new"?"Clique no mapa onde a nova câmera será instalada. Esc para cancelar.":placingWhat==="p"?"Clique no mapa onde a câmera será instalada. Em uma estrutura, ela fica fixada na superfície.":placingWhat==="t"?"Clique no ponto que a câmera deve enxergar.":""; }
+  addEventListener("keydown",e=>{ if(e.key==="Escape"&&placingWhat){ if(placingWhat==="new"){ adding=false; const bt=document.getElementById("ceAdd"); bt.classList.remove("primary"); bt.textContent="+ Nova câmera"; } placingWhat=null; hint(); document.querySelectorAll("[data-pick]").forEach(x=>x.classList.remove("on")); } });
   const ground=new THREE.Plane(new THREE.Vector3(0,1,0),0), tmp=new THREE.Vector3();
   function place(e){
-    if(!draft) { placingWhat=null; hint(); return; }
+    if(!draft&&placingWhat!=="new") { placingWhat=null; hint(); return; }
     const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
     const hits=ray.intersectObjects(Object.values(groups),true); let pt=null, onStruct=false;
     if(hits.length){ pt=hits[0].point.clone(); onStruct=pt.y>.6; } else if(ray.ray.intersectPlane(ground,tmp)) pt=tmp.clone();
     if(!pt) return; const [mx,my]=W2M(pt);
+    if(placingWhat==="new"){ placingWhat=null; hint(); createAt(mx,my,+(pt.y+.4).toFixed(1),onStruct); return; }
     if(placingWhat==="p"){ const dx=mx-draft.p[0], dy=my-draft.p[1]; draft.p[0]=mx; draft.p[1]=my;
-      if(onStruct){ draft.p[2]=+(pt.y+.4).toFixed(1); draft.pole=false; } draft.t[0]+=dx; draft.t[1]+=dy; const sel=document.getElementById("ed-pole"); if(sel) sel.value=draft.pole?"1":"0"; }
+      if(onStruct){ draft.p[2]=+(pt.y+.4).toFixed(1); draft.pole=false; } draft.t[0]+=dx; draft.t[1]+=dy; syncInst(); }
     else { draft.t=[mx,my,+Math.max(0,pt.y).toFixed(1)]; }
     placingWhat=null; hint(); document.querySelectorAll("[data-pick]").forEach(x=>x.classList.remove("on")); syncInputs(); preview();
   }
   // nova câmera no centro da vista
+  let adding=false;
   document.getElementById("ceAdd").onclick=()=>{
     if(!canWrite){ setInfo("Seu acesso a este painel é apenas de leitura."); return; }
-    const t=controls.target, [mx,my]=W2M(t), area=selCam!==null&&CAMS[selCam]?CAMS[selCam].a:"rec";
-    const id="n"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
-    const f={a:area,d:"Nova câmera",p:[mx,my,7],t:[mx+15,my,0],pole:true,status:"validar",obs:"",isNew:true,deleted:false};
-    const c=newCam(id,f); c.status="validar"; c.edited=false; rebuildMarkers(); relist();
-    draft=null; selectCam(CAMS.indexOf(c),true); if(draft) draft.dirty=true;
-    placingWhat="p"; hint(); document.querySelectorAll('[data-pick="p"]').forEach(x=>x.classList.add("on"));
+    if(mode==="pending"){ setInfo("Aguarde a conexão com o painel."); return; }
+    adding=!adding; placingWhat=adding?"new":null; hint();
+    document.getElementById("ceAdd").classList.toggle("primary",adding); document.getElementById("ceAdd").textContent=adding?"Cancelar nova câmera":"+ Nova câmera";
+    if(adding&&selCam!==null) selectCam(null);
   };
+  function createAt(mx,my,h,onStruct){
+    adding=false; const bt=document.getElementById("ceAdd"); bt.classList.remove("primary"); bt.textContent="+ Nova câmera";
+    const near=CAMS.filter(c=>!c.deleted).sort((a,b)=>Math.hypot(a.p[0]-mx,a.p[1]-my)-Math.hypot(b.p[0]-mx,b.p[1]-my))[0];
+    const id="n"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
+    const f={a:near?near.a:"rec",d:"Nova câmera",p:[mx,my,onStruct?h:7],t:[mx+15,my,0],pole:!onStruct,status:"validar",obs:"",isNew:true,deleted:false};
+    const c=newCam(id,f); c.status="validar"; c.edited=false; rebuildMarkers(); relist();
+    draft=null; selectCam(CAMS.indexOf(c),false); if(draft) draft.dirty=true;
+    setInfo("Câmera criada. Ajuste a direção e clique em Salvar.");
+  }
   // exportação
   document.getElementById("ceExp").onclick=()=>{
     const rows=[["Código","Área","Descrição","Instalação","Situação","X (m)","Y (m)","Altura (m)","Alvo X (m)","Alvo Y (m)","Alvo altura (m)","Direção (°)","Inclinação (°)","Observações","Alterada","Última alteração"]];
     CAMS.filter(c=>!c.deleted).forEach(c=>{ const dx=c.t[0]-c.p[0], dy=c.t[1]-c.p[1], dist=Math.hypot(dx,dy);
-      rows.push([c.code,(CAM_AREAS.find(a=>a.id===c.a)||{}).name,c.d,c.pole?"Poste":"Estrutura",ST[c.status||"validar"][0],c.p[0],c.p[1],c.p[2],c.t[0],c.t[1],c.t[2],
+      rows.push([c.code,(CAM_AREAS.find(a=>a.id===c.a)||{}).name,c.d,c.p[2]<0?"Subterrânea":c.pole?"Poste":"Estrutura",ST[c.status||"validar"][0],c.p[0],c.p[1],c.p[2],c.t[0],c.t[1],c.t[2],
         Math.round((Math.atan2(dx,-dy)*180/Math.PI+360)%360),Math.round(Math.atan2(c.t[2]-c.p[2],dist)*180/Math.PI),c.obs||"",c.edited?"Sim":"Não",c.at?new Date(c.at).toLocaleString("pt-BR"):""]); });
     CAMS.filter(c=>c.deleted&&!c.isNew).forEach(c=>rows.push([c.code,(CAM_AREAS.find(a=>a.id===c.a)||{}).name,c.d,"","Removida","","","","","","","","",c.obs||"","Sim",c.at?new Date(c.at).toLocaleString("pt-BR"):""]));
     const csv="﻿"+rows.map(r=>r.map(v=>{ const s=String(v==null?"":v).replace(/\./g,typeof v==="number"?",":"."); return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }).join(";")).join("\r\n");
