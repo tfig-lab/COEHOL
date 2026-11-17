@@ -5095,7 +5095,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   [
     { id: 'N01', item: 'Plataforma em nuvem Microsoft Fabric (banco do COE e tempo real)', tipo: 'OPEX', qtd: 33, un: 'meses', unit: 5000, total: 165000, baixo: 110000, alto: 300000, opex: 60000, ini: 'A1 Q2', fim: 'A3 Q4', cen: T3, rev: 'Não estava no estudo, que orçou servidores locais. Valor de capacidade F8 a F16 com reserva anual.' },
     { id: 'S01', item: 'Projeto de arquitetura da sala do COE', tipo: 'Serviço', qtd: 1, un: 'projeto', unit: 45000, total: 45000, baixo: 25000, alto: 80000, opex: 0, ini: 'A1 Q1', fim: 'A1 Q1', cen: T3, rev: 'Não estava no estudo.' },
-    { id: 'N02', item: 'Rede e links da sala central do COE', tipo: 'CAPEX', qtd: 1, un: 'lote', unit: 50000, total: 50000, baixo: 30000, alto: 80000, opex: 24000, ini: 'A1 Q3', fim: 'A1 Q4', cen: T3, rev: 'Não estava no estudo, que considerava a sala dentro de uma unidade.' },
+    { id: 'N02', item: 'Rede da sala central do COE', tipo: 'CAPEX', qtd: 1, un: 'lote', unit: 50000, total: 50000, baixo: 30000, alto: 80000, opex: 24000, ini: 'A1 Q3', fim: 'A1 Q4', cen: T3, rev: 'Não estava no estudo, que considerava a sala dentro de uma unidade.' },
     { id: 'K01', item: 'Levantamento das câmeras e projeto de cobertura', tipo: 'Serviço', qtd: 1, un: 'serviço', unit: 18000, total: 18000, baixo: 10000, alto: 30000, opex: 0, ini: 'A1 Q3', fim: 'A1 Q3', cen: T3, rev: 'Não estava no estudo.' },
     { id: 'K02', item: 'Câmeras IP novas e substituições', tipo: 'CAPEX', qtd: 12, un: 'un.', unit: 3000, total: 36000, baixo: 21600, alto: 60000, opex: 0, ini: 'A1 Q4', fim: 'A1 Q4', cen: T3, rev: 'Não estava no estudo, que considerava só as 32 câmeras atuais. Quantidade a confirmar no levantamento.' },
     { id: 'K03', item: 'Instalação das câmeras: cabos, switches PoE e caixas', tipo: 'CAPEX', qtd: 1, un: 'lote', unit: 45000, total: 45000, baixo: 28000, alto: 75000, opex: 0, ini: 'A1 Q4', fim: 'A2 Q1', cen: T3, rev: 'Não estava no estudo.' },
@@ -5146,6 +5146,8 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       x.unit = u; x.qtd = q; x.total = t; if (x.baixo) x.baixo = Math.round(x.baixo * f); if (x.alto) x.alto = Math.round(x.alto * f); });
     /* câmeras: 32 câmeras novas em Avaré, sem o serviço de levantamento */
     if (porId.K02) { const x = porId.K02, f = 32 * 2400 / x.total; x.item = 'Câmeras IP novas'; x.qtd = 32; x.unit = 2400; x.total = 32 * 2400; x.baixo = Math.round(x.baixo * f); x.alto = Math.round(x.alto * f); }
+    /* segundo link de fibra: depende do contrato da Coop Holambra, sem valor no investimento */
+    if (porId.C076) Object.assign(porId.C076, { total: 0, baixo: 0, alto: 0, unit: 0, semValor: true, semTxt: 'depende do contrato' });
     if (porId.C041) porId.C041.opexA = Math.round(80.2 * 15 * 12); /* Power BI Pro: R$ 80,20 por usuário por mês, 15 pessoas */
     if (porId.C045) porId.C045.opexA = 12600; /* suporte do historiador: cerca de 18% da licença por ano */
     if (porId.N01) porId.N01.opexA = 163800; /* F32 reservado 1 ano, desde Avaré: cerca de US$ 2.501 por mês (R$ 13.500), mais armazenamento */ /* Fabric F8 reservado 1 ano: cerca de US$ 625 por mês (R$ 3.400), mais armazenamento OneLake (cerca de R$ 150 por mês) */ }
@@ -5154,12 +5156,12 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const CATS = [
     { id: 'paineis', n: 1, nome: 'Integração dos painéis', curto: 'Os painéis que já existem passam a falar com o CCO',
       qtd: 'Projeto executivo de automação · 10 painéis a integrar · gateways e remotas',
-      ids: 'C001 C046 C048 C049 C061',
-      oque: 'O gasto com a empresa integradora: o projeto executivo de automação e a ligação ao CCO local dos CLPs de cada fornecedor (FACH, Condutiva, Fockink, NBR Termo, RM, SAUR, Autokraft, Kepler e Atlas Copco). Omega e NBR Tec transporte já chegam ao SCADA do CCO e só são ampliados. Onde o painel não tem porta de comunicação, entram gateways e remotas de I/O. Inclui a integração dos medidores de energia existentes.',
+      ids: 'C001 C046 C048 C049',
+      oque: 'O gasto com a empresa integradora: o projeto executivo de automação e a ligação ao CCO local dos CLPs de cada fornecedor (FACH, Condutiva, Fockink, NBR Termo, RM, SAUR, Autokraft, Kepler e Atlas Copco). Omega e NBR Tec transporte já chegam ao SCADA do CCO e só são ampliados. Onde o painel não tem porta de comunicação, entram gateways e remotas de I/O.',
       porque: 'Só 1 das 11 automações de campo está ligada ao SCADA hoje. Esta frente acaba com o isolamento dos dados sem trocar equipamentos.',
       atencao: 'O prazo depende da resposta dos fornecedores, que detêm mapas de memória, senhas e garantia dos painéis.' },
     { id: 'rede', n: 2, nome: 'Rede e cibersegurança', curto: 'O caminho seguro do painel ao CCO e do CCO à nuvem',
-      qtd: 'Fibra · 8 switches · firewall em par · links · rede da sala central',
+      qtd: 'Fibra · 8 switches · firewall em par · rede da sala central',
       ids: 'C063 C064 C065 C066 C067 C076 C077 N02',
       oque: 'Fibra e switches industriais até o CCO local, firewall entre automação e rede corporativa, acesso remoto com MFA, backup dos programas de CLP e SCADA, segundo link de internet até a nuvem e monitoramento da rede. Inclui a rede e os dois links da sala central do COE.',
       porque: 'Ler os painéis à distância abre uma porta para a automação. O firewall deixa o dado sair para a nuvem sem abrir caminho de volta até os CLPs.',
@@ -5292,7 +5294,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     C049: 'Caixas de entradas e saídas para ler sinais de painéis que não têm porta de comunicação.',
     C061: 'Configuração dos medidores de energia que já existem, para o consumo aparecer no COE.',
     C018: 'Gravador e licenças do software de vídeo para as 32 câmeras que já existem aparecerem no COE. Não inclui compra de câmeras.',
-    C063: 'Cabos de fibra e eletrodutos que ligam os painéis da unidade ao CCO, com certificação. Depende da contratação e do contrato da Coop Holambra.',
+    C063: 'Cabos de fibra e eletrodutos que ligam os painéis da unidade ao CCO, com certificação. Infraestrutura interna da unidade.',
     C064: 'Equipamentos de rede de uso industrial, um por região da unidade.',
     C065: 'Dois firewalls (um de reserva) que separam a automação da rede da empresa e da internet.',
     C066: 'Acesso remoto controlado para fornecedores e TI: senha com segundo fator e gravação das sessões.',
@@ -5301,7 +5303,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     S02: 'Tela de toque fixa na sala, ligada à controladora, para trocar o layout e as telas do videowall.',
     C017: 'Rádios push-to-talk que falam pela internet, para a sala falar com o campo mesmo fora da unidade.',
     PT1: 'Rádios push-to-talk para supervisores e operadores da unidade falarem com a sala do COE.',
-    C076: 'Segundo link de fibra, de outra operadora, para o COE não perder os dados se o link principal cair. Depende da contratação e do contrato da Coop Holambra.',
+    C076: 'Segundo link de fibra, de outra operadora, para o COE não perder os dados se o link principal cair. Depende do contrato da Coop Holambra com a operadora: sem valor no investimento.',
     C077: 'Software que avisa quando um link, servidor ou integração para, antes de a tela ficar sem dado.',
     C016: 'Armário para servidores e equipamentos de rede no CCO.',
     C043: 'Servidores do CCO: um para o SCADA e o banco local, outro para dados e BI.',
@@ -5360,7 +5362,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     C051: 'Calibração dos instrumentos atuais (Condutiva, termometria e depressão), para o número que chega ao COE ser confiável.',
     C074: 'Noventa dias com a integradora acompanhando a operação real e corrigindo falhas antes do aceite final.',
     N01: 'Assinatura mensal da plataforma em nuvem onde ficam o banco do COE, as cargas de dados e as telas de tempo real.',
-    N02: 'Cabeamento, switch e firewall da sala central, mais o link principal e o de reserva, para a sala receber os dados da nuvem e o vídeo das câmeras. Depende da contratação e do contrato da Coop Holambra.',
+    N02: 'Cabeamento, switch e firewall da sala central, para a sala receber os dados da nuvem e o vídeo das câmeras. Os links de internet dependem do contrato da Coop Holambra e não entram no valor.',
     C043: 'Servidor do CCO para o SCADA e o banco local.',
     C041: 'Assinatura do Power BI Pro para quem publica e consulta as telas estratégicas (15 pessoas por 3 anos).',
     C030: 'Detector de fumaça e extintor adequado a equipamentos eletrônicos.',
@@ -5533,7 +5535,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const COMUM = new Set(('S01 S02 C005 C006 C007 C034 C035 C008 C033 C036 C017 C022 C013 C014 C015 C030 C028 N02 K04 C020 ' +
     'N01 C037 C038 C039 C041 C078 C066 C040 C042 C002 C073 C082 C075').split(' '));
   const esc2 = x => COMUM.has(x.id) ? '<span class="nz nz-cm">Comum às 7 unidades</span>' : '<span class="nz nz-un">Por unidade</span>';
-  const subs = (its, g) => its.slice().sort((x, y) => y.total - x.total).map(x => '<tr class="nc-sub" data-g="' + g + '" hidden><td class="nc-sub-r">' + fig(x) + '</td><td><b>' + esc(x.item) + '</b><span class="nz-l">' + clsTag(x) + (LIC[x.id] ? '<span class="nz nz-l2">' + esc(LIC[x.id]) + '</span>' : '') + esc2(x) + (x.opex ? '<span class="nz nz-r">depois: ' + curto(x.opex) + '/ano</span>' : '') + '</span><div class="it-box"><dl class="it-dl"><dt>O que é</dt><dd>' + esc(x.desc || DESC[x.id] || x.espec || '') + ' <i>(' + esc(qtdTxt(x)) + ')</i></dd>' + (ONDE[x.id] ? '<dt>Onde</dt><dd>' + esc(ONDE[x.id][0]) + '</dd><dt>Especificação mínima</dt><dd>' + esc(ONDE[x.id][1]) + '</dd>' : '') + (CLS[x.id] ? '<dt>Por quê</dt><dd>' + esc(CLS[x.id][1]) + '</dd>' : '') + '</dl></div></td><td><span class="dir">' + (x.semValor ? 'licença à parte' : curto(x.total)) + '</span>' + (!x.semValor && Number(x.qtd) > 1 ? '<small class="dir nc-un">R$ ' + Math.round(x.unit || x.total / x.qtd).toLocaleString('pt-BR') + ' cada</small>' : '') + '</td><td><span class="dir nc-fx">' + (x.semValor ? '—' : faixa([x])) + '</span></td></tr>').join('');
+  const subs = (its, g) => its.slice().sort((x, y) => y.total - x.total).map(x => '<tr class="nc-sub" data-g="' + g + '" hidden><td class="nc-sub-r">' + fig(x) + '</td><td><b>' + esc(x.item) + '</b><span class="nz-l">' + clsTag(x) + (LIC[x.id] ? '<span class="nz nz-l2">' + esc(LIC[x.id]) + '</span>' : '') + esc2(x) + (x.opex ? '<span class="nz nz-r">depois: ' + curto(x.opex) + '/ano</span>' : '') + '</span><div class="it-box"><dl class="it-dl"><dt>O que é</dt><dd>' + esc(x.desc || DESC[x.id] || x.espec || '') + ' <i>(' + esc(qtdTxt(x)) + ')</i></dd>' + (ONDE[x.id] ? '<dt>Onde</dt><dd>' + esc(ONDE[x.id][0]) + '</dd><dt>Especificação mínima</dt><dd>' + esc(ONDE[x.id][1]) + '</dd>' : '') + (CLS[x.id] ? '<dt>Por quê</dt><dd>' + esc(CLS[x.id][1]) + '</dd>' : '') + '</dl></div></td><td><span class="dir">' + (x.semValor ? (x.semTxt || 'licença à parte') : curto(x.total)) + '</span>' + (!x.semValor && Number(x.qtd) > 1 ? '<small class="dir nc-un">R$ ' + Math.round(x.unit || x.total / x.qtd).toLocaleString('pt-BR') + ' cada</small>' : '') + '</td><td><span class="dir nc-fx">' + (x.semValor ? '—' : faixa([x])) + '</span></td></tr>').join('');
   const linha = (g, nome, ponto, oque, val, fx, its) => '<tr class="nc-gr"><td><button type="button" class="nc-gt" data-gt="' + g + '" aria-expanded="false"><i aria-hidden="true">▸</i><span class="nc-tp-n">' + ponto + esc(nome) + '</span></button></td><td>' + esc(oque) + '</td><td><span class="dir">' + curto(val) + '</span></td><td><span class="dir nc-fx">' + fx + '</span></td></tr>' + subs(its, g);
   const tabela = c => '<div class="tbl"><table class="ln-tab nc-tab-tp' + (c.kpmg ? ' nc-tab-k' : '') + '"><thead><tr><th>' + (c.kpmg ? 'Frente de trabalho' : 'Categoria') + '</th><th>O que tem</th><th><span class="dir">Valor estimado</span></th><th><span class="dir">Faixa</span></th></tr></thead><tbody>' +
     (c.kpmg
