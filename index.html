@@ -5611,9 +5611,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
           '<div class="av-gg av-gg5">' + UNI_IDS.map(id => no(cat(id), false)).join('') + '</div>') +
         grupo('av-g-c', 'Comum a todas as unidades', 'Feito uma vez, em Avaré, e usado pelas 7 unidades.', curto(cat('sala').total),
           '<div class="av-gg av-gg3">' + banco + obra + no(cat('sala'), false) + '</div>') +
-        grupo('av-g-k', 'Implementação', 'Em todos os blocos.', curto(KA.total),
+        grupo('av-g-k', 'Implementação', 'Em todos os blocos. Valor anual.', curto(KA.total) + ' por ano',
           '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det-ava"><span class="nc-n">' + KA.n + '</span><span class="nc-kp-t"><b>' + esc(KA.nome) + '</b><span>' + esc(KA.curto) + '</span></span>' +
-          '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + '</span><small class="nc-fx">estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
+          '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + ' por ano</span><small class="nc-fx">valor anual estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
       montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', html });
       const t27 = CATS.filter(c => c.id !== 'medicao').reduce((t, c) => t + c.total, 0) + KA.total, t28 = cat('medicao').total;
       const tl = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b><span>' + i + '</span></div>';
