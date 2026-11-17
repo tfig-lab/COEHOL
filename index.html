@@ -5139,6 +5139,8 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     const M = { C017: [2500, 4], PT1: [2500, 10], C044: [100000, 1], C036: [1200, 3], C007: [60000, 1], C005: [6300, 12], C006: [1000, 12], C057: [75000, 2], C054: [50000, 8], C062: [100000, 1], C001: [120000, 1], C020: [6300, 4], C064: [7000, 8], C065: [30000, 2], C043: [45000, 1], C016: [5000, 1], C045: [140000, 1], C013: [15000, 1], C015: [6000, 2] };
     Object.entries(M).forEach(([id, [u, q]]) => { const x = porId[id]; if (!x || !x.total) return; const t = u * q, f = t / x.total;
       x.unit = u; x.qtd = q; x.total = t; if (x.baixo) x.baixo = Math.round(x.baixo * f); if (x.alto) x.alto = Math.round(x.alto * f); });
+    /* câmeras: 32 câmeras novas em Avaré, sem o serviço de levantamento */
+    if (porId.K02) { const x = porId.K02, f = 32 * 2400 / x.total; x.item = 'Câmeras IP novas'; x.qtd = 32; x.unit = 2400; x.total = 32 * 2400; x.baixo = Math.round(x.baixo * f); x.alto = Math.round(x.alto * f); }
     if (porId.C041) porId.C041.opexA = Math.round(80.2 * 15 * 12); /* Power BI Pro: R$ 80,20 por usuário por mês, 15 pessoas */
     if (porId.C045) porId.C045.opexA = 12600; /* suporte do historiador: cerca de 18% da licença por ano */
     if (porId.N01) porId.N01.opexA = 163800; /* F32 reservado 1 ano, desde Avaré: cerca de US$ 2.501 por mês (R$ 13.500), mais armazenamento */ /* Fabric F8 reservado 1 ano: cerca de US$ 625 por mês (R$ 3.400), mais armazenamento OneLake (cerca de R$ 150 por mês) */ }
@@ -5170,9 +5172,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       porque: 'Na safra a sala opera 24 horas. Monitores profissionais são feitos para uso contínuo, e energia e clima redundantes evitam que uma falha apague o videowall.',
       atencao: 'A parede de 4,84 m × 1,36 m precisa caber no local escolhido.' },
     { id: 'camera', n: 5, nome: 'Câmeras', curto: 'A imagem de cada área de Avaré, gravada na unidade e vista na sala do COE',
-      qtd: '32 câmeras atuais + cerca de 12 novas · gravador',
-      ids: 'K01 K02 K03 C018',
-      oque: 'Aproveita as 32 câmeras de Avaré e completa a cobertura onde faltar: levantamento em campo, câmeras novas, cabos e switches que alimentam as câmeras pela rede (PoE), gravador com 30 dias de imagem na unidade, software de vídeo ; a banda de internet para o vídeo depende dos links contratados. Os monitores estão na sala do COE, e a controladora do videowall mostra as câmeras.' },
+      qtd: '32 câmeras novas · gravador',
+      ids: 'K02 K03 C018',
+      oque: '32 câmeras novas nas áreas do processo de Avaré, cabos e switches que alimentam as câmeras pela rede (PoE), gravador com 30 dias de imagem na unidade, software de vídeo ; a banda de internet para o vídeo depende dos links contratados. Os monitores estão na sala do COE, e a controladora do videowall mostra as câmeras.' },
     { id: 'medicao', n: 6, nome: 'Medição nova', curto: 'Sensores e medidas para o que hoje não é medido, em 2028',
       qtd: 'Scanner 3D nos 8 silos · radares · balanças de fluxo dos secadores',
       ids: 'C054 C052 C053 C057 C062',
@@ -5359,7 +5361,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     C030: 'Detector de fumaça e extintor adequado a equipamentos eletrônicos.',
     C028: 'Fechadura com leitura de cartão ou biometria na porta da sala.',
     K01: 'Visita técnica que lista as 32 câmeras (modelo, estado e ângulo) e define onde faltam câmeras para as áreas com alerta.',
-    K02: 'Câmeras para as áreas sem cobertura e para trocar as que não servem para a rede.',
+    K02: '32 câmeras novas cobrindo as áreas do processo, ligadas à rede da unidade.',
     K03: 'Cabos, switches que alimentam as câmeras pela própria rede (PoE) e caixas de proteção.',
     C018: 'Gravador (NVR) com 30 dias de imagem na unidade e licenças do software de vídeo (VMS) para ver as câmeras no COE.',
     K04: 'Computador que recebe o vídeo e alimenta os 4 monitores de câmeras.',
@@ -5777,7 +5779,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
         ['Sala do COE e câmeras', [
           ['Videowall 8 + 4, energia e climatização', 1, 1, 1],
           ['Monitor reserva, rádios, alarme e controle de acesso', 0, 1, 1],
-          ['Câmeras: levantamento, câmeras novas, gravador e 4 monitores', 1, 1, 1]]],
+          ['Câmeras: 32 câmeras novas, gravador e 4 monitores', 1, 1, 1]]],
         ['Medição nova', [
           ['Pilotos: scanner 3D em 1 silo, depressão e corrente', 1, 1, 1],
           ['Radares das moegas e silos e estação meteorológica', 0, 1, 1],
@@ -5868,8 +5870,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       L('C015', 'Ar-condicionado', 'Dois aparelhos de 24.000 BTU/h, um de reserva.'),
       L('C030', 'Detecção de fumaça', 'Detector de fumaça e extintor de CO2 da sala.')]]] },
     { k: 'camera', n: 5, nome: 'Câmeras', txt: 'Cobertura de câmeras de Avaré, com o software de vídeo e o gravador.', grupos: [['', [
-      L('K01', 'Projeto de cobertura das câmeras', 'Levantamento das câmeras atuais e definição de onde faltam.'),
-      L('K02', 'Câmeras IP', 'Câmeras novas e substituições.'),
+            L('K02', 'Câmeras IP novas', '32 câmeras novas nas áreas do processo de Avaré.'),
       L('K03', 'Instalação das câmeras', 'Cabos, switches PoE e caixas de proteção.'),
       L('C018', 'Software de vídeo e gravador', 'Licenças do software de vídeo para 32 câmeras e gravador com 30 dias de gravação.')]]] },
     { k: 'medicao', n: 6, nome: 'Medição nova', txt: 'Medições que ainda não existem em Avaré: volume nos silos, nível nas moegas e ritmo dos secadores.', grupos: [['', [
@@ -6534,9 +6535,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   ETAPAS[5].t = 'Mais duas unidades integradas';
   BUL[4] = ['Microsoft Fabric configurado: banco do COE e ferramenta de tempo real, conforme o contrato da Holambra', 'Cargas automáticas dos sistemas de gestão', 'Duas safras de histórico do Império carregadas', 'Acessos por perfil e cópia de segurança'];
   const ORDEM = [...new Set(Object.values(PE).flatMap(x => x.ids))].filter(id => !(PASSOS[id] && PASSOS[id].cam));
-  PASSOS.c = { q: 'T3 a T4', t: 'Integração das câmeras', d: 'Instalar ou regularizar as 32 câmeras nas áreas do processo. A imagem é gravada na unidade (gravador de vídeo) e segue pela rede e pelo firewall até a parede de câmeras da sala: 4 monitores, ao lado dos 8 de indicadores. Cada alerta abre a câmera da área.', g: [], cam: true };
+  PASSOS.c = { q: 'T3 a T4', t: 'Integração das câmeras', d: 'Instalar 32 câmeras novas nas áreas do processo. A imagem é gravada na unidade (gravador de vídeo) e segue pela rede e pelo firewall até a parede de câmeras da sala: 4 monitores, ao lado dos 8 de indicadores. Cada alerta abre a câmera da área.', g: [], cam: true };
   PASSOS.c.t = 'Câmeras no COE';
-  BUL.c = ['Levantamento das 32 câmeras e câmeras novas onde faltar', 'Gravação na unidade e imagem pela rede até a sala', '4 monitores ao lado dos 8 de indicadores', 'Cada alerta abre a câmera da área'];
+  BUL.c = ['32 câmeras novas nas áreas do processo', 'Gravação na unidade e imagem pela rede até a sala', '4 monitores ao lado dos 8 de indicadores', 'Cada alerta abre a câmera da área'];
   const CAMS = [0, 0, 32, 32, 32, 32, 32];
   const PAINEIS = [2, 2, 12, 12, 12, 12, 12];
   const UNIDADES = [0, 0, 1, 1, 3, 5, 7];
