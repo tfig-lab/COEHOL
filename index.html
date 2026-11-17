@@ -2637,6 +2637,7 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .nc-sp b{font-variant-numeric:tabular-nums;color:var(--fg);white-space:nowrap}
 .nc-sp .nc-sp-t i{color:#9a6a17}
 .nc-kp-t .nc-sp{max-width:340px}
+.nc-ref{margin-top:12px}
 .av-g{display:grid;gap:14px;padding:18px 20px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
 .av-g + .av-g{margin-top:14px}
 .av-g-cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
@@ -5746,11 +5747,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
               '<b class="ev-a">' + a + '</b><ul>' + O[i].map(t => '<li>' + esc(t) + '</li>').join('') + '</ul></div>'; }).join('') + '</div></div>';
       })();
       const escEl = $('[data-nc="escopo"]'); if (escEl) escEl.outerHTML = escopo;
-      resumo.innerHTML =
-        (() => { const e = expansao(itens), av = itens.reduce((t, x) => t + x.total, 0); return '<div class="nc-r7"><div><small class="nc-r-ano">Avaré e COE central · 2027 a 2030</small><b>' + curto(av) + '</b><small class="nc-fx">Avaré completo, sala do COE e implementação</small></div>' +
-          '<div><small class="nc-r-ano">Outras 6 unidades · 2028 a 2030, 2 por ano</small><b>' + curto(e.t) + '</b><small class="nc-fx">preço estimado por unidade com referência ao investimento estimado para Avaré: ' + ('R$ ' + (expansao(itens).t / OUTRAS / 1e6).toFixed(2).replace('.', ',') + ' mi') + ' por unidade</small></div>' +
-          '<div class="nc-r7-t"><small class="nc-r-ano">Total para as 7 unidades</small><b>' + curto(av + e.t) + '</b><small class="nc-fx">2027 a 2030</small></div></div>'; })() +
-        '<p class="nc-r-nota">Reserva sugerida para imprevistos: 15% do investimento, cerca de <b>' + curto(0.15 * itens.reduce((t, x) => t + x.total, 0)) + '</b> em Avaré e no COE central e <b>' + curto(0.15 * (itens.reduce((t, x) => t + x.total, 0) + expansao(itens).t)) + '</b> com as 7 unidades, à parte destes valores. Não entra a equipe do COE.</p>' + evol;
+      resumo.innerHTML = evol + '<p class="nc-r-nota nc-ref">Para as demais unidades, foi considerado o valor de Avaré como referência: <b>R$ ' + (expansao(itens).t / OUTRAS / 1e6).toFixed(2).replace('.', ',') + ' mi</b> por unidade.</p>';
     }
     anosEl.innerHTML = '<div class="nc-an">' + cols.map(c => '<div class="nc-an-c' + (c.reg ? ' nc-an-reg' : '') + '"><b class="nc-an-t">' + curto(c.t) + '</b>' +
         '<div class="nc-an-p"><div class="nc-an-b" style="height:' + (c.t / mx * 100).toFixed(1) + '%">' + L.map((l, k) => c.v[k] ? '<i class="nc-an-' + l.id + '" style="flex:' + c.v[k] + '" title="' + esc(l.nome + ': ' + curto(c.v[k])) + '"></i>' : '').join('') + '</div></div>' +
