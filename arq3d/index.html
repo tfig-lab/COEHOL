@@ -682,7 +682,7 @@ const TODOS=PLC.map((_,i)=>'plc'+i);
 const RMS=[
   null,
   {items:RMI.s1.concat(['proj']),int:['plc4','plc2'],ghosts:['g-net','g-hist'],zones:[0,1,3,4],flows:['erp','coe','omega'],cam:'avare'},
-  {items:RMI.s2,int:['plc4','plc2','plc8','plc5'],ghosts:[],zones:[0,1,2,3,4],flows:['erp','coe','rede','hist','nuvem','cam'],cam:'avare'},
+  {items:RMI.s2,int:TODOS,ghosts:[],zones:[0,1,2,3,4],flows:['erp','coe','rede','hist','nuvem','cam'],cam:'avare'},
   {items:RMI.s3.concat(['un0','un1']),int:TODOS,ghosts:[],zones:[0,1,2,3,4,5],flows:['erp','coe','rede','hist','nuvem','cam','apont','alarm','un0','un1'],cam:'todas',nova:2},
   {items:RMI.s3.concat(['un0','un1','un2','un3']),int:TODOS,ghosts:[],zones:[0,1,2,3,4,5],flows:['erp','coe','rede','hist','nuvem','cam','apont','alarm','un0','un1','un2','un3'],cam:'todas',nova:4},
   {items:RMI.s3.concat(['un0','un1','un2','un3','un4','un5']),int:TODOS,ghosts:[],zones:[0,1,2,3,4,5],flows:['erp','coe','rede','hist','nuvem','cam','apont','alarm','un0','un1','un2','un3','un4','un5'],cam:'todas'},

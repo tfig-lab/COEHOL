@@ -2542,6 +2542,7 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 @media (max-width:520px){.nc-resumo{grid-template-columns:minmax(0,1fr)}}
 .nc-r3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .nc-cadeia.nc-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.nc-cadeia.nc-4z{grid-template-columns:repeat(4,minmax(0,1fr))}
 .nc-5 .nc-zona > h4 span:empty{display:none}
 .nc-dec{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .nc-dec-c{display:grid;gap:6px;align-content:start;padding:18px 20px;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:14px;background:var(--bg)}
@@ -2552,7 +2553,7 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .nc-dec-x{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px}
 .nc-dec-x > div{display:grid;gap:2px;padding:12px 16px;border:1px dashed var(--line);border-radius:12px;color:var(--texto-2);font-size:14px;line-height:1.45}
 .nc-dec-x b{color:var(--fg);font-size:14px}
-@media (max-width:1180px){.nc-cadeia.nc-5{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:1180px){.nc-cadeia.nc-5,.nc-cadeia.nc-4z{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:720px){.nc-r3,.nc-dec,.nc-dec-x{grid-template-columns:minmax(0,1fr)}}
 .nc-selo{display:inline-block;padding:1px 7px;border-radius:999px;background:var(--accent-2);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;vertical-align:middle;font-style:normal;line-height:1.6}
 .nc-sw-l{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}
@@ -2627,6 +2628,15 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .av-res .av-tot{border:2px solid var(--accent);background:var(--accent-soft)}
 .av-res .av-tot b{color:var(--accent)}
 #p-viabilidade-investimento-avare .nz-cm,#p-viabilidade-investimento-avare .nz-un{display:none}
+.nc-sp{display:grid;gap:4px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.nc-sp > span{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;line-height:1.35}
+.nc-sp i{font-style:normal;color:var(--texto-2)}
+.nc-sp b{font-variant-numeric:tabular-nums;color:var(--fg);white-space:nowrap}
+.nc-sp .nc-sp-t i{color:#9a6a17}
+.nc-kp-t .nc-sp{max-width:340px}
+.av-esc{grid-template-columns:repeat(3,minmax(0,1fr))}
+.av-esc .nc-esc-k{border-left-color:var(--line)}
+@media (max-width:760px){.av-esc{grid-template-columns:1fr}}
 @media (max-width:760px){.av-res{grid-template-columns:1fr}}
 .nc-det{display:grid;gap:10px;padding:18px 20px;border:2px solid var(--accent);border-radius:16px;background:var(--bg)}
 .nc-det-cab{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -3082,6 +3092,7 @@ html.rmx-cheia-on{overflow:hidden}
 /* ---- Tabela de investimento ---- */
 #p-viabilidade-tabela-de-investimento > .wrap{display:grid;gap:32px;padding-block:28px 40px}
 .tb-res{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.tb-ass-h{margin:18px 0 0;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 .tb-res > div{display:grid;gap:4px;align-content:start;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .tb-res small{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 .tb-res b{font-size:22px;line-height:1.15;color:var(--fg);font-variant-numeric:tabular-nums}
@@ -4503,6 +4514,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     <div class="nc-cab"><h3 id="nc-mapa-ava-t">Investimento estimado para integração de Avaré</h3>
       <p>Clique em um bloco para ver itens, valores e responsáveis.</p></div>
     <div data-nc="mapa-ava"></div>
+    <div class="nc-esc av-esc" data-nc="ava-esc"></div>
   </section>
 </div>
 </article>
@@ -4876,7 +4888,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   <section class="sec rmx" data-rmx tabindex="-1" aria-label="Evolução do COE etapa por etapa">
     <ol class="rmx-tempo" data-rmx="tempo"></ol>
     <div class="rmx-palco">
-      <iframe data-src="arq3d/index.html?v=nbr2#roadmap" title="Modelo 3D da arquitetura do COE, etapa por etapa: clique em um componente para ver o que é" allowtransparency="true"></iframe>
+      <iframe data-src="arq3d/index.html?v=nbr3#roadmap" title="Modelo 3D da arquitetura do COE, etapa por etapa: clique em um componente para ver o que é" allowtransparency="true"></iframe>
       <button type="button" class="rmx-seta ant" data-rmx="ant" aria-label="Etapa anterior">‹</button>
       <button type="button" class="rmx-seta prox" data-rmx="prox" aria-label="Próxima etapa">›</button>
       <button type="button" class="rmx-cheia-bt" data-rmx="cheia" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span>Tela cheia</span></button>
@@ -4889,7 +4901,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   <div hidden><div data-v="gantt"></div><div data-v="gates"></div><div data-v="dependencias"></div><div data-v="prioridade-resumo"></div><div data-v="prioridade"></div><div data-v="pm-metas"></div><div data-v="pm-filtros"></div><div data-v="pm-gantt"></div><div data-v="pm-det-rot"></div><div data-v="pm-det"></div></div>
 
   
-  <p class="note">Cada passo está ligado a um dos 9 blocos da página <a href="#viabilidade/o-que-o-coe-precisa">Investimento</a>. Datas por trimestre, com intervenções de campo na entressafra. Fonte: Estudo de Viabilidade Técnica do COE, revisão A, revisado em nov/2026. A arquitetura com banco local em cada unidade e banco do COE em nuvem ainda precisa ser validada com TI e Automação.</p>
+  <p class="note">Cada passo está ligado a um dos blocos da página <a href="#viabilidade/investimento-avare">Investimento Avaré</a>. Datas por trimestre, com intervenções de campo na entressafra. Fonte: Estudo de Viabilidade Técnica do COE, revisão A, revisado em nov/2026. A arquitetura com banco local em cada unidade e banco do COE em nuvem ainda precisa ser validada com TI e Automação.</p>
 </div>
 </article>
 <article class="page" id="p-roadmap-ia-e-ml" hidden>
@@ -5106,6 +5118,10 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     if (porId.C052) { porId.C052.ini = 'A2 Q1'; porId.C052.fim = 'A2 Q2'; }
     if (porId.C053) { porId.C053.ini = 'A3 Q1'; porId.C053.fim = 'A3 Q2'; }
     if (porId.C062) { porId.C062.ini = 'A2 Q1'; porId.C062.fim = 'A3 Q2'; }
+    /* revisão: todos os painéis, rede, CCO, sala e câmeras de Avaré em 2027; medição nova em 2028 */
+    'C001 C046 C048 C049 C061 C063 C064 C065 C066 C067 C076 C077 N02 C016 C043 C044 C045 C050 PT1 C005 C007 S02 C017 C036 C013 C015 C030 K01 K02 K03 C018'.split(' ').forEach(id => {
+      const x = porId[id]; if (!x) return; if (x.ini > 'A1 Q4') x.ini = 'A1 Q3'; if (x.fim > 'A1 Q4') x.fim = 'A1 Q4'; });
+    'C054 C052 C053 C057 C062'.split(' ').forEach(id => { const x = porId[id]; if (x) { x.ini = 'A2 Q1'; x.fim = 'A2 Q4'; } });
     const M = { C017: [2500, 4], PT1: [2500, 10], C044: [100000, 1], C036: [1200, 3], C007: [60000, 1], C005: [6300, 12], C006: [1000, 12], C057: [75000, 2], C054: [50000, 8], C062: [100000, 1], C001: [120000, 1], C020: [6300, 4], C064: [7000, 8], C065: [30000, 2], C043: [45000, 1], C016: [5000, 1], C045: [140000, 1], C013: [15000, 1], C015: [6000, 2] };
     Object.entries(M).forEach(([id, [u, q]]) => { const x = porId[id]; if (!x || !x.total) return; const t = u * q, f = t / x.total;
       x.unit = u; x.qtd = q; x.total = t; if (x.baixo) x.baixo = Math.round(x.baixo * f); if (x.alto) x.alto = Math.round(x.alto * f); });
@@ -5133,23 +5149,17 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       oque: 'No CCO da unidade: rack e servidor, ampliação do SCADA BluePlant (licenças e tags; as telas são feitas na implementação), alarmes racionalizados (ISA-18.2) e o banco local (historiador), que grava cada medição e a envia ao banco do COE.',
       porque: 'A unidade continua operando e gravando se a internet cair, e reenvia o histórico quando ela volta. A operação local ganha tendências e alarmes que hoje não existem.',
       atencao: 'Com o banco do COE em nuvem, o segundo servidor orçado (dados e BI) pode sair. Cada nova unidade repete esta estrutura, sem SCADA novo.' },
-    { id: 'nuvem', n: 4, nome: 'Dados em nuvem', curto: 'Junta as sete unidades e os sistemas de gestão',
-      qtd: 'Banco de dados do COE: recebe todos os dados',
-      ids: 'N01 C039 C041', /* alertas ao campo: dentro da implementação e gestão do COE */
-      oque: 'O banco de dados do COE, que recebe tudo: primeiro os sistemas de gestão (Império, Evolutize, formulários e clima) e depois os dados de cada CCO local. A assinatura do Fabric e as licenças Power BI não estão no investimento: precisam ser cotadas. As cargas, os cálculos e as telas estão na implementação e gestão do COE.',
-      porque: 'A sala do COE fica em outra unidade e vai atender sete. Com um banco central, a sala lê de um lugar só, e uma unidade nova entra sem refazer a arquitetura.',
-      atencao: 'Depende do contrato atual com a Microsoft: verificar se já inclui Azure e Fabric. Um banco em servidor local pode ser avaliado, mas exige mais dedicação da TI da Holambra.' },
-    { id: 'sala', n: 5, nome: 'Sala do COE', curto: 'Videowall e a infraestrutura que mantém a sala no ar',
+    { id: 'sala', n: 4, nome: 'Sala do COE', curto: 'Videowall e a infraestrutura que mantém a sala no ar',
       qtd: '12 monitores dos indicadores · controladora e painel de controle · nobreak · climatização N+1',
       ids: 'C005 C007 S02 C017 C036 C013 C015 C030',
       oque: '12 monitores dos indicadores, profissionais de 55": 8 no videowall (4 × 2) e 4 ao lado, para as câmeras; controladora (um computador dedicado que abre as telas e as câmeras e distribui nos 12 monitores); painel de controle para trocar as telas; rádios push-to-talk; alarme sonoro e visual; nobreak, ar-condicionado redundante e detecção de fumaça. Sem obra civil, quadro elétrico e mobiliário.',
       porque: 'Na safra a sala opera 24 horas. Monitores profissionais são feitos para uso contínuo, e energia e clima redundantes evitam que uma falha apague o videowall.',
       atencao: 'A parede de 4,84 m × 1,36 m precisa caber no local escolhido.' },
-    { id: 'camera', n: 6, nome: 'Câmeras', curto: 'A imagem de cada área de Avaré, gravada na unidade e vista na sala do COE',
+    { id: 'camera', n: 5, nome: 'Câmeras', curto: 'A imagem de cada área de Avaré, gravada na unidade e vista na sala do COE',
       qtd: '32 câmeras atuais + cerca de 12 novas · gravador',
       ids: 'K01 K02 K03 C018',
       oque: 'Aproveita as 32 câmeras de Avaré e completa a cobertura onde faltar: levantamento em campo, câmeras novas, cabos e switches que alimentam as câmeras pela rede (PoE), gravador com 30 dias de imagem na unidade, software de vídeo ; a banda de internet para o vídeo depende dos links contratados. Os monitores estão na sala do COE, e a controladora do videowall mostra as câmeras.' },
-    { id: 'medicao', n: 7, nome: 'Medição nova', curto: 'Sensores para o que hoje não é medido: pilotos em 2028, conclusão em 2029',
+    { id: 'medicao', n: 6, nome: 'Medição nova', curto: 'Sensores e medidas para o que hoje não é medido, em 2028',
       qtd: 'Scanner 3D nos 8 silos · radares · balanças de fluxo dos secadores',
       ids: 'C054 C052 C053 C057 C062',
       oque: 'Instrumentos para as informações que hoje não existem: scanner 3D nos 8 silos, radares nas 6 moegas e nos 2 silos pulmão e balanças de fluxo na saída dos 2 secadores. A depressão dos secadores e a corrente das esteiras já são medidas e só são integradas, junto com os painéis. Pilotos em 2028 e conclusão em 2029. Inclui montagem e comissionamento.' },
@@ -5181,7 +5191,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const INV = CATS;
   const totInv = INV.reduce((t, c) => t + c.total, 0), essInv = INV.reduce((t, c) => t + c.cl.E, 0);
   /* implementação e gestão do COE: R$ 3,0 / 2,1 / 1,7 / 1,3 mi de 2027 a 2030 (R$ 8,1 mi; faixa de 7,4 a 8,8 mi). */
-  const K = { id: 'kpmg', n: 8, kpmg: true, nome: 'Implementação e gestão do COE', curto: 'Cálculos, telas, dados e gestão da implementação, de 2027 até o fim de 2030. Premissa: valores estimados, com validação concreta e revisão anual conforme o esforço de implementação e o escopo contratado',
+  const K = { id: 'kpmg', n: 7, kpmg: true, nome: 'Implementação e gestão do COE', curto: 'Cálculos, telas, dados e gestão da implementação, de 2027 até o fim de 2030. Premissa: valores estimados, com validação concreta e revisão anual conforme o esforço de implementação e o escopo contratado',
     oque: 'Desenvolvimento das regras de cálculo das 416 informações e das 22 telas do videowall, alertas ao campo, governança e qualidade dos dados e gestão da implementação como um todo até o fim de 2030: cronograma, fornecedores, handover e medição dos ganhos.',
     linhas: [
       { nome: 'Cálculos e telas', oque: 'Regras de cálculo e de alerta das 416 informações, as 22 telas do videowall, testes e documentação', ids: ['C040'] },
@@ -5510,22 +5520,25 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       : TP.filter(k => c.tp[k.id]).map(k => { const its = c.itens.filter(x => tipo(x) === k.id).sort((x, y) => y.total - x.total);
           return linha(c.id + '-' + k.id, k.nome, '<i class="o-ponto nc-t' + k.id + '"></i>', cap(its.map(x => CURTO[x.id] || x.item).join(', ')), c.tp[k.id], ftp(c, k.id), its); }).join('')) +
     '<tr class="ln-tot"><td><b>Total</b></td><td></td><td><span class="dir"><b>' + curto(c.total) + '</b></span></td><td><span class="dir nc-fx">' + faixa(c.itens) + '</span></td></tr></tbody></table></div><p class="nc-dica">Clique numa linha para ver os itens.</p>';
+  const spl = c => { const u = c.itens.filter(x => !COMUM.has(x.id)).reduce((t, x) => t + x.total, 0), m = c.total - u;
+    return '<span class="nc-sp">' + (u ? '<span><i>Específico de Avaré</i><b>' + curto(u) + '</b></span>' : '') + (m ? '<span class="nc-sp-t"><i>Para todas as unidades</i><b>' + curto(m) + '</b></span>' : '') + '</span>'; };
+  let SPLIT = false;
   const no = (c, seta) => '<button type="button" class="nc-no' + (seta ? ' nc-seta' : '') + '" data-f="' + c.id + '" aria-expanded="false" aria-controls="nc-det">' +
     '<span class="nc-n">' + c.n + '</span><b>' + esc(c.nome) + '</b><small>' + esc(c.curto) + '</small>' +
     '<em class="nc-q">' + esc(c.qtd) + '</em>' +
-    '<span class="nc-v">' + curto(c.total) + '<small class="nc-fx">estimado · ' + faixa(c.itens) + '</small></span><span class="nc-abre">Ver detalhe</span></button>';
+    (SPLIT ? spl(c) : '') + '<span class="nc-v">' + curto(c.total) + '<small class="nc-fx">estimado · ' + faixa(c.itens) + '</small></span><span class="nc-abre">Ver detalhe</span></button>';
   const zona = (rot, ids, cls, ultima) => '<section class="nc-zona' + (cls ? ' ' + cls : '') + '"><h4>' + rot + '</h4><div class="nc-nos">' +
     ids.map(id => no(cat(id), !ultima)).join('') + '</div></section>';
   const montaMapa = (mapa, KK, op) => {
-    if (!mapa) return; op = op || {}; const did = op.det || 'nc-det', CUR = op.curto || {};
-    mapa.innerHTML = '<div class="nc-cadeia nc-5">' +
+    if (!mapa) return; op = op || {}; const did = op.det || 'nc-det', CUR = op.curto || {}; SPLIT = !!op.split;
+    mapa.innerHTML = '<div class="nc-cadeia nc-5 nc-4z">' +
       zona('Campo', ['paineis']) + zona('Rede', ['rede']) + zona('Unidade', ['cco']) +
-      zona('Nuvem', ['nuvem'], 'nc-nuvem') + zona('Sala do COE', ['sala'], 'nc-sala', true) +
+      zona('Sala do COE', ['sala'], 'nc-sala', true) +
       '</div>' +
-      '<div class="nc-bandas">' + (op.bandas || [['camera', 'Do campo à sala · 2027'], ['medicao', 'Campo · 2028 e 2029']]).map(([id, rot]) => { const c = cat(id);
-        return '<button type="button" class="nc-kp nc-kp-x" data-f="' + id + '" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">' + c.n + '</span><span class="nc-kp-t"><small>' + rot + '</small><b>' + esc(c.nome) + '</b><span>' + esc(CUR[c.id] || c.curto) + '</span></span>' +
+      '<div class="nc-bandas">' + (op.bandas || [['camera', 'Do campo à sala · 2027'], ['medicao', 'Campo · 2028']]).map(([id, rot]) => { const c = cat(id);
+        return '<button type="button" class="nc-kp nc-kp-x" data-f="' + id + '" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">' + c.n + '</span><span class="nc-kp-t"><small>' + rot + '</small><b>' + esc(c.nome) + '</b><span>' + esc(CUR[c.id] || c.curto) + '</span>' + (SPLIT ? spl(c) : '') + '</span>' +
           '<span class="nc-kp-v"><span class="nc-v">' + curto(c.total) + '</span><small class="nc-fx">estimado · ' + faixa(c.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>'; }).join('') + '</div>' +
-      '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">8</span><span class="nc-kp-t"><small>Em todos os blocos</small><b>' + esc(KK.nome) + '</b><span>' + esc(KK.curto) + '</span></span>' +
+      '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">' + KK.n + '</span><span class="nc-kp-t"><small>Em todos os blocos</small><b>' + esc(KK.nome) + '</b><span>' + esc(KK.curto) + '</span></span>' +
       '<span class="nc-kp-v"><span class="nc-v">' + curto(KK.total) + '</span><small class="nc-fx">estimado · ' + faixa(KK.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>' +
       '<div class="nc-det" id="' + did + '" hidden></div>';
     if (did !== 'nc-det') mapa.querySelectorAll('[aria-controls="nc-det"]').forEach(b => b.setAttribute('aria-controls', did));
@@ -5563,12 +5576,15 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
         oque: 'Desenvolvimento das regras de cálculo das 416 informações e das 22 telas do videowall, alertas ao campo, governança e qualidade dos dados e gestão da implementação de Avaré: cronograma, fornecedores, handover e medição dos ganhos.',
         linhas: K.linhas.map(l => { const its = l.itens.map(cl); return Object.assign({}, l, { itens: its, oque: OQ[l.nome] || l.oque, total: its.reduce((t, x) => t + x.total, 0) }); }) });
       KA.itens = KA.linhas.flatMap(l => l.itens); KA.total = KA.itens.reduce((t, x) => t + x.total, 0);
-      montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', bandas: [['camera', 'Do campo à sala · 2027'], ['medicao', 'Campo · 2028']],
-        curto: { medicao: 'Sensores e medidas para o que hoje não é medido, em 2028' } });
+      montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', split: true });
       const t27 = CATS.filter(c => c.id !== 'medicao').reduce((t, c) => t + c.total, 0) + KA.total, t28 = cat('medicao').total;
       const tl = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b><span>' + i + '</span></div>';
-      $('[data-nc="ava-res"]', pa).innerHTML = tl('2027', t27, 'Painéis, rede, CCO local, dados em nuvem, sala do COE, câmeras e consultoria') +
+      $('[data-nc="ava-res"]', pa).innerHTML = tl('2027', t27, 'Painéis, rede, CCO local, sala do COE, câmeras e consultoria') +
         tl('2028', t28, 'Medição nova: novos sensores e medidas') + tl('Total Avaré', t27 + t28, '2027 e 2028', 'av-tot');
+      const its = CATS.flatMap(c => c.itens), u = its.filter(x => !COMUM.has(x.id)).reduce((t, x) => t + x.total, 0), m = its.reduce((t, x) => t + x.total, 0) - u;
+      $('[data-nc="ava-esc"]', pa).innerHTML = '<div class="nc-esc-c nc-esc-u"><small class="nc-r-ano">Específico de Avaré</small><b>R$ ' + (u / 1e6).toFixed(2).replace('.', ',') + ' mi</b><p>Painéis, rede de automação, CCO local, câmeras e medição nova. Cada nova unidade repete este valor.</p></div>' +
+        '<div class="nc-esc-c"><small class="nc-r-ano">Para todas as unidades</small><b>' + curto(m) + '</b><p>Sala do COE, rede e links da sala e acesso remoto seguro: feitos uma vez, em Avaré, e usados pelas 7 unidades.</p></div>' +
+        '<div class="nc-esc-c nc-esc-k"><small class="nc-r-ano">Implementação e gestão do COE</small><b>' + curto(KA.total) + '</b><p>Consultoria, à parte desta divisão.</p></div>';
     } }
 
 
@@ -5674,7 +5690,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       const sT = a => a.reduce((t, x) => t + x.total, 0), sO = a => a.reduce((t, x) => t + (x.opex || 0), 0);
       const escopo = '<div class="nc-esc">' +
         '<div class="nc-esc-c"><small class="nc-r-ano">Comum às 7 unidades</small><b>' + curto(sT(cm)) + '</b>' +
-        '<p>Feito uma vez e usado por todas: sala do COE, dados em nuvem, acesso remoto seguro e implementação e gestão do COE.</p></div>' +
+        '<p>Feito uma vez e usado por todas: sala do COE, acesso remoto seguro e implementação e gestão do COE.</p></div>' +
         '<div class="nc-esc-c nc-esc-u"><small class="nc-r-ano">Por unidade · Avaré</small><b>R$ ' + (sT(un) / 1e6).toFixed(2).replace('.', ',') + ' mi</b>' +
         '<p>Painéis, rede, CCO local, câmeras, medição nova e licenças da unidade. É a referência para cada uma das outras 6 unidades.</p></div>' +
         '<p class="nc-esc-nota"><b>Premissa:</b> o valor de cada uma das outras unidades usa como referência o valor por unidade de Avaré.</p></div>';
@@ -5683,7 +5699,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       const evol = (() => {
         const e = expansao(itens), uni = e.t / OUTRAS, K_IDS = new Set(K.itens.map(x => x.id));
         const grp = x => K_IDS.has(x.id) ? 'im' : COMUM.has(x.id) ? 'ce' : 'av';
-        const G = [{ id: 'im', nome: 'Implementação e gestão do COE' }, { id: 'av', nome: 'Avaré' }, { id: 'ce', nome: 'COE central (sala e nuvem)' }, { id: 'ou', nome: 'Outras unidades' }];
+        const G = [{ id: 'im', nome: 'Implementação e gestão do COE' }, { id: 'av', nome: 'Avaré' }, { id: 'ce', nome: 'COE central (sala)' }, { id: 'ou', nome: 'Outras unidades' }];
         const AN = [2027, 2028, 2029, 2030];
         const v = AN.map(() => ({ av: 0, ce: 0, im: 0, ou: 0 }));
         itens.forEach(x => porAno(x).forEach((y, i) => { if (v[i]) v[i][grp(x)] += y; }));
@@ -5691,9 +5707,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
         const tem = id => itens.some(x => x.id === id);
         const imA = i => curto(v[i].im);
         const O = [
-          ['Sala do COE montada e em operação', 'Banco em nuvem com os dados de gestão', 'Rede, historiador, primeiros painéis e câmeras em Avaré', 'Implementação e gestão: ' + imA(0)],
-          ['Demais painéis de Avaré integrados', 'Pilotos de medição nova', '2 primeiras unidades integradas ao COE', 'Implementação e gestão: ' + imA(1)],
-          ['Conclusão da medição nova em Avaré'].concat(tem('R01') ? ['Acionamento remoto em Avaré'] : []).concat(['+2 unidades integradas ao COE', 'Implementação e gestão: ' + imA(2)]),
+          ['Sala do COE montada e em operação', 'Todos os painéis de Avaré integrados', 'Rede, historiador e câmeras em Avaré', 'Implementação e gestão: ' + imA(0)],
+          ['Medição nova em Avaré', '2 primeiras unidades integradas ao COE', 'Implementação e gestão: ' + imA(1)],
+          (tem('R01') ? ['Acionamento remoto em Avaré'] : []).concat(['+2 unidades integradas ao COE', 'Implementação e gestão: ' + imA(2)]),
           ['+2 unidades: as 7 integradas ao COE', 'Avaré e COE central já concluídos', 'Implementação e gestão: ' + imA(3) + ' (último ano)'],
         ];
         const T = v.map(r => r.av + r.ce + r.im + r.ou), mx = Math.max(...T);
@@ -5705,7 +5721,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       })();
       const escEl = $('[data-nc="escopo"]'); if (escEl) escEl.outerHTML = escopo;
       resumo.innerHTML =
-        (() => { const e = expansao(itens), av = itens.reduce((t, x) => t + x.total, 0); return '<div class="nc-r7"><div><small class="nc-r-ano">Avaré e COE central · 2027 a 2030</small><b>' + curto(av) + '</b><small class="nc-fx">Avaré completo, sala do COE, nuvem e implementação</small></div>' +
+        (() => { const e = expansao(itens), av = itens.reduce((t, x) => t + x.total, 0); return '<div class="nc-r7"><div><small class="nc-r-ano">Avaré e COE central · 2027 a 2030</small><b>' + curto(av) + '</b><small class="nc-fx">Avaré completo, sala do COE e implementação</small></div>' +
           '<div><small class="nc-r-ano">Outras 6 unidades · 2028 a 2030, 2 por ano</small><b>' + curto(e.t) + '</b><small class="nc-fx">preço estimado por unidade com referência ao investimento estimado para Avaré: ' + ('R$ ' + (expansao(itens).t / OUTRAS / 1e6).toFixed(2).replace('.', ',') + ' mi') + ' por unidade</small></div>' +
           '<div class="nc-r7-t"><small class="nc-r-ano">Total para as 7 unidades</small><b>' + curto(av + e.t) + '</b><small class="nc-fx">2027 a 2030</small></div></div>'; })() +
         '<p class="nc-r-nota">Reserva sugerida para imprevistos: 15% do investimento, cerca de <b>' + curto(0.15 * itens.reduce((t, x) => t + x.total, 0)) + '</b> em Avaré e no COE central e <b>' + curto(0.15 * (itens.reduce((t, x) => t + x.total, 0) + expansao(itens).t)) + '</b> com as 7 unidades, à parte destes valores. Não entra a equipe do COE.</p>' + evol;
@@ -5818,12 +5834,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       L('C045', 'Historiador', 'Licença e configuração do banco local que guarda o histórico do processo e reenvia os dados se a internet cair.'),
       L('C050', 'Alarmes padronizados', 'Revisão dos alarmes no padrão ISA-18.2: prioridade, responsável e resposta de cada um.'),
       L('PT1', 'Rádios push-to-talk do campo', 'Rádios que falam pela internet, para supervisores e operadores da unidade falarem com a sala do COE. A mensalidade de cada rádio não entra no investimento.')]]] },
-    { k: 'nuvem', n: 4, nome: 'Dados em nuvem', txt: 'O banco de dados do COE, feito uma vez e usado pelas 7 unidades. As assinaturas estão listadas abaixo, sem valor: precisam ser cotadas e não entram no total.', grupos: [['', [
-      L('C039', 'Estabelecimento do banco de dados', 'O banco que recebe tudo: primeiro Império, Evolutize, formulários e clima, depois os dados de cada CCO local. Modelo, catálogo e registro de falhas. Vale para as duas opções.'),
-      C('BL1', 'Servidores do banco (local)', 'Dois servidores em redundância, um assume se o outro falhar, num rack da TI da Holambra.', 2, 'un.', 60000, { op: 'local' }),
-      C('BL2', 'Licença do banco de dados (local)', 'Licença SQL Server Standard para 8 núcleos (cerca de US$ 15,8 mil).', 1, 'pacote', 85000, { op: 'local' }),
-      C('BL3', 'Backup externo (local)', 'Cópia do banco fora da sala dos servidores, com teste de restauração.', 1, 'pacote', 25000, { op: 'local' })]]] },
-    { k: 'sala', n: 5, nome: 'Sala do COE', txt: 'Videowall e a infraestrutura que mantém a sala no ar. Feita uma vez e usada pelas 7 unidades.', grupos: [['', [
+    { k: 'sala', n: 4, nome: 'Sala do COE', txt: 'Videowall e a infraestrutura que mantém a sala no ar. Feita uma vez e usada pelas 7 unidades.', grupos: [['', [
       L('C005', 'Monitores dos indicadores', '12 monitores profissionais de 55" para uso 24 horas: 8 formam o videowall e 4 ficam ao lado, para as câmeras.'),
       L('S02', 'Painel de controle do videowall', 'Tela de toque fixa na sala, ligada à controladora: quem está na sala troca o layout, amplia uma tela ou coloca uma câmera em destaque.'),
       L('C007', 'Controladora do videowall', 'Computador dedicado (Windows) com 12 saídas: abre as telas no navegador e as câmeras no software de vídeo e distribui nos 12 monitores.'),
@@ -5832,18 +5843,18 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       L('C013', 'Nobreak', 'Nobreak online de 6 kVA, cerca de 30 minutos de autonomia.'),
       L('C015', 'Ar-condicionado', 'Dois aparelhos de 24.000 BTU/h, um de reserva.'),
       L('C030', 'Detecção de fumaça', 'Detector de fumaça e extintor de CO2 da sala.')]]] },
-    { k: 'camera', n: 6, nome: 'Câmeras', txt: 'Cobertura de câmeras de Avaré, com o software de vídeo e o gravador.', grupos: [['', [
+    { k: 'camera', n: 5, nome: 'Câmeras', txt: 'Cobertura de câmeras de Avaré, com o software de vídeo e o gravador.', grupos: [['', [
       L('K01', 'Projeto de cobertura das câmeras', 'Levantamento das câmeras atuais e definição de onde faltam.'),
       L('K02', 'Câmeras IP', 'Câmeras novas e substituições.'),
       L('K03', 'Instalação das câmeras', 'Cabos, switches PoE e caixas de proteção.'),
       L('C018', 'Software de vídeo e gravador', 'Licenças do software de vídeo para 32 câmeras e gravador com 30 dias de gravação.')]]] },
-    { k: 'medicao', n: 7, nome: 'Medição nova', txt: 'Medições que ainda não existem em Avaré: volume nos silos, nível nas moegas e ritmo dos secadores.', grupos: [['', [
+    { k: 'medicao', n: 6, nome: 'Medição nova', txt: 'Medições que ainda não existem em Avaré: volume nos silos, nível nas moegas e ritmo dos secadores.', grupos: [['', [
       L('C054', 'Scanner 3D nos 8 silos', 'Mede o volume real de grão em cada silo por varredura.'),
       L('C052', 'Radares de nível nas moegas', 'Um radar em cada moega, de M1 a M6.'),
       L('C053', 'Radares nos silos pulmão', 'Um radar em cada silo pulmão dos 2 secadores.'),
       L('C057', 'Balanças de fluxo dos secadores', 'Medem o ritmo de grão (t/h) na saída de cada um dos 2 secadores.'),
       L('C062', 'Montagem da medição', 'Cabos, caixas, montagem e comissionamento dos scanners e radares. Depressão e corrente já são medidas e entram na integração dos painéis.')]]] },
-    { k: 'imp', n: 8, nome: 'Implementação e gestão do COE', txt: 'Papel da consultoria: governança de todos os blocos e fornecedores, e implementação das telas do SCADA e da sala do COE, de 2027 a 2030.', premissa: 'Premissa: valores estimados, sendo necessária validação concreta e revisão anual, de acordo com o esforço de implementação e o escopo contratado.', grupos: [['', [
+    { k: 'imp', n: 7, nome: 'Implementação e gestão do COE', txt: 'Papel da consultoria: governança de todos os blocos e fornecedores, e implementação das telas do SCADA e da sala do COE, de 2027 a 2030.', premissa: 'Premissa: valores estimados, sendo necessária validação concreta e revisão anual, de acordo com o esforço de implementação e o escopo contratado.', grupos: [['', [
       L('C040', 'Telas da sala do COE e do SCADA', 'Regras de cálculo e de alerta das 416 informações, as 22 telas do videowall, as telas do SCADA no padrão ISA-101 e os alertas ao campo, com testes e documentação.'),
       L('C002', 'Gestão e governança da implementação', 'Coordena todos os blocos e fornecedores: cronograma, custos, riscos e reporte mensal ao comitê.', { q: 48, un: 'meses' }),
       L('C042', 'Governança de dados', 'Dono e definição de cada uma das 416 informações, qualidade dos dados e conciliação com o Império.', { q: 48, un: 'meses' }),
@@ -5893,9 +5904,8 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const capEl = pg.querySelector('[data-tb="capitulos"]'), resEl = pg.querySelector('[data-tb="resumo"]');
   capEl.innerHTML = CAPS.map(c => '<section class="tb-cap" data-k="' + c.k + '" aria-labelledby="tb-' + c.k + '"><div class="tb-cab"><h3 id="tb-' + c.k + '"><span class="tb-n">' + c.n + '</span>' + esc(c.nome) + '</h3><b data-st="' + c.k + '"></b><p>' + esc(c.txt) + '</p>' + (c.premissa ? '<p class="tb-prem">' + esc(c.premissa) + '</p>' : '') + '</div>' +
       '<div class="tb-sc"><table class="tb-t">' + cols + '<tbody>' + c.grupos.map((g, gi) => (g[0] ? '<tr class="tb-g"><td colspan="5">' + esc(g[0]) + '<span data-gt="' + c.k + gi + '"></span></td></tr>' : '') + g[1].map(linha).join('')).join('') + '</tbody></table></div>' +
-      (c.k === 'nuvem' ? DEC : '') +
-      (c.k === 'nuvem' ? '<div class="tb-sc"><table class="tb-t">' + cols.replace('Item e o que é', 'Assinaturas · a cotar') + '<tbody>' + ASS.map(l => '<tr><td class="tb-i"><b>' + esc(l.nome) + '</b><small>' + esc(l.oque) + '</small></td><td class="n">' + nf.format(l.q) + '</td><td class="tb-un">' + esc(l.un) + '</td><td class="n tb-cot">a cotar</td><td class="n tb-cot">—</td></tr>').join('') + '</tbody></table></div>' : '') + '</section>').join('') +
-    '<section class="tb-cap" data-k="out" aria-labelledby="tb-out"><div class="tb-cab"><h3 id="tb-out"><span class="tb-n">9</span>Outras 6 unidades</h3><b data-st="out"></b><p>Valor de cada unidade aberto para ajuste. Enquanto não for alterado, segue o valor estimado por unidade de Avaré: painéis, rede, CCO local, câmeras, medição nova e licenças da unidade. 2 unidades por ano, de 2028 a 2030.</p></div>' +
+      (c.k === 'imp' ? '<div class="tb-sc"><table class="tb-t">' + cols.replace('Item e o que é', 'Assinaturas · a cotar') + '<tbody>' + ASS.map(l => '<tr><td class="tb-i"><b>' + esc(l.nome) + '</b><small>' + esc(l.oque) + '</small></td><td class="n">' + nf.format(l.q) + '</td><td class="tb-un">' + esc(l.un) + '</td><td class="n tb-cot">a cotar</td><td class="n tb-cot">—</td></tr>').join('') + '</tbody></table></div>' : '') + '</section>').join('') +
+    '<section class="tb-cap" data-k="out" aria-labelledby="tb-out"><div class="tb-cab"><h3 id="tb-out"><span class="tb-n">8</span>Outras 6 unidades</h3><b data-st="out"></b><p>Valor de cada unidade aberto para ajuste. Enquanto não for alterado, segue o valor estimado por unidade de Avaré: painéis, rede, CCO local, câmeras, medição nova e licenças da unidade. 2 unidades por ano, de 2028 a 2030.</p></div>' +
       '<div class="tb-ref">Referência Avaré por unidade: <b data-ref></b></div>' +
       '<div class="tb-sc"><table class="tb-t tb-uni"><colgroup><col><col class="c-v2"><col class="c-t"></colgroup><thead><tr><th>Unidade</th><th class="n">Valor da unidade (R$)</th><th class="n">Diferença da referência</th></tr></thead><tbody>' +
       UNI.map(l => '<tr data-id="' + l.id + '"><td class="tb-i"><b>' + esc(l.nome) + '</b><small>Mesmo escopo de Avaré: painéis, rede, CCO local, câmeras, medição nova e licenças.</small></td>' +
@@ -5915,7 +5925,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     CAPS.map(c => c.k).concat('out').forEach(k => { pg.querySelector('[data-st="' + k + '"]').innerHTML = curto(st[k]); });
     const T = CAPS.reduce((a, c) => a + st[c.k], 0) + st.out;
     const tile = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b>' + (i ? '<i>' + i + '</i>' : '') + '</div>';
-    resEl.innerHTML = CAPS.map(c => tile(c.n + ' · ' + c.nome, st[c.k], '')).join('') + tile('9 · Outras 6 unidades', st.out, 'R$ ' + (ref / 1e6).toFixed(2).replace('.', ',') + ' mi cada') + tile('Total', T, '7 unidades, 2027 a 2030', 'tb-tot');
+    resEl.innerHTML = CAPS.map(c => tile(c.n + ' · ' + c.nome, st[c.k], '')).join('') + tile('8 · Outras 6 unidades', st.out, 'R$ ' + (ref / 1e6).toFixed(2).replace('.', ',') + ' mi cada') + tile('Total', T, '7 unidades, 2027 a 2030', 'tb-tot');
   };
   pg.addEventListener('click', ev => { const b = ev.target.closest('[data-opc]'); if (!b) return; OPC = b.dataset.opc; salva(); calcula(); });
   pg.addEventListener('change', ev => { const i = ev.target.closest('input[data-c]'); if (!i) return; const id = i.closest('tr').dataset.id, l = porId[id], uni = /^U\d$/.test(id); const v = num(i.value);
@@ -6476,12 +6486,35 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   ETAPAS[6].t = 'As sete unidades integradas ao COE';
   PASSOS[14].t = 'Completar a medição nova em Avaré'; BUL[14] = ['Scanner 3D nos 8 silos', 'Radares dos silos pulmão', 'Balanças de fluxo dos secadores', 'Formulários deixam de ser fonte onde houver medição'];
   BUL[9] = ['Primeiros scanners 3D nos silos', 'Radares nas moegas', 'Depressão e corrente, que já são medidas, integradas'];
+  /* revisão: todos os painéis, rede, CCO, sala e câmeras de Avaré em 2027; medição nova em 2028; sem o bloco Dados em nuvem */
+  BLOCOS.splice(0, BLOCOS.length, ['1', 'Integração dos painéis'], ['2', 'Rede e cibersegurança'], ['3', 'CCO local'], ['4', 'Sala do COE'],
+    ['5', 'Câmeras'], ['6', 'Medição nova'], ['7', 'Implementação e gestão do COE'], ['D', 'Banco do COE em nuvem'], ['U', 'Outras unidades'], ['O', 'Operação e melhoria contínua']);
+  { const NOVO = { '4': 'D', '5': '4', '6': '5', '7': '6', '8': '7' }; Object.keys(BLOCO_DE).forEach(k => { if (NOVO[BLOCO_DE[k]]) BLOCO_DE[k] = NOVO[BLOCO_DE[k]]; }); }
+  PASSOS[6] = { q: 'T3 a T4', t: 'Primeiros painéis no SCADA', d: '', g: [] };
+  BUL[6] = ['Calibração da Condutiva', 'FACH e Condutiva ligados ao SCADA', 'Omega e NBR Tec transporte ampliadas'];
+  PASSOS[7] = { q: 'T4', t: 'Demais painéis no SCADA', d: '', g: [] };
+  BUL[7] = ['Fockink por gateway', 'NBR Termo: comunicação com a central reativada', 'RM, SAUR, Autokraft, Atlas Copco e Kepler', 'Os 12 painéis de Avaré integrados até dezembro'];
+  PASSOS[8].q = 'T4';
+  PASSOS[9] = { q: 'T1 a T2', t: 'Medição nova em Avaré', d: '', g: [] };
+  BUL[9] = ['Scanner 3D nos 8 silos', 'Radares nas moegas e nos silos pulmão', 'Balanças de fluxo dos 2 secadores', 'Montagem e comissionamento'];
+  PASSOS[14] = { q: 'T3 a T4', t: 'Medição nova nas telas', d: '', g: [] };
+  BUL[14] = ['Scanner 3D e vazão completam as 416 informações', 'Formulários deixam de ser fonte onde houver medição'];
+  PASSOS.k3 = { q: 'T1 a T2', t: 'Telas com os dados de automação', d: '', g: [] };
+  PE[2].ids = ['6r', '6c', 6, 7, 8, 5, 'c', 'k2'];
+  PE[3].ids = [9, 'k3', 'u1'];
+  PE[4].ids = [14, 10, 11, 'u1b'];
+  PE[5].ids = ['u2', 15];
+  ETAPAS[2].t = 'COE em operação com todos os painéis de Avaré';
+  ETAPAS[3].t = 'Medição nova em Avaré e início das primeiras unidades';
+  ETAPAS[4].t = 'Estabilização de Avaré e duas unidades integradas';
+  ETAPAS[5].t = 'Mais duas unidades integradas';
+  BUL[4] = ['Microsoft Fabric configurado: banco do COE e ferramenta de tempo real, conforme o contrato da Holambra', 'Cargas automáticas dos sistemas de gestão', 'Duas safras de histórico do Império carregadas', 'Acessos por perfil e cópia de segurança'];
   const ORDEM = [...new Set(Object.values(PE).flatMap(x => x.ids))].filter(id => !(PASSOS[id] && PASSOS[id].cam));
   PASSOS.c = { q: 'T3 a T4', t: 'Integração das câmeras', d: 'Instalar ou regularizar as 32 câmeras nas áreas do processo. A imagem é gravada na unidade (gravador de vídeo) e segue pela rede e pelo firewall até a parede de câmeras da sala: 4 monitores, ao lado dos 8 de indicadores. Cada alerta abre a câmera da área.', g: [], cam: true };
   PASSOS.c.t = 'Câmeras no COE';
   BUL.c = ['Levantamento das 32 câmeras e câmeras novas onde faltar', 'Gravação na unidade e imagem pela rede até a sala', '4 monitores ao lado dos 8 de indicadores', 'Cada alerta abre a câmera da área'];
   const CAMS = [0, 0, 32, 32, 32, 32, 32];
-  const PAINEIS = [2, 2, 4, 12, 12, 12, 12];
+  const PAINEIS = [2, 2, 12, 12, 12, 12, 12];
   const UNIDADES = [0, 0, 1, 1, 3, 5, 7];
 
   /* processos de Avaré e quanto de cada um chega ao COE em cada etapa */
@@ -6490,7 +6523,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   let L = [];
   if (C && C.campos) L = C.linhas.map(r => Object.fromEntries(C.campos.map((k, i) => [k, r[i]])));
   const gestao = r => /Império|Climatempo|Microsoft Forms|Jotform|N\/A|Padrão/.test(r.forn) && !/CLP|termometria|Fockink|NBR|Condutiva|Fach|SanTec|Estação|Operador/i.test(r.forn);
-  const pronto = (r, n) => n === 0 ? false : n === 1 ? r.onda === '1' && gestao(r) : n === 2 ? r.onda === '1' : n <= 4 ? r.onda !== '3' : true;
+  const pronto = (r, n) => n === 0 ? false : n === 1 ? r.onda === '1' && gestao(r) : n <= 3 ? r.onda !== '3' : true;
   const cobre = n => PROC.map(([nome, re]) => { const g = L.filter(r => re.test(r.menu)); return [nome, g.length ? g.filter(r => pronto(r, n)).length / g.length : 0]; });
   const total = n => L.filter(r => pronto(r, n)).length;
 
