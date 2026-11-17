@@ -2634,9 +2634,23 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .nc-sp b{font-variant-numeric:tabular-nums;color:var(--fg);white-space:nowrap}
 .nc-sp .nc-sp-t i{color:#9a6a17}
 .nc-kp-t .nc-sp{max-width:340px}
-.av-esc{grid-template-columns:repeat(3,minmax(0,1fr))}
+.av-g{display:grid;gap:14px;padding:18px 20px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.av-g + .av-g{margin-top:14px}
+.av-g-cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.av-g-cab h4{margin:0;font-size:17px;font-weight:700}
+.av-g-cab p{margin:3px 0 0;font-size:13.5px;color:var(--texto-2)}
+.av-g-cab > b{font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--fg);white-space:nowrap}
+.av-g-u{border-left:4px solid #C08A2B}
+.av-g-c{border-left:4px solid var(--accent)}
+.av-g-k{border-left:4px solid var(--dim)}
+.av-gg{display:grid;gap:14px}
+.av-gg5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.av-gg2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.av-banco{cursor:default;border-top-color:var(--dim);border-style:dashed;border-top-style:solid}
+.av-banco .nc-v{font-size:17px;color:var(--texto-2)}
+@media (max-width:1180px){.av-gg5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.av-gg5,.av-gg2{grid-template-columns:1fr}.av-g-cab{flex-direction:column;align-items:flex-start}}
 .av-esc .nc-esc-k{border-left-color:var(--line)}
-@media (max-width:760px){.av-esc{grid-template-columns:1fr}}
 @media (max-width:760px){.av-res{grid-template-columns:1fr}}
 .nc-det{display:grid;gap:10px;padding:18px 20px;border:2px solid var(--accent);border-radius:16px;background:var(--bg)}
 .nc-det-cab{display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -4514,7 +4528,6 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     <div class="nc-cab"><h3 id="nc-mapa-ava-t">Investimento estimado para integração de Avaré</h3>
       <p>Clique em um bloco para ver itens, valores e responsáveis.</p></div>
     <div data-nc="mapa-ava"></div>
-    <div class="nc-esc av-esc" data-nc="ava-esc"></div>
   </section>
 </div>
 </article>
@@ -5531,7 +5544,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     ids.map(id => no(cat(id), !ultima)).join('') + '</div></section>';
   const montaMapa = (mapa, KK, op) => {
     if (!mapa) return; op = op || {}; const did = op.det || 'nc-det', CUR = op.curto || {}; SPLIT = !!op.split;
-    mapa.innerHTML = '<div class="nc-cadeia nc-5 nc-4z">' +
+    mapa.innerHTML = op.html ? op.html + '<div class="nc-det" id="' + did + '" hidden></div>' : '<div class="nc-cadeia nc-5 nc-4z">' +
       zona('Campo', ['paineis']) + zona('Rede', ['rede']) + zona('Unidade', ['cco']) +
       zona('Sala do COE', ['sala'], 'nc-sala', true) +
       '</div>' +
@@ -5550,7 +5563,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       det.innerHTML = '<div class="nc-det-cab"><h4><span class="nc-n">' + c.n + '</span>' + esc(c.nome) + '<b>' + curto(c.total) + '</b><small class="nc-fx">estimado · faixa ' + faixa(c.itens) + '</small></h4><button type="button" class="nc-det-x" data-fecha aria-label="Fechar">×</button></div>' +
         '<p>' + esc(c.oque) + '</p>' + tabela(c);
       const bt = mapa.querySelector('[data-f="' + id + '"]'), kp = mapa.querySelector('.nc-kp[data-f="kpmg"]');
-      if (matchMedia('(max-width:1180px)').matches) (bt.closest('.nc-zona') || bt).after(det); else kp.after(det);
+      if (bt.closest('.av-g')) bt.closest('.av-g').after(det); else if (matchMedia('(max-width:1180px)').matches) (bt.closest('.nc-zona') || bt).after(det); else kp.after(det);
       det.hidden = false;
       if (matchMedia('(max-width:1180px)').matches) det.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     };
@@ -5576,15 +5589,25 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
         oque: 'Desenvolvimento das regras de cálculo das 416 informações e das 22 telas do videowall, alertas ao campo, governança e qualidade dos dados e gestão da implementação de Avaré: cronograma, fornecedores, handover e medição dos ganhos.',
         linhas: K.linhas.map(l => { const its = l.itens.map(cl); return Object.assign({}, l, { itens: its, oque: OQ[l.nome] || l.oque, total: its.reduce((t, x) => t + x.total, 0) }); }) });
       KA.itens = KA.linhas.flatMap(l => l.itens); KA.total = KA.itens.reduce((t, x) => t + x.total, 0);
-      montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', split: true });
+      const soma = ids => ids.reduce((t, id) => t + cat(id).total, 0), UNI_IDS = ['paineis', 'rede', 'cco', 'camera', 'medicao'];
+      KA.curto = 'O COE é construído desde o início pensando na replicabilidade: padrões técnicos, modelo de dados, regras de cálculo, telas e alertas feitos em Avaré são reaproveitados. Nas demais unidades o esforço de implementação é menor e o valor é reduzido.';
+      const grupo = (cls, nome, sub, val, corpo) => '<section class="av-g ' + cls + '"><div class="av-g-cab"><div><h4>' + nome + '</h4><p>' + sub + '</p></div><b>' + val + '</b></div>' + corpo + '</section>';
+      const banco = '<div class="nc-no av-banco"><span class="nc-n">B</span><b>Banco de dados do COE</b><small>Recebe os dados de todas as unidades e dos sistemas de gestão</small>' +
+        '<em class="nc-q">Microsoft Azure / Fabric · conforme o contrato Microsoft da Holambra</em><span class="nc-v">A definir com a TI<small class="nc-fx">valor não incluído no total</small></span></div>';
+      const html =
+        grupo('av-g-u', 'Específico da unidade', 'Feito em Avaré e repetido em cada unidade que entrar no COE.', curto(soma(UNI_IDS)),
+          '<div class="av-gg av-gg5">' + UNI_IDS.map(id => no(cat(id), false)).join('') + '</div>') +
+        grupo('av-g-c', 'Comum a todas as unidades', 'Feito uma vez, em Avaré, e usado pelas 7 unidades.', curto(cat('sala').total),
+          '<div class="av-gg av-gg2">' + banco + no(cat('sala'), false) + '</div>') +
+        grupo('av-g-k', 'Implementação e consultoria', 'Em todos os blocos.', curto(KA.total),
+          '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det-ava"><span class="nc-n">' + KA.n + '</span><span class="nc-kp-t"><b>' + esc(KA.nome) + '</b><span>' + esc(KA.curto) + '</span></span>' +
+          '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + '</span><small class="nc-fx">estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
+      montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', html });
       const t27 = CATS.filter(c => c.id !== 'medicao').reduce((t, c) => t + c.total, 0) + KA.total, t28 = cat('medicao').total;
       const tl = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b><span>' + i + '</span></div>';
       $('[data-nc="ava-res"]', pa).innerHTML = tl('2027', t27, 'Painéis, rede, CCO local, sala do COE, câmeras e consultoria') +
         tl('2028', t28, 'Medição nova: novos sensores e medidas') + tl('Total Avaré', t27 + t28, '2027 e 2028', 'av-tot');
-      const its = CATS.flatMap(c => c.itens), u = its.filter(x => !COMUM.has(x.id)).reduce((t, x) => t + x.total, 0), m = its.reduce((t, x) => t + x.total, 0) - u;
-      $('[data-nc="ava-esc"]', pa).innerHTML = '<div class="nc-esc-c nc-esc-u"><small class="nc-r-ano">Específico de Avaré</small><b>R$ ' + (u / 1e6).toFixed(2).replace('.', ',') + ' mi</b><p>Painéis, rede de automação, CCO local, câmeras e medição nova. Cada nova unidade repete este valor.</p></div>' +
-        '<div class="nc-esc-c"><small class="nc-r-ano">Para todas as unidades</small><b>' + curto(m) + '</b><p>Sala do COE, rede e links da sala e acesso remoto seguro: feitos uma vez, em Avaré, e usados pelas 7 unidades.</p></div>' +
-        '<div class="nc-esc-c nc-esc-k"><small class="nc-r-ano">Implementação e gestão do COE</small><b>' + curto(KA.total) + '</b><p>Consultoria, à parte desta divisão.</p></div>';
+
     } }
 
 
