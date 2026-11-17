@@ -2627,6 +2627,9 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .av-res span{font-size:13.5px;line-height:1.5;color:var(--texto-2)}
 .av-res .av-tot{border:2px solid var(--accent);background:var(--accent-soft)}
 .av-res .av-tot b{color:var(--accent)}
+.nc-tab-tp td.nc-sub-r{white-space:normal!important;width:214px!important;min-width:214px}
+.nc-sub-r .it-resp{max-width:none!important;white-space:normal!important}
+.nc-sub-r .it-resp *{white-space:normal!important;overflow-wrap:break-word}
 #p-viabilidade-investimento-avare .nz-cm,#p-viabilidade-investimento-avare .nz-un{display:none}
 .nc-sp{display:grid;gap:4px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 .nc-sp > span{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;line-height:1.35}
@@ -2855,7 +2858,10 @@ html.rmx-cheia-on{overflow:hidden}
 .it-resp small:first-child{margin-top:0}
 .it-resp b{font-size:14px;color:var(--fg)}
 .it-resp span{color:var(--texto-2)}
-@media (max-width:640px){.nc-sub-r .it-resp{max-width:none}}
+@media (max-width:640px){.nc-sub-r .it-resp{max-width:none;min-width:0;overflow-wrap:anywhere}
+.nc-tab-tp td.nc-sub-r{white-space:normal!important;width:210px!important;min-width:210px}
+.nc-sub-r .it-resp,.nc-sub-r .it-resp *{white-space:normal!important}
+.it-resp b,.it-resp span{overflow-wrap:anywhere;hyphens:auto}}
 .nc-rs td{vertical-align:top}
 .nc-rs td:first-child{min-width:170px}
 .nc-rs td:first-child small{display:block;color:var(--dim);font-size:12.5px}
@@ -4535,12 +4541,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
 <div class="wrap wide">
   <div><h2>Estimativa de investimento 2027 a 2030</h2></div>
   <div class="nc-resumo" data-nc="resumo"></div>
-  <section class="nc-mapa" aria-labelledby="nc-mapa-t">
-    <div class="nc-cab"><h3 id="nc-mapa-t">Investimento estimado para integração de Avaré</h3>
-      <p>Clique em um bloco para ver itens, valores e responsáveis.</p></div>
-    <div data-nc="mapa"></div>
-    <div data-nc="escopo"></div>
-  </section>
+  <div hidden><div data-nc="mapa"></div><div data-nc="escopo"></div></div>
   <div data-nc="anos" hidden></div>
 
 
@@ -5293,7 +5294,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     S02: 'Tela de toque fixa na sala, ligada à controladora, para trocar o layout e as telas do videowall.',
     C017: 'Rádios push-to-talk que falam pela internet, para a sala falar com o campo mesmo fora da unidade.',
     PT1: 'Rádios push-to-talk para supervisores e operadores da unidade falarem com a sala do COE.',
-    C076: 'Segundo link de internet, de outra operadora, para o COE não perder os dados se o link principal cair. Depende da contratação e do contrato da Coop Holambra.',
+    C076: 'Segundo link de fibra, de outra operadora, para o COE não perder os dados se o link principal cair. Depende da contratação e do contrato da Coop Holambra.',
     C077: 'Software que avisa quando um link, servidor ou integração para, antes de a tela ficar sem dado.',
     C016: 'Armário para servidores e equipamentos de rede no CCO.',
     C043: 'Servidores do CCO: um para o SCADA e o banco local, outro para dados e BI.',
@@ -5599,7 +5600,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
           '<div class="av-gg av-gg5">' + UNI_IDS.map(id => no(cat(id), false)).join('') + '</div>') +
         grupo('av-g-c', 'Comum a todas as unidades', 'Feito uma vez, em Avaré, e usado pelas 7 unidades.', curto(cat('sala').total),
           '<div class="av-gg av-gg2">' + banco + no(cat('sala'), false) + '</div>') +
-        grupo('av-g-k', 'Implementação e consultoria', 'Em todos os blocos.', curto(KA.total),
+        grupo('av-g-k', 'Implementação', 'Em todos os blocos.', curto(KA.total),
           '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det-ava"><span class="nc-n">' + KA.n + '</span><span class="nc-kp-t"><b>' + esc(KA.nome) + '</b><span>' + esc(KA.curto) + '</span></span>' +
           '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + '</span><small class="nc-fx">estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
       montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', html });
@@ -5846,7 +5847,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       L('C064', 'Switches industriais', 'Switches gerenciáveis, um em cada região da unidade, em anel redundante.'),
       L('C065', 'Firewall industrial (par)', 'Separa a rede de automação da rede da empresa; um assume se o outro falhar.'),
       L('C067', 'Backup da automação', 'Cópia automática dos programas de CLPs, IHMs e SCADA, no CCO e na nuvem.'),
-      L('C076', 'Segundo link de internet (instalação)', 'Instalação do link de outra operadora, com troca automática se o principal cair. A mensalidade não entra no investimento. Depende da contratação e do contrato da Coop Holambra.'),
+      L('C076', 'Segundo link de fibra (instalação)', 'Instalação do link de fibra de outra operadora, com troca automática se o principal cair. A mensalidade não entra no investimento. Depende da contratação e do contrato da Coop Holambra.'),
       L('C077', 'Monitoramento da rede', 'Monitora links, servidores e cargas de dados, com aviso por e-mail ou Teams.'),
       L('C066', 'Acesso remoto seguro', 'Licença do software que controla o acesso dos fornecedores à automação, com senha em dois fatores e gravação das sessões, e a configuração. Vale para todas as unidades.'),
       L('N02', 'Rede e links da sala do COE', 'Switch, firewall e cabeamento da sala e instalação dos links de internet. Depende da contratação e do contrato da Coop Holambra.')]]] },
@@ -5861,7 +5862,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       L('C005', 'Monitores dos indicadores', '12 monitores profissionais de 55" para uso 24 horas: 8 formam o videowall e 4 ficam ao lado, para as câmeras.'),
       L('S02', 'Painel de controle do videowall', 'Tela de toque fixa na sala, ligada à controladora: quem está na sala troca o layout, amplia uma tela ou coloca uma câmera em destaque.'),
       L('C007', 'Controladora do videowall', 'Computador dedicado (Windows) com 12 saídas: abre as telas no navegador e as câmeras no software de vídeo e distribui nos 12 monitores.'),
-      L('C017', 'Rádios push-to-talk da sala', 'Rádios que falam pela internet (4G ou wi-fi), para a sala falar com o campo mesmo fora da unidade. A mensalidade de cada rádio não entra no investimento.'),
+      L('C017', 'Rádios push-to-talk da sala', 'Rádios que falam pela rede wi-fi e pela internet, para a sala falar com o campo de cada unidade. A mensalidade de cada rádio não entra no investimento.'),
       L('C036', 'Sinalização de alarmes', 'Torre luminosa com som na sala, que acende nos alertas críticos.'),
       L('C013', 'Nobreak', 'Nobreak online de 6 kVA, cerca de 30 minutos de autonomia.'),
       L('C015', 'Ar-condicionado', 'Dois aparelhos de 24.000 BTU/h, um de reserva.'),
