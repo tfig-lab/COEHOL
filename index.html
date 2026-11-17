@@ -2858,6 +2858,9 @@ html.rmx-cheia-on{overflow:hidden}
 .pg-dep li span{color:var(--texto-2);font-size:14px;line-height:1.45}
 @media (max-width:900px){.pg-dep{grid-template-columns:minmax(0,1fr)}.pg-gantt{grid-template-columns:150px repeat(16,56px)}}
 
+.pm-cab .pm-sub{margin:6px 0 0;font-size:17px;font-weight:600;color:#C08A2B}
+.pm-txt{margin:16px 0 8px;max-width:980px}
+.pm-txt p{margin:0 0 10px;color:var(--texto-2);font-size:15px;line-height:1.6}
 .nc-aviso{margin:18px 0 22px;padding:18px 22px;border:1px solid color-mix(in srgb,#C08A2B 45%,var(--line));border-left:5px solid #C08A2B;border-radius:14px;background:color-mix(in srgb,#C08A2B 7%,var(--bg))}
 .nc-aviso h3{margin:0 0 8px;font-size:17px}
 .nc-aviso p{margin:0 0 10px;color:var(--texto-2);font-size:14.5px;line-height:1.55;max-width:none}
@@ -4467,21 +4470,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
 </article>
 <article class="page" id="p-viabilidade-premissas" hidden>
 <div class="wrap wide">
-  <div><h2>Premissas do investimento</h2></div>
+  <div class="pm-cab"><h2>Premissas do investimento</h2><p class="pm-sub">Valores estimados: referência para decisão, não orçamento</p></div>
+  <div class="pm-txt"><p>Os valores do investimento foram estimados a partir de referências de mercado e de preços públicos, em R$ de novembro de 2026. O valor de cada uma das outras unidades é estimado com base no valor de Avaré. Servem para dimensionar o investimento e orientar as decisões de cada etapa. Não substituem cotação, proposta comercial ou orçamento aprovado. Impostos, frete, instalação e condições comerciais devem ser confirmados em cada cotação.</p><p>A faixa mostrada em cada valor (do baixo ao alto) indica a incerteza atual. Nos itens que dependem de levantamento em campo, a variação pode ser maior.</p></div>
   <section class="sec pm" aria-label="Premissas"><ol class="pm-l"><li><b>Começar pelo que já está em rede</b><span>Império, Evolutize, formulários e clima: cerca de 300 das 416 informações, sem obra no campo.</span></li><li><b>Integrar, não trocar</b><span>Painéis, CLPs, medidores e o SCADA que já existem entram no COE.</span></li><li><b>Avaré primeiro</b><span>As outras seis unidades seguem o mesmo padrão, 2 por ano, de 2028 a 2030.</span></li></ol></section>
-  <aside class="nc-aviso" role="note" aria-labelledby="nc-aviso-t">
-    <h3 id="nc-aviso-t">Valores estimados: referência para decisão, não orçamento</h3>
-    <p>Os valores do investimento foram estimados a partir de referências de mercado e de preços públicos, em R$ de novembro de 2026. O valor de cada uma das outras unidades é estimado com base no valor de Avaré. Servem para dimensionar o investimento e orientar as decisões de cada etapa. Não substituem cotação, proposta comercial ou orçamento aprovado. Impostos, frete, instalação e condições comerciais devem ser confirmados em cada cotação.</p>
-    <p class="nc-aviso-s">Antes de aprovar cada bloco, recomenda-se:</p>
-    <ol>
-      <li><b>Detalhar no projeto executivo</b><span>Quantidades e especificações confirmadas em campo, principalmente painéis, rede, câmeras e medição nova.</span></li>
-      <li><b>Conferir contratos e fornecedores atuais</b><span>Contratos de TI, telecomunicações, Microsoft, segurança eletrônica, manutenção e automação podem já cobrir parte dos itens ou oferecer condições melhores.</span></li>
-      <li><b>Cotar no mercado</b><span>Ao menos três propostas por contratação, ou justificativa para a contratação direta, como no caso dos fornecedores dos painéis.</span></li>
-      <li><b>Validar com as áreas</b><span>TI, Automação, Operações, Suprimentos e Financeiro.</span></li>
-      <li><b>Atualizar a cada etapa</b><span>O valor contratado substitui a estimativa, e o saldo dos blocos seguintes é revisto.</span></li>
-    </ol>
-    <p class="nc-aviso-f">A faixa mostrada em cada valor (do baixo ao alto) indica a incerteza atual. Nos itens que dependem de levantamento em campo, a variação pode ser maior.</p>
-  </aside>
   <section class="sec pm-fora" aria-labelledby="pm-fora-t"><h3 id="pm-fora-t">O que não está incluído no investimento</h3>
     <ul><li><b>Folha da equipe do COE</b><span>Salários, encargos e sobreaviso de analistas e coordenação, e os notebooks da equipe.</span></li><li><b>Obra civil e mobiliário da sala</b><span>Projeto de arquitetura, reforma, quadro elétrico e adequações do prédio, mesas e cadeiras. Dependem do prédio e do layout escolhidos.</span></li><li><b>Assinaturas e mensalidades</b><span>Microsoft Fabric, armazenamento na nuvem, Power BI, links de internet e linhas dos rádios push-to-talk. Precisam ser cotadas, conforme os contratos atuais da Holambra.</span></li><li><b>Suporte e manutenção</b><span>Contratos anuais de suporte dos softwares e de manutenção dos equipamentos depois da garantia.</span></li><li><b>Impostos, frete e condições comerciais</b><span>Confirmados em cada contratação.</span></li><li><b>Viagens e deslocamentos</b><span>Da equipe da Holambra entre as unidades e a sala do COE.</span></li><li><b>Reserva para imprevistos</b><span>Sugestão de 15% do investimento, mostrada à parte na página Investimento.</span></li></ul>
   </section>
