@@ -2,41 +2,16 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script src="../js/modelo-host.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>[hidden]{display:none!important} body{margin:0} :root{color-scheme:light}
-/* edição de câmeras */
-.cedit{margin:4px 0 6px}
-.ce-tools{margin:6px 14px 4px;display:grid;gap:8px}
-.ce-sum{font-size:12.5px;color:var(--muted);line-height:1.5}
-.ce-sum b{color:var(--fg)}
-.ce-sum i,.item .st,.ce-st::before{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--d);margin:0 4px 0 6px;vertical-align:middle}
+/* câmeras: observação somente leitura no cartão */
+.ce-st::before{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--d);margin:0 4px 0 6px;vertical-align:middle}
 .item.cam{position:relative;padding-right:30px}
-.item .st{position:absolute;right:12px;top:50%;margin:-4px 0 0}
-.ce-btns{display:flex;gap:6px;flex-wrap:wrap}
-.ce-btns .t{padding:6px 10px}
-.ce-info{margin:0;font-size:12px;color:var(--muted);line-height:1.45}
-.ced{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
-.ced fieldset{border:0;margin:0;padding:0;display:grid;gap:8px;min-width:0}
-.ced label{display:grid;gap:3px;font-size:11.5px;font-weight:600;color:var(--muted);min-width:0}
-.ced input,.ced select,.ced textarea{font:13.5px var(--f-body);color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:6px 8px;width:100%;box-sizing:border-box;min-width:0}
-.ced textarea{resize:vertical}
-.ced-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.ced-h{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--fg);margin-top:4px}
-.ced-pick{font:600 12px var(--f-body);letter-spacing:0;text-transform:none;background:none;border:1px solid var(--c-cam);color:var(--c-cam);border-radius:999px;padding:4px 10px;cursor:pointer}
-.ced-pick.on{background:var(--c-cam);color:#fff}
-.ced-nudge{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
-.ced-nudge button{font:600 12px var(--f-body);background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:3px;padding:4px 8px;cursor:pointer;min-width:30px}
-.ced-nudge span{font-size:11.5px;color:var(--muted);margin-left:4px}
-.ced-aim{margin:0;font-size:12px;color:var(--muted)}
-.ced-act{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.ced-danger{color:#D0353F!important}
-.ced fieldset[disabled]{opacity:.6}
-.ce-meta{margin:8px 0 0;font-size:11.5px;color:var(--muted)}
 .ce-ro{margin-top:10px;border-top:1px solid var(--line);padding-top:8px;font-size:13px}
 .ce-ro p{margin:6px 0 0}
 .ce-st{font-weight:700;font-size:12px}
 .ce-st::before{content:"";margin-left:0}
-.ce-tip{position:absolute;left:50%;top:70px;transform:translateX(-50%);z-index:6;background:var(--c-cam);color:#fff;font:600 13px var(--f-body);padding:8px 14px;border-radius:999px;box-shadow:0 4px 16px rgba(0,0,0,.2);max-width:min(560px,calc(100% - 32px));text-align:center}
 </style>
 <title>Holambra Unidade Avaré 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -180,6 +155,12 @@ button.t.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
 
 </style>
 
+<style>
+.tela-viva,.tela-grande{display:block;position:relative;overflow:hidden;aspect-ratio:16/9;background:#071421}
+.tela-viva img,.tela-grande img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.tela-viva img{pointer-events:none}
+.tela-grande{width:min(96vw,calc((100vh - 130px)*16/9));max-width:1600px}
+</style>
 </head>
 <body>
 <div id="app">
@@ -203,8 +184,8 @@ button.t.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
   <div class="hint">Arrastar: girar · Botão direito ou Shift + arrastar: mover para os lados · Setas do teclado: mover · Roda: zoom</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js" integrity="sha384-wagZhIFgY4hD+7awjQjR4e2E294y6J2HSnd8eTNc15ZubTeQeVRZwhQJ+W6hnBsf" crossorigin="anonymous"></script>
 <script>
 // Referência: vista aérea original, 1 px ≈ 1 m (estimado). Close-ups usados para refinar formas.
 const W = 1275, H = 297;
@@ -802,6 +783,7 @@ function setCams(on){ camOn=on; camLayer.visible=coneLayer.visible=on; camLabels
   const cb=document.getElementById("camShow"); if(cb) cb.checked=on; if(!on&&selCam!==null) selectCam(null); }
 bCams.onclick=()=>{ const on=!camOn; setCams(on); if(on){ showTab("cam"); setList(true);} };
 let selCam=null;
+const escRO=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function selectCam(i,fly){
   CAMS.forEach((c,k)=>{ const on=k===i; c.cone.material.opacity=i===null?.13:(on?.32:.06); c.dot.scale.setScalar(on?1.6:1);
     c.lbl.classList.toggle("on",on); c.btn&&c.btn.classList.toggle("on",on); });
@@ -812,10 +794,9 @@ function selectCam(i,fly){
   card.style.setProperty("--cc","var(--c-cam)");
   card.innerHTML=`<button class="x" aria-label="Fechar">×</button><div class="cat">Câmera · ${area.name}</div><h2>${c.code}</h2><p>${c.d}</p>
     <dl><dt>Instalação</dt><dd>${c.p[2]<0?"subterrânea":c.pole?"poste":"estrutura"}, ${c.p[2]<0?Math.abs(Math.round(c.p[2]))+" m abaixo do solo":"~"+Math.round(c.p[2])+" m"}</dd><dt>Área</dt><dd>${area.name}</dd></dl>
-    <span class="tag">${window.CAMEDIT?CAMEDIT.tag(c):"Posição revisada pelo time em 03/11/2026"}</span>`;
+    <span class="tag">Posição revisada pelo time em 03/11/2026</span>${c.obs?`<div class="ce-ro"><span class="ce-st" style="--d:#8A97A6">A validar</span><p>${escRO(c.obs)}</p></div>`:""}`;
   card.classList.remove("wide");
   card.querySelector(".x").onclick=()=>selectCam(null); card.hidden=false;
-  if(window.CAMEDIT) CAMEDIT.card(i);
   if(innerWidth<=760) setList(false);
   if(fly){ const dir=c.tgt.clone().sub(c.pos).setY(0).normalize(); const mid=c.pos.clone().lerp(c.tgt,.5); mid.y=Math.min(mid.y,c.pos.y);
     flyTo(mid, c.pos.clone().sub(dir.multiplyScalar(75)).add(new THREE.Vector3(0,55,0))); }
@@ -861,15 +842,18 @@ const ETAPAS=[
   ganho:"Achar pontos quentes dentro do armazém e ligar a aeração só onde precisa, protegendo o grão e economizando energia.",telas:[["6","Tela do armazém"]]},
  {n:"07",name:"Expedição · Dosagem",items:["expedicao"],
   ve:["Ritmo de carregamento por contrato","Qualidade e dosagem por cultura e por carga","Fluxo dos caminhões da expedição, do pátio à saída, com tempo por etapa"],
-  ganho:"Cumprir os contratos no prazo e na especificação de qualidade, com carregamento mais rápido.",telas:[["7","Tela da expedição"],["exp-fluxo","Fluxo de caminhões"]]},
+  ganho:"Cumprir os contratos no prazo e na especificação de qualidade, com carregamento mais rápido.",telas:[["7","Tela da expedição"],["exp-fluxo","Fluxo de caminhões"],["exp-contrato","Contratos"]]},
  {n:"08",name:"Previsão do tempo",items:[],
   ve:["Temperatura e umidade medidas na estação da unidade","Previsão de 24 horas e 6 dias, e chuva acumulada","Previsão para Avaré e os cooperados da região"],
   ganho:"Planejar recebimento, secagem e expedição de acordo com a chuva prevista na unidade e nas lavouras.",telas:[["8","Previsão do tempo"]]},
 ];
 const etapaDe=id=>ETAPAS.find(e=>e.items.includes(id));
+// Telas ao vivo: cada iframe desenha a TV em 1920x1080 e escala para o quadro
+/* capturas das telas do videowall (tema escuro); a tela ao vivo abre em outra aba */
+function ligarTelas(raiz){ raiz.querySelectorAll("img[data-tela]").forEach(f=>{ if(!f.getAttribute("src")) f.src="../img/telas/"+encodeURIComponent(f.dataset.tela)+"-escuro.webp"; }); }
 function telasHTML(e){
   return `<div class="telas-h">Telas do COE · ${e.n} ${e.name}</div><div class="telas${e.telas.length===1?" one":""}">${
-    e.telas.map(([id,t],k)=>`<button class="tela" data-e="${e.n}" data-k="${k}"><img src="telas/${id}-p.jpg" alt="${t}" loading="lazy">${t}</button>`).join("")}</div>`;
+    e.telas.map(([id,t],k)=>`<button class="tela" data-e="${e.n}" data-k="${k}"><span class="tela-viva"><img data-tela="${id}" alt="" loading="lazy"></span>${t}</button>`).join("")}</div>`;
 }
 function ganhoHTML(e){
   return `<div class="telas-h">O que o COE mostra</div><ul class="ve">${e.ve.map(v=>`<li>${v}</li>`).join("")}</ul>
@@ -880,14 +864,15 @@ function navHTML(){ return ''; }
 function wireNav(){ const p=document.getElementById("ePrev"), n=document.getElementById("eNext");
   if(p) p.onclick=()=>stepEtapa(-1); if(n) n.onclick=()=>stepEtapa(1); }
 function stepEtapa(d){ showTab("coe"); selectEtapa(ETAPAS[(curEtapa+d+ETAPAS.length)%ETAPAS.length]); }
-function wireTelas(){ wireNav(); card.querySelectorAll(".tela").forEach(b=>b.onclick=()=>openTela(ETAPAS.find(e=>e.n===b.dataset.e),+b.dataset.k)); }
+function wireTelas(){ wireNav(); ligarTelas(card); card.querySelectorAll(".tela").forEach(b=>b.onclick=()=>openTela(ETAPAS.find(e=>e.n===b.dataset.e),+b.dataset.k)); }
 const lb=document.getElementById("lightbox"); let lbE=null,lbK=0;
 function openTela(e,k){ lbE=e; lbK=(k+e.telas.length)%e.telas.length; const [id,t]=e.telas[lbK];
   lb.innerHTML=`<div class="bar"><b>${e.n} · ${e.name}</b><span>${t}</span><span class="c">${lbK+1}/${e.telas.length}</span></div>
-    <img src="telas/${id}.jpg" alt="${t}">
+    <div class="tela-grande"><img data-tela="${id}" alt="${t}"></div>
     <div class="bar">${e.telas.length>1?'<button id="lbPrev">← Anterior</button><button id="lbNext">Próxima →</button>':""}
     <a href="${COE_URL}?telas=${encodeURIComponent(id)}" target="_blank" rel="noopener">Abrir ao vivo no COE ↗</a><button id="lbClose">Fechar</button></div>
-    <div class="bar"><span class="c">Imagem capturada da tela do COE. A versão ao vivo abre em outra aba.</span></div>`;
+    `;
+  ligarTelas(lb);
   lb.hidden=false; document.getElementById("lbClose").onclick=closeTela; lb.querySelector("#lbClose").focus();
   const p=document.getElementById("lbPrev"); if(p){ p.onclick=()=>openTela(e,lbK-1); document.getElementById("lbNext").onclick=()=>openTela(e,lbK+1); } }
 function closeTela(){ lb.hidden=true; lbE=null; }
@@ -957,8 +942,8 @@ function flyTo(target,pos){ anim={t0:performance.now(),dur:matchMedia("(prefers-
 
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let down=null;
 renderer.domElement.addEventListener("pointerdown",e=>down=[e.clientX,e.clientY]);
-renderer.domElement.addEventListener("pointerup",e=>{ if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return; if(window.CAMEDIT&&CAMEDIT.placing()){ CAMEDIT.place(e); return; } const hit=pick(e); select(hit,!!hit); });
-renderer.domElement.addEventListener("pointermove",e=>{ if(e.buttons)return; if(window.CAMEDIT&&CAMEDIT.placing()){renderer.domElement.style.cursor="crosshair";return;} if(window.CAMEDIT&&CAMEDIT.dragging&&CAMEDIT.dragging())return; renderer.domElement.style.cursor=pick(e)?"pointer":"grab"; });
+renderer.domElement.addEventListener("pointerup",e=>{ if(!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>5)return; const hit=pick(e); select(hit,!!hit); });
+renderer.domElement.addEventListener("pointermove",e=>{ if(e.buttons)return; renderer.domElement.style.cursor=pick(e)?"pointer":"grab"; });
 function pick(e){ const r=renderer.domElement.getBoundingClientRect();
   mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
   const hits=ray.intersectObjects((camOn?CAM_MARKERS:[]).concat(Object.values(groups)),true);
@@ -975,6 +960,7 @@ function resize(){ const w=host.clientWidth,h=host.clientHeight; renderer.setSiz
 addEventListener("resize",resize); resize();
 const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2; const v=new THREE.Vector3();
 function loop(now){
+  if (!window.COE_MODELO_ATIVO || document.hidden) { setTimeout(() => requestAnimationFrame(loop), 250); return; }
   if(anim){ const k=Math.max(0,Math.min(1,(now-anim.t0)/anim.dur)), e=ease(k);
     controls.target.lerpVectors(anim.fT,anim.tT,e); camera.position.lerpVectors(anim.fP,anim.tP,e); if(k===1)anim=null; }
   controls.update(); renderer.render(scene,camera);
@@ -1056,213 +1042,6 @@ new MutationObserver(recolor).observe(document.documentElement,{attributes:true,
 })();
 
 
-// ---------- edição de câmeras (validação do time) ----------
-(function(){
-  const ST={validar:["A validar","#8A97A6"],ok:["Validada","#11845B"],ajustar:["Ajustar","#D0353F"]};
-  const W2M=v=>[+(v.x+W/2).toFixed(1),+(v.z+H/2).toFixed(1)];
-  let EDIT=false, mode=parent!==window?"pending":"local", canWrite=true, docs={}, placingWhat=null, draft=null, connected=false;
-  const LSK="holambra-avare-cams-v1";
-  const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-  const camById=id=>CAMS.find(c=>c.id===id);
-  const toParent=m=>{ try{ parent.postMessage(Object.assign({ns:"camedit"},m),"*"); }catch(_){} };
-
-  // ---- aplicar estado salvo ----
-  function applyFields(c,f){
-    c.a=f.a||c.a; c.d=f.d!=null?f.d:c.d; c.p=f.p.slice(); c.t=f.t.slice(); c.pole=!!f.pole;
-    c.deleted=!!f.deleted; c.status=f.status||"validar"; c.obs=f.obs||""; c.by=f.by||null; c.byName=f.byName||""; c.at=f.at||null;
-    dropCam(c); makeCam(c); c.lbl.style.display=c.deleted?"none":"";
-    c.cone.material.color.copy(camColor());
-  }
-  function revert(c){ applyFields(c,Object.assign({},c.orig,{status:"validar",obs:c.orig.obs||"",deleted:!!c.isNew})); }
-  function newCam(id,f){
-    const n=CAMS.length+1, c={id,isNew:true,n,code:"CAM "+String(n).padStart(2,"0"),a:f.a,d:f.d,p:f.p.slice(),t:f.t.slice(),pole:!!f.pole};
-    c.orig={a:f.a,d:f.d,p:f.p.slice(),t:f.t.slice(),pole:!!f.pole}; CAMS.push(c); makeCam(c);
-    const d=document.createElement("div"); d.className="lbl cam"; d.textContent=String(n).padStart(2,"0"); camLabels.appendChild(d); c.lbl=d;
-    return c;
-  }
-  function applyAll(){
-    CAMS.forEach(c=>{ const f=docs[c.id]; if(f) applyFields(c,f); else if(c.isNew&&!c.edited){ /* nova, ainda não salva */ } else if(c.status&&c.status!=="validar"||c.deleted||c.edited) revert(c); c.edited=!!f; });
-    Object.entries(docs).forEach(([id,f])=>{ if(!camById(id)&&f&&f.isNew&&!f.deleted){ const c=newCam(id,f); applyFields(c,f); c.edited=true; } });
-    rebuildMarkers(); relist();
-    if(selCam!==null&&CAMS[selCam]&&!draftDirty()) selectCam(CAMS[selCam].deleted?null:selCam,false);
-  }
-  function draftDirty(){ return !!(draft&&draft.dirty); }
-
-  // ---- armazenamento: compartilhado (painel) ou local ----
-  function saveLocal(){ try{ localStorage.setItem(LSK,JSON.stringify(docs)); }catch(_){} }
-  function loadLocal(){ try{ return JSON.parse(localStorage.getItem(LSK)||"{}")||{}; }catch(_){ return {}; } }
-  function store(id,f){ if(mode==="pending"){ setInfo("Aguarde a conexão com o painel para salvar."); return; } if(mode==="shared"){ toParent({type:"save",id,doc:f}); setInfo("Salvando…"); } else { f.at=Date.now(); docs[id]=f; saveLocal(); applyAll(); setInfo(); } }
-  function unstore(id){ if(mode==="shared"){ toParent({type:"remove",id}); setInfo("Salvando…"); } else { delete docs[id]; saveLocal(); applyAll(); setInfo(); } }
-  addEventListener("message",e=>{
-    if(e.source!==parent) return; const m=e.data; if(!m||m.ns!=="camedit") return;
-    if(m.type==="state"){ connected=true; if(m.mode==="shared"){ mode="shared"; canWrite=m.canWrite!==false; docs=m.docs&&typeof m.docs==="object"?m.docs:{}; }
-      else if(mode!=="shared"){ mode="local"; docs=loadLocal(); }
-      applyAll(); setInfo(); }
-    if(m.type==="error"){ setInfo(m.code==="readonly"?"Seu acesso a este painel é apenas de leitura. Peça acesso de colaborador para editar.":"Não foi possível salvar ("+esc(m.code||"erro")+"). Tente novamente."); }
-    if(m.type==="saved") setInfo();
-  });
-  docs=loadLocal(); if(Object.keys(docs).length) applyAll();
-  if(parent!==window) toParent({type:"hello"});
-
-  // ---- painel lateral: modo de edição, resumo, exportação ----
-  const box=document.createElement("div"); box.className="cedit";
-  box.innerHTML=`<label class="camtog"><input type="checkbox" id="camEdit"> Modo de edição</label>
-    <div class="ce-tools" hidden><div class="ce-sum" id="ceSum"></div>
-    <div class="ce-btns"><button type="button" class="t" id="ceAdd">+ Nova câmera</button><button type="button" class="t" id="ceExp">Exportar CSV</button></div>
-    <p class="ce-info" id="ceInfo"></p></div>`;
-  camPane.querySelector(".camtog").after(box);
-  const tools=box.querySelector(".ce-tools");
-  function setInfo(msg){ const el=document.getElementById("ceInfo"); if(!el) return;
-    el.textContent=msg||(mode==="pending"?"Conectando ao painel…":mode==="shared"?(canWrite?"As alterações ficam salvas no painel e aparecem para todo o time.":"Acesso de leitura: você vê as posições validadas, mas não pode editar."):"Modelo aberto fora do painel: as alterações ficam salvas apenas neste navegador. Use Exportar CSV para compartilhar.");
-    summary(); }
-  function summary(){ const live=CAMS.filter(c=>!c.deleted), k={validar:0,ok:0,ajustar:0}; live.forEach(c=>k[c.status||"validar"]++);
-    const el=document.getElementById("ceSum"); if(el) el.innerHTML=`<b>${live.length}</b> câmeras · <i style="--d:${ST.ok[1]}"></i>${k.ok} validadas · <i style="--d:${ST.ajustar[1]}"></i>${k.ajustar} ajustar · <i style="--d:${ST.validar[1]}"></i>${k.validar} a validar`; }
-  document.getElementById("camEdit").onchange=e=>{ EDIT=e.target.checked; tools.hidden=!EDIT; document.body.classList.toggle("cam-editing",EDIT); if(EDIT&&!camOn) setCams(true); setInfo(); relist(); if(selCam!==null) selectCam(selCam,false); };
-  function relist(){
-    camPane.querySelectorAll("h3,.item.cam").forEach(x=>x.remove());
-    const sumEl=camPane.querySelector(".camsum b"); if(sumEl) sumEl.textContent=CAMS.filter(c=>!c.deleted).length; const tc=document.getElementById("tabCam"); if(tc) tc.textContent="Câmeras ("+CAMS.filter(c=>!c.deleted).length+")";
-    CAM_AREAS.forEach(a=>{ const cs=CAMS.filter(c=>c.a===a.id&&!c.deleted);
-      const h=document.createElement("h3"); h.style.setProperty("--cc","var(--c-cam)"); h.innerHTML=`<i></i>${esc(a.name)}<span class="ct">${cs.length}</span>`; camPane.appendChild(h);
-      cs.forEach(c=>{ const b=document.createElement("button"); b.className="item cam"; b.id="cam-"+c.id; const s=ST[c.status||"validar"];
-        b.innerHTML=`<span class="n">${c.code}</span>${esc(c.d)}${EDIT?`<span class="st" style="--d:${s[1]}" title="${s[0]}"></span>`:""}`;
-        b.onclick=()=>selectCam(CAMS.indexOf(c),true); camPane.appendChild(b); c.btn=b; if(selCam!==null&&CAMS[selCam]===c) b.classList.add("on"); }); });
-    CAMS.filter(c=>c.deleted).forEach(c=>{ c.btn=c.btn||document.createElement("button"); });
-    summary();
-  }
-  relist();
-
-  // ---- editor no cartão ----
-  const num=(id,v,step)=>`<input type="number" id="${id}" value="${+(+v).toFixed(1)}" step="${step||0.5}" inputmode="decimal">`;
-  function card(i){
-    const c=CAMS[i]; if(!c) return;
-    const meta=c.at?`<p class="ce-meta">Última alteração${c.byName?" por "+esc(c.byName):""} em ${new Date(c.at).toLocaleString("pt-BR",{dateStyle:"short",timeStyle:"short"})}</p>`:"";
-    if(!EDIT){ if(c.status&&c.status!=="validar"||c.obs){ cardEl().insertAdjacentHTML("beforeend",`<div class="ce-ro"><span class="ce-st" style="--d:${ST[c.status||"validar"][1]}">${ST[c.status||"validar"][0]}</span>${c.obs?`<p>${esc(c.obs)}</p>`:""}${meta}</div>`); } return; }
-    if(!draft||draft.id!==c.id) draft={id:c.id,a:c.a,d:c.d,p:c.p.slice(),t:c.t.slice(),pole:!!c.pole,status:c.status||"validar",obs:c.obs||"",dirty:false};
-    const el=cardEl(); el.classList.add("wide");
-    const dis=canWrite?"":" disabled";
-    el.querySelector("dl")&&el.querySelector("dl").remove(); el.querySelector(".tag")&&el.querySelector(".tag").remove();
-    el.insertAdjacentHTML("beforeend",`<form class="ced" onsubmit="return false"><fieldset${dis}>
-      <label class="w">Descrição<input type="text" id="ed-d" value="${esc(draft.d)}" maxlength="120"></label>
-      <label class="w">Área<select id="ed-a">${CAM_AREAS.map(a=>`<option value="${a.id}"${a.id===draft.a?" selected":""}>${esc(a.name)}</option>`).join("")}</select></label>
-      <div class="ced-h">Posição da câmera <button type="button" class="ced-pick${placingWhat==="p"?" on":""}" data-pick="p">⌖ Clicar no mapa</button></div>
-      <div class="ced-g"><label>X (m)${num("ed-px",draft.p[0])}</label><label>Y (m)${num("ed-py",draft.p[1])}</label><label>Altura (m)${num("ed-ph",draft.p[2])}</label></div>
-      <div class="ced-nudge" aria-label="Ajuste fino da posição"><button type="button" data-n="px+" title="Em direção ao armazém">↑</button><button type="button" data-n="px-" title="Em direção à classificação">↓</button><button type="button" data-n="py-" title="Para a esquerda (olhando para o armazém)">←</button><button type="button" data-n="py+" title="Para a direita (olhando para o armazém)">→</button><span>↑ armazém · ↓ classificação · 1 m por clique</span></div>
-      <div class="ced-h">Para onde aponta <button type="button" class="ced-pick${placingWhat==="t"?" on":""}" data-pick="t">◎ Clicar no mapa</button></div>
-      <div class="ced-g"><label>X (m)${num("ed-tx",draft.t[0])}</label><label>Y (m)${num("ed-ty",draft.t[1])}</label><label>Altura (m)${num("ed-th",draft.t[2])}</label></div>
-      <div class="ced-nudge"><button type="button" data-r="-15" title="Girar 15° à esquerda">⟲ 15°</button><button type="button" data-r="15" title="Girar 15° à direita">⟳ 15°</button><button type="button" data-tl="2" title="Inclinar para cima">▲ inclinar</button><button type="button" data-tl="-2" title="Inclinar para baixo">▼ inclinar</button></div>
-      <p class="ced-aim" id="ed-aim"></p>
-      <label class="w">Instalação<select id="ed-pole"><option value="1">Poste</option><option value="0">Fixada em estrutura</option><option value="sub">Subterrânea (abaixo do solo)</option></select></label>
-      <label class="w">Situação<select id="ed-st">${Object.entries(ST).map(([k,v])=>`<option value="${k}"${k===draft.status?" selected":""}>${v[0]}</option>`).join("")}</select></label>
-      <label class="w">Observações<textarea id="ed-obs" rows="2" maxlength="500" placeholder="Ex.: fixar na coluna sul da moega, cobrir a grelha inteira">${esc(draft.obs)}</textarea></label>
-      <div class="ced-act"><button type="button" class="t primary" id="ed-save">Salvar</button><button type="button" class="t" id="ed-undo">Descartar</button>
-      <button type="button" class="t ced-danger" id="ed-reset">${c.isNew?"Excluir câmera":(c.edited?"Restaurar original":"Remover câmera")}</button></div>
-    </fieldset></form>${meta}`);
-    aimText(); wire(c);
-  }
-  const cardEl=()=>document.getElementById("card");
-  function aimText(){ const dx=draft.t[0]-draft.p[0], dy=draft.t[1]-draft.p[1], dh=draft.t[2]-draft.p[2], dist=Math.hypot(dx,dy);
-    const az=(Math.atan2(dx,-dy)*180/Math.PI+360)%360, tilt=Math.atan2(dh,dist)*180/Math.PI;
-    const el=document.getElementById("ed-aim"); if(el) el.textContent=`Direção ${Math.round(az)}° (0° = norte do mapa) · inclinação ${Math.round(tilt)}° · distância ${Math.round(Math.hypot(dist,dh))} m`; }
-  function preview(){ const c=camById(draft.id); if(!c) return; c.p=draft.p.slice(); c.t=draft.t.slice(); c.pole=draft.pole; c.a=draft.a;
-    dropCam(c); makeCam(c); rebuildMarkers(); c.cone.material.opacity=.32; c.dot.scale.setScalar(1.6); draft.dirty=true; aimText(); }
-  function syncInst(){ const sel=document.getElementById("ed-pole"); if(sel) sel.value=draft.p[2]<0?"sub":draft.pole?"1":"0"; }
-  function syncInputs(){ [["ed-px",draft.p,0],["ed-py",draft.p,1],["ed-ph",draft.p,2],["ed-tx",draft.t,0],["ed-ty",draft.t,1],["ed-th",draft.t,2]].forEach(([id,arr,k])=>{ const el=document.getElementById(id); if(el) el.value=+arr[k].toFixed(1); }); }
-  function wire(c){
-    const el=cardEl(), q=s=>el.querySelector(s);
-    [["ed-px","p",0],["ed-py","p",1],["ed-ph","p",2],["ed-tx","t",0],["ed-ty","t",1],["ed-th","t",2]].forEach(([id,key,k])=>{ const inp=q("#"+id); inp.oninput=()=>{ const v=parseFloat(inp.value); if(isFinite(v)){ draft[key][k]=v; if(key==="p"&&k===2){ if(v<0) draft.pole=false; syncInst(); } preview(); } }; });
-    q("#ed-d").oninput=e=>{ draft.d=e.target.value; draft.dirty=true; };
-    q("#ed-a").onchange=e=>{ draft.a=e.target.value; draft.dirty=true; };
-    q("#ed-pole").onchange=e=>{ const v=e.target.value; draft.pole=v==="1"; if(v==="sub"&&draft.p[2]>=0){ draft.p[2]=-3; } else if(v!=="sub"&&draft.p[2]<0){ draft.p[2]=v==="1"?7:3; } syncInputs(); preview(); };
-    syncInst();
-    q("#ed-st").onchange=e=>{ draft.status=e.target.value; draft.dirty=true; };
-    q("#ed-obs").oninput=e=>{ draft.obs=e.target.value; draft.dirty=true; };
-    el.querySelectorAll("[data-pick]").forEach(b=>b.onclick=()=>{ placingWhat=placingWhat===b.dataset.pick?null:b.dataset.pick; el.querySelectorAll("[data-pick]").forEach(x=>x.classList.toggle("on",x.dataset.pick===placingWhat)); hint(); });
-    el.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{ const [ax,sg]=[b.dataset.n.slice(0,2),b.dataset.n[2]]; const k=ax==="px"?0:1, d=sg==="+"?1:-1; draft.p[k]+=d; draft.t[k]+=d; syncInputs(); preview(); });
-    el.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{ const a=+b.dataset.r*Math.PI/180, dx=draft.t[0]-draft.p[0], dy=draft.t[1]-draft.p[1];
-      draft.t[0]=+(draft.p[0]+dx*Math.cos(a)-dy*Math.sin(a)).toFixed(1); draft.t[1]=+(draft.p[1]+dx*Math.sin(a)+dy*Math.cos(a)).toFixed(1); syncInputs(); preview(); });
-    el.querySelectorAll("[data-tl]").forEach(b=>b.onclick=()=>{ draft.t[2]+=+b.dataset.tl; syncInputs(); preview(); });
-    q("#ed-save").onclick=()=>{ if(!draft.d.trim()){ q("#ed-d").focus(); return; }
-      const f={a:draft.a,d:draft.d.trim(),p:draft.p.map(v=>+v.toFixed(2)),t:draft.t.map(v=>+v.toFixed(2)),pole:draft.pole,status:draft.status,obs:draft.obs.trim(),isNew:!!c.isNew,deleted:false};
-      draft=null; placingWhat=null; hint(); store(c.id,f); };
-    q("#ed-undo").onclick=()=>{ draft=null; placingWhat=null; hint(); const f=docs[c.id]; if(f) applyFields(c,f); else revert(c); rebuildMarkers(); selectCam(CAMS.indexOf(c),false); };
-    q("#ed-reset").onclick=()=>{ draft=null; placingWhat=null; hint();
-      if(c.isNew&&!docs[c.id]){ c.deleted=true; dropCam(c); makeCam(c); c.lbl.style.display="none"; rebuildMarkers(); relist(); }
-      else if(c.isNew) store(c.id,Object.assign({},docs[c.id],{isNew:true,deleted:true}));
-      else if(c.edited) unstore(c.id);
-      else store(c.id,Object.assign({},c.orig,{deleted:true,status:"validar",obs:""}));
-      selectCam(null); };
-  }
-  // dica de posicionamento
-  const tip=document.createElement("div"); tip.className="ce-tip"; tip.hidden=true; document.getElementById("app").appendChild(tip);
-  function hint(){ tip.hidden=!placingWhat; tip.textContent=placingWhat==="new"?"Clique no mapa onde a nova câmera será instalada. Esc para cancelar.":placingWhat==="p"?"Clique no mapa onde a câmera será instalada. Em uma estrutura, ela fica fixada na superfície.":placingWhat==="t"?"Clique no ponto que a câmera deve enxergar.":""; }
-  addEventListener("keydown",e=>{ if(e.key==="Escape"&&placingWhat){ if(placingWhat==="new"){ adding=false; const bt=document.getElementById("ceAdd"); bt.classList.remove("primary"); bt.textContent="+ Nova câmera"; } placingWhat=null; hint(); document.querySelectorAll("[data-pick]").forEach(x=>x.classList.remove("on")); } });
-  const ground=new THREE.Plane(new THREE.Vector3(0,1,0),0), tmp=new THREE.Vector3();
-  function place(e){
-    if(!draft&&placingWhat!=="new") { placingWhat=null; hint(); return; }
-    const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
-    const hits=ray.intersectObjects(Object.values(groups),true); let pt=null, onStruct=false;
-    if(hits.length){ pt=hits[0].point.clone(); onStruct=pt.y>.6; } else if(ray.ray.intersectPlane(ground,tmp)) pt=tmp.clone();
-    if(!pt) return; const [mx,my]=W2M(pt);
-    if(placingWhat==="new"){ placingWhat=null; hint(); createAt(mx,my,+(pt.y+.4).toFixed(1),onStruct); return; }
-    if(placingWhat==="p"){ const dx=mx-draft.p[0], dy=my-draft.p[1]; draft.p[0]=mx; draft.p[1]=my;
-      if(onStruct){ draft.p[2]=+(pt.y+.4).toFixed(1); draft.pole=false; } draft.t[0]+=dx; draft.t[1]+=dy; syncInst(); }
-    else { draft.t=[mx,my,+Math.max(0,pt.y).toFixed(1)]; }
-    placingWhat=null; hint(); document.querySelectorAll("[data-pick]").forEach(x=>x.classList.remove("on")); syncInputs(); preview();
-  }
-  // arrastar a câmera no mapa (modo de edição)
-  let drag=null; const dragPlane=new THREE.Plane(), dp=new THREE.Vector3();
-  function camUnder(e){ if(!EDIT||!camOn||!canWrite||mode==="pending") return null;
-    const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
-    const hits=ray.intersectObjects(CAMS.filter(c=>!c.deleted&&c.g).map(c=>c.g),true);
-    for(const h of hits){ let o=h.object; while(o&&!o.userData.id) o=o.parent; if(o){ const c=CAMS[+o.userData.id.slice(4)]; if(c&&!c.deleted) return c; } } return null; }
-  host.addEventListener("pointerdown",e=>{ if(e.button!==0||placingWhat) return; const c=camUnder(e); if(!c) return;
-    const i=CAMS.indexOf(c); if(!draft||draft.id!==c.id){ selectCam(i,false); }
-    if(!draft||draft.id!==c.id) return;
-    controls.enabled=false; dragPlane.set(new THREE.Vector3(0,1,0),-c.pos.y);
-    ray.ray.intersectPlane(dragPlane,dp); const [mx,my]=W2M(dp);
-    drag={id:c.id,ox:draft.p[0]-mx,oy:draft.p[1]-my,moved:false,pid:e.pointerId}; renderer.domElement.style.cursor="grabbing"; e.preventDefault(); },true);
-  addEventListener("pointermove",e=>{
-    if(!drag){ if(EDIT&&!e.buttons&&!placingWhat&&camUnder(e)) renderer.domElement.style.cursor="move"; return; }
-    const r=renderer.domElement.getBoundingClientRect(); mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mouse,camera);
-    if(!ray.ray.intersectPlane(dragPlane,dp)) return; const [mx,my]=W2M(dp);
-    const nx=+(mx+drag.ox).toFixed(1), ny=+(my+drag.oy).toFixed(1), dx=nx-draft.p[0], dy=ny-draft.p[1]; if(!dx&&!dy) return;
-    draft.p[0]=nx; draft.p[1]=ny; draft.t[0]=+(draft.t[0]+dx).toFixed(1); draft.t[1]=+(draft.t[1]+dy).toFixed(1); drag.moved=true; syncInputs(); preview(); });
-  addEventListener("pointerup",()=>{ if(!drag) return; drag=null; controls.enabled=true; renderer.domElement.style.cursor="move"; });
-  // nova câmera no centro da vista
-  let adding=false;
-  document.getElementById("ceAdd").onclick=()=>{
-    if(!canWrite){ setInfo("Seu acesso a este painel é apenas de leitura."); return; }
-    if(mode==="pending"){ setInfo("Aguarde a conexão com o painel."); return; }
-    adding=!adding; placingWhat=adding?"new":null; hint();
-    document.getElementById("ceAdd").classList.toggle("primary",adding); document.getElementById("ceAdd").textContent=adding?"Cancelar nova câmera":"+ Nova câmera";
-    if(adding&&selCam!==null) selectCam(null);
-  };
-  function createAt(mx,my,h,onStruct){
-    adding=false; const bt=document.getElementById("ceAdd"); bt.classList.remove("primary"); bt.textContent="+ Nova câmera";
-    const near=CAMS.filter(c=>!c.deleted).sort((a,b)=>Math.hypot(a.p[0]-mx,a.p[1]-my)-Math.hypot(b.p[0]-mx,b.p[1]-my))[0];
-    const id="n"+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
-    const f={a:near?near.a:"rec",d:"Nova câmera",p:[mx,my,onStruct?h:7],t:[mx+15,my,0],pole:!onStruct,status:"validar",obs:"",isNew:true,deleted:false};
-    const c=newCam(id,f); c.status="validar"; c.edited=false; rebuildMarkers(); relist();
-    draft=null; selectCam(CAMS.indexOf(c),false); if(draft) draft.dirty=true;
-    setInfo("Câmera criada. Ajuste a direção e clique em Salvar.");
-  }
-  // exportação
-  document.getElementById("ceExp").onclick=()=>{
-    const rows=[["Código","Área","Descrição","Instalação","Situação","X (m)","Y (m)","Altura (m)","Alvo X (m)","Alvo Y (m)","Alvo altura (m)","Direção (°)","Inclinação (°)","Observações","Alterada","Última alteração"]];
-    CAMS.filter(c=>!c.deleted).forEach(c=>{ const dx=c.t[0]-c.p[0], dy=c.t[1]-c.p[1], dist=Math.hypot(dx,dy);
-      rows.push([c.code,(CAM_AREAS.find(a=>a.id===c.a)||{}).name,c.d,c.p[2]<0?"Subterrânea":c.pole?"Poste":"Estrutura",ST[c.status||"validar"][0],c.p[0],c.p[1],c.p[2],c.t[0],c.t[1],c.t[2],
-        Math.round((Math.atan2(dx,-dy)*180/Math.PI+360)%360),Math.round(Math.atan2(c.t[2]-c.p[2],dist)*180/Math.PI),c.obs||"",c.edited?"Sim":"Não",c.at?new Date(c.at).toLocaleString("pt-BR"):""]); });
-    CAMS.filter(c=>c.deleted&&!c.isNew).forEach(c=>rows.push([c.code,(CAM_AREAS.find(a=>a.id===c.a)||{}).name,c.d,"","Removida","","","","","","","","",c.obs||"","Sim",c.at?new Date(c.at).toLocaleString("pt-BR"):""]));
-    const csv="﻿"+rows.map(r=>r.map(v=>{ const s=String(v==null?"":v).replace(/\./g,typeof v==="number"?",":"."); return /[;"\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }).join(";")).join("\r\n");
-    const fn="cameras-avare-"+new Date().toISOString().slice(0,10)+".csv";
-    if(mode==="shared") toParent({type:"download",filename:fn,data:csv});
-    else { const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"})); a.download=fn; document.body.appendChild(a); a.click(); a.remove(); }
-  };
-  window.CAMEDIT={ dragging:()=>!!drag, card, placing:()=>EDIT&&!!placingWhat, place,
-    tag:c=>c.edited?(c.status==="ok"?"Posição validada pelo time":"Posição ajustada pelo time"):"Posição revisada pelo time em 03/11/2026" };
-  // ao trocar de câmera, descarta rascunho não salvo
-  const _sel=selectCam;
-})();
 </script>
 
 </body>
