@@ -2638,6 +2638,7 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .nc-sp .nc-sp-t i{color:#9a6a17}
 .nc-kp-t .nc-sp{max-width:340px}
 .nc-ref{margin-top:12px}
+.nc-tab-k tr:not(.ln-tot) td:nth-child(3) > .dir,.nc-tab-k tr:not(.ln-tot) td:nth-child(4) > .dir{display:none}
 .av-g{display:grid;gap:14px;padding:18px 20px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
 .av-g + .av-g{margin-top:14px}
 .av-g-cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
@@ -5531,7 +5532,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const esc2 = x => COMUM.has(x.id) ? '<span class="nz nz-cm">Comum às 7 unidades</span>' : '<span class="nz nz-un">Por unidade</span>';
   const subs = (its, g) => its.slice().sort((x, y) => y.total - x.total).map(x => '<tr class="nc-sub" data-g="' + g + '" hidden><td class="nc-sub-r">' + fig(x) + '</td><td><b>' + esc(x.item) + '</b><span class="nz-l">' + clsTag(x) + (LIC[x.id] ? '<span class="nz nz-l2">' + esc(LIC[x.id]) + '</span>' : '') + esc2(x) + (x.opex ? '<span class="nz nz-r">depois: ' + curto(x.opex) + '/ano</span>' : '') + '</span><div class="it-box"><dl class="it-dl"><dt>O que é</dt><dd>' + esc(x.desc || DESC[x.id] || x.espec || '') + ' <i>(' + esc(qtdTxt(x)) + ')</i></dd>' + (ONDE[x.id] ? '<dt>Onde</dt><dd>' + esc(ONDE[x.id][0]) + '</dd><dt>Especificação mínima</dt><dd>' + esc(ONDE[x.id][1]) + '</dd>' : '') + (CLS[x.id] ? '<dt>Por quê</dt><dd>' + esc(CLS[x.id][1]) + '</dd>' : '') + '</dl></div></td><td><span class="dir">' + (x.semValor ? 'licença à parte' : curto(x.total)) + '</span></td><td><span class="dir nc-fx">' + (x.semValor ? '—' : faixa([x])) + '</span></td></tr>').join('');
   const linha = (g, nome, ponto, oque, val, fx, its) => '<tr class="nc-gr"><td><button type="button" class="nc-gt" data-gt="' + g + '" aria-expanded="false"><i aria-hidden="true">▸</i><span class="nc-tp-n">' + ponto + esc(nome) + '</span></button></td><td>' + esc(oque) + '</td><td><span class="dir">' + curto(val) + '</span></td><td><span class="dir nc-fx">' + fx + '</span></td></tr>' + subs(its, g);
-  const tabela = c => '<div class="tbl"><table class="ln-tab nc-tab-tp"><thead><tr><th>' + (c.kpmg ? 'Frente de trabalho' : 'Categoria') + '</th><th>O que tem</th><th><span class="dir">Valor estimado</span></th><th><span class="dir">Faixa</span></th></tr></thead><tbody>' +
+  const tabela = c => '<div class="tbl"><table class="ln-tab nc-tab-tp' + (c.kpmg ? ' nc-tab-k' : '') + '"><thead><tr><th>' + (c.kpmg ? 'Frente de trabalho' : 'Categoria') + '</th><th>O que tem</th><th><span class="dir">Valor estimado</span></th><th><span class="dir">Faixa</span></th></tr></thead><tbody>' +
     (c.kpmg
       ? c.linhas.map((l, i) => linha(c.id + '-' + i, l.nome, '', l.oque, l.total, faixa(l.itens), l.itens)).join('')
       : TP.filter(k => c.tp[k.id]).map(k => { const its = c.itens.filter(x => tipo(x) === k.id).sort((x, y) => y.total - x.total);
