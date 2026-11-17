@@ -2651,10 +2651,11 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .av-gg{display:grid;gap:14px}
 .av-gg5{grid-template-columns:repeat(5,minmax(0,1fr))}
 .av-gg2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.av-gg3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .av-banco{cursor:default;border-top-color:var(--dim);border-style:dashed;border-top-style:solid}
 .av-banco .nc-v{font-size:17px;color:var(--texto-2)}
 @media (max-width:1180px){.av-gg5{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.av-gg5,.av-gg2{grid-template-columns:1fr}.av-g-cab{flex-direction:column;align-items:flex-start}}
+@media (max-width:620px){.av-gg5,.av-gg2,.av-gg3{grid-template-columns:1fr}.av-g-cab{flex-direction:column;align-items:flex-start}}
 .av-esc .nc-esc-k{border-left-color:var(--line)}
 @media (max-width:760px){.av-res{grid-template-columns:1fr}}
 .nc-det{display:grid;gap:10px;padding:18px 20px;border:2px solid var(--accent);border-radius:16px;background:var(--bg)}
@@ -5599,11 +5600,13 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       const grupo = (cls, nome, sub, val, corpo) => '<section class="av-g ' + cls + '"><div class="av-g-cab"><div><h4>' + nome + '</h4><p>' + sub + '</p></div><b>' + val + '</b></div>' + corpo + '</section>';
       const banco = '<div class="nc-no av-banco"><span class="nc-n">B</span><b>Banco de dados do COE</b><small>Recebe os dados de todas as unidades e dos sistemas de gestão</small>' +
         '<em class="nc-q">Microsoft Azure / Fabric · conforme o contrato Microsoft da Holambra</em><span class="nc-v">A definir com a TI<small class="nc-fx">valor não incluído no total</small></span></div>';
+      const obra = '<div class="nc-no av-banco"><span class="nc-n">O</span><b>Obra civil da sala do COE</b><small>Adequação do espaço: paredes, piso, forro, elétrica e iluminação</small>' +
+        '<em class="nc-q">Conforme o projeto de arquitetura da sala</em><span class="nc-v">Depende da cotação da Holambra<small class="nc-fx">valor não incluído no total</small></span></div>';
       const html =
         grupo('av-g-u', 'Específico da unidade', 'Feito em Avaré e repetido em cada unidade que entrar no COE.', curto(soma(UNI_IDS)),
           '<div class="av-gg av-gg5">' + UNI_IDS.map(id => no(cat(id), false)).join('') + '</div>') +
         grupo('av-g-c', 'Comum a todas as unidades', 'Feito uma vez, em Avaré, e usado pelas 7 unidades.', curto(cat('sala').total),
-          '<div class="av-gg av-gg2">' + banco + no(cat('sala'), false) + '</div>') +
+          '<div class="av-gg av-gg3">' + banco + obra + no(cat('sala'), false) + '</div>') +
         grupo('av-g-k', 'Implementação', 'Em todos os blocos.', curto(KA.total),
           '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det-ava"><span class="nc-n">' + KA.n + '</span><span class="nc-kp-t"><b>' + esc(KA.nome) + '</b><span>' + esc(KA.curto) + '</span></span>' +
           '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + '</span><small class="nc-fx">estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
