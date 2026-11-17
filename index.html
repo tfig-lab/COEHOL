@@ -3072,7 +3072,7 @@ html.rmx-cheia-on{overflow:hidden}
 @media (max-width:900px){.vd-k{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ---- Tabela de investimento ---- */
 #p-viabilidade-tabela-de-investimento > .wrap{display:grid;gap:32px;padding-block:28px 40px}
-.tb-res{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.tb-res{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 .tb-res > div{display:grid;gap:4px;align-content:start;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .tb-res small{font-size:11.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
 .tb-res b{font-size:22px;line-height:1.15;color:var(--fg);font-variant-numeric:tabular-nums}
@@ -5753,65 +5753,59 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const C = (id, nome, oque, q, un, u, o) => Object.assign({ id, nome, oque, q, un, u, rep: false }, o || {});
   /* capítulos */
   const CAPS = [
-    { k: 'coe', n: 1, nome: 'COE central', txt: 'Sala do COE e banco de dados do COE: feitos uma vez e usados pelas 7 unidades.', grupos: [
-      ['Sala do COE', [
-        L('C005', 'Monitores dos indicadores', '12 monitores profissionais de 55" para uso 24 horas: 8 formam o videowall e 4 ficam ao lado, para as câmeras.'),
-        L('S02', 'Painel de controle do videowall', 'Tela de toque fixa na sala, ligada à controladora: quem está na sala troca o layout, amplia uma tela ou coloca uma câmera em destaque.'),
-        L('C017', 'Rádios push-to-talk da sala', 'Rádios que falam pela internet (4G ou wi-fi), para a sala falar com o campo mesmo fora da unidade. A mensalidade de cada rádio não entra no investimento.'),
-        L('C007', 'Controladora do videowall', 'Computador dedicado (Windows) com 12 saídas: abre as telas no navegador e as câmeras no software de vídeo e distribui nos 12 monitores.'),
-        L('C036', 'Sinalização de alarmes', 'Torre luminosa com som na sala, que acende nos alertas críticos.'),
-        L('C013', 'Nobreak', 'Nobreak online de 6 kVA, cerca de 30 minutos de autonomia.'),
-        L('C015', 'Ar-condicionado', 'Dois aparelhos de 24.000 BTU/h, um de reserva.'),
-        L('C030', 'Detecção de fumaça', 'Detector de fumaça e extintor de CO2 da sala.')]],
-      ['Dados em nuvem', [
-        L('C039', 'Estabelecimento do banco de dados', 'O banco que recebe tudo: primeiro Império, Evolutize, formulários e clima, depois os dados de cada CCO local. Modelo, catálogo e registro de falhas. Vale para as duas opções.'),
-        C('BL1', 'Servidores do banco (local)', 'Dois servidores em redundância, um assume se o outro falhar, num rack da TI da Holambra.', 2, 'un.', 60000, { op: 'local' }),
-        C('BL2', 'Licença do banco de dados (local)', 'Licença SQL Server Standard para 8 núcleos (cerca de US$ 15,8 mil).', 1, 'pacote', 85000, { op: 'local' }),
-        C('BL3', 'Backup externo (local)', 'Cópia do banco fora da sala dos servidores, com teste de restauração.', 1, 'pacote', 25000, { op: 'local' })]],
-      ['Rede da sala', [
-        L('N02', 'Rede e links da sala do COE', 'Switch, firewall e cabeamento da sala e instalação dos links de internet. Depende da contratação e do contrato da Coop Holambra.')]] ] },
-    { k: 'ava', n: 2, nome: 'Unidade Avaré', txt: 'O que é feito em Avaré. Este capítulo, mais as licenças do SCADA, do historiador e do software de vídeo, forma o valor de referência para cada uma das outras unidades.', grupos: [
-      ['Integração dos painéis', [
-        L('C001', 'Projeto executivo de automação', 'Projeto da integradora: arquitetura dos painéis e da rede de automação, padrões técnicos e lista de pontos.', R),
-        L('C046', 'Integração dos 10 painéis ao CCO local', 'A integradora liga os painéis dos fornecedores ao SCADA do CCO: lê os mapas de memória, programa, testa e documenta.', R),
-        L('C048', 'Gateways', 'Conversores que ligam equipamentos com porta serial (RS-485) à rede.', R),
-        L('C049', 'Remotas de I/O', 'Caixas de entradas e saídas para painéis que não têm porta de comunicação.', R),
-        L('C061', 'Integração dos medidores de energia', 'Leitura dos medidores de energia que já existem nos quadros elétricos.', R)]],
-      ['Rede e cibersegurança', [
-        L('C063', 'Fibra e backbone', 'Fibra óptica, eletrodutos e certificação de cada trecho entre os painéis e o CCO. Depende da contratação e do contrato da Coop Holambra.', R),
-        L('C064', 'Switches industriais', 'Switches gerenciáveis, um em cada região da unidade, em anel redundante.', R),
-        L('C065', 'Firewall industrial (par)', 'Separa a rede de automação da rede da empresa; um assume se o outro falhar.', R),
-        L('C067', 'Backup da automação', 'Cópia automática dos programas de CLPs, IHMs e SCADA, no CCO e na nuvem.', R),
-        L('C076', 'Segundo link de internet (instalação)', 'Instalação do link de outra operadora, com troca automática se o principal cair. A mensalidade não entra no investimento. Depende da contratação e do contrato da Coop Holambra.', R),
-        L('C077', 'Monitoramento da rede', 'Monitora links, servidores e cargas de dados, com aviso por e-mail ou Teams.', R)]],
-      ['CCO local', [
-        L('C016', 'Rack', 'Rack 24U fechado, com régua de tomadas e ventilação.', R),
-        L('C043', 'Servidor', 'Servidor do SCADA e do historiador, com fontes e discos redundantes.', R),
-        L('PT1', 'Rádios push-to-talk do campo', 'Rádios que falam pela internet, para supervisores e operadores da unidade falarem com a sala do COE. A mensalidade de cada rádio não entra no investimento.', R),
-        L('C050', 'Alarmes padronizados', 'Revisão dos alarmes no padrão ISA-18.2: prioridade, responsável e resposta de cada um.', R)]],
-      ['Câmeras', [
-        L('K01', 'Projeto de cobertura das câmeras', 'Levantamento das câmeras atuais e definição de onde faltam.'),
-        L('K02', 'Câmeras IP', 'Câmeras novas e substituições.'),
-        L('K03', 'Instalação das câmeras', 'Cabos, switches PoE e caixas de proteção.')]],
-      ['Medição nova', [
-        L('C054', 'Scanner 3D nos 8 silos', 'Mede o volume real de grão em cada silo por varredura.'),
-        L('C052', 'Radares de nível nas moegas', 'Um radar em cada moega, de M1 a M6.'),
-        L('C053', 'Radares nos silos pulmão', 'Um radar em cada silo pulmão dos 2 secadores.'),
-        L('C057', 'Balanças de fluxo dos secadores', 'Medem o ritmo de grão (t/h) na saída de cada um dos 2 secadores.'),
-        L('C062', 'Montagem da medição', 'Cabos, caixas, montagem e comissionamento dos scanners e radares. Depressão e corrente já são medidas e entram na integração dos painéis.')]] ] },
-    { k: 'imp', n: 3, nome: 'Implementação e desenvolvimento', txt: 'Papel da consultoria: governança de todos os blocos e fornecedores, e implementação das telas do SCADA e da sala do COE, de 2027 a 2030.', premissa: 'Premissa: valores estimados, sendo necessária validação concreta e revisão anual, de acordo com o esforço de implementação e o escopo contratado.', grupos: [
-      ['', [
-        L('C040', 'Telas da sala do COE e do SCADA', 'Regras de cálculo e de alerta das 416 informações, as 22 telas do videowall, as telas do SCADA no padrão ISA-101 e os alertas ao campo, com testes e documentação.'),
-        L('C002', 'Gestão e governança da implementação', 'Coordena todos os blocos e fornecedores: cronograma, custos, riscos e reporte mensal ao comitê.', { q: 48, un: 'meses' }),
-        L('C042', 'Governança de dados', 'Dono e definição de cada uma das 416 informações, qualidade dos dados e conciliação com o Império.', { q: 48, un: 'meses' }),
-        L('C073', 'Handover para a equipe do COE', 'Passagem de tudo para a equipe da Holambra: documentação, procedimento de cada alerta e acompanhamento das primeiras semanas.'),
-        L('C075', 'Medição dos ganhos', 'Linha de base antes do COE e acompanhamento dos ganhos a cada trimestre.')]] ] },
-    { k: 'lic', n: 4, nome: 'Licenças', txt: 'Licenças de software compradas uma vez. As assinaturas estão listadas abaixo, sem valor: precisam ser cotadas e não entram no total.', grupos: [
-      ['Compradas uma vez', [
-        L('C044', 'Licença SCADA BluePlant (ampliação)', 'Ampliação da licença do SCADA de Avaré: número de pontos, acessos e usuários nominais. As telas são feitas na implementação.'),
-        L('C045', 'Historiador', 'Licença e configuração do banco local que guarda o histórico do processo e reenvia os dados se a internet cair.', R),
-        L('C018', 'Software de vídeo e gravador', 'Licenças do software de vídeo para 32 câmeras e gravador com 30 dias de gravação.'),
-        L('C066', 'Acesso remoto seguro', 'Licença do software que controla o acesso dos fornecedores à automação, com senha em dois fatores e gravação das sessões, e a configuração. Vale para todas as unidades.')]] ] },
+    { k: 'paineis', n: 1, nome: 'Integração dos painéis', txt: 'O gasto com a empresa integradora para ligar os painéis que já existem ao CCO local.', grupos: [['', [
+      L('C001', 'Projeto executivo de automação', 'Projeto da integradora: arquitetura dos painéis e da rede de automação, padrões técnicos e lista de pontos.'),
+      L('C046', 'Integração dos 10 painéis ao CCO local', 'A integradora liga os painéis dos fornecedores ao SCADA do CCO: lê os mapas de memória, programa, testa e documenta.'),
+      L('C048', 'Gateways', 'Conversores que ligam equipamentos com porta serial (RS-485) à rede.'),
+      L('C049', 'Remotas de I/O', 'Caixas de entradas e saídas para painéis que não têm porta de comunicação.'),
+      L('C061', 'Integração dos medidores de energia', 'Leitura dos medidores de energia que já existem nos quadros elétricos.')]]] },
+    { k: 'rede', n: 2, nome: 'Rede e cibersegurança', txt: 'O caminho seguro do painel ao CCO e do CCO à nuvem. O acesso remoto seguro e a rede da sala do COE são feitos uma vez e valem para as 7 unidades.', grupos: [['', [
+      L('C063', 'Fibra e backbone', 'Fibra óptica, eletrodutos e certificação de cada trecho entre os painéis e o CCO. Depende da contratação e do contrato da Coop Holambra.'),
+      L('C064', 'Switches industriais', 'Switches gerenciáveis, um em cada região da unidade, em anel redundante.'),
+      L('C065', 'Firewall industrial (par)', 'Separa a rede de automação da rede da empresa; um assume se o outro falhar.'),
+      L('C067', 'Backup da automação', 'Cópia automática dos programas de CLPs, IHMs e SCADA, no CCO e na nuvem.'),
+      L('C076', 'Segundo link de internet (instalação)', 'Instalação do link de outra operadora, com troca automática se o principal cair. A mensalidade não entra no investimento. Depende da contratação e do contrato da Coop Holambra.'),
+      L('C077', 'Monitoramento da rede', 'Monitora links, servidores e cargas de dados, com aviso por e-mail ou Teams.'),
+      L('C066', 'Acesso remoto seguro', 'Licença do software que controla o acesso dos fornecedores à automação, com senha em dois fatores e gravação das sessões, e a configuração. Vale para todas as unidades.'),
+      L('N02', 'Rede e links da sala do COE', 'Switch, firewall e cabeamento da sala e instalação dos links de internet. Depende da contratação e do contrato da Coop Holambra.')]]] },
+    { k: 'cco', n: 3, nome: 'CCO local', txt: 'Supervisão, alarmes e histórico dentro da unidade, com a ampliação do SCADA e o historiador.', grupos: [['', [
+      L('C016', 'Rack', 'Rack 24U fechado, com régua de tomadas e ventilação.'),
+      L('C043', 'Servidor', 'Servidor do SCADA e do historiador, com fontes e discos redundantes.'),
+      L('C044', 'Licença SCADA BluePlant (ampliação)', 'Ampliação da licença do SCADA de Avaré: número de pontos, acessos e usuários nominais. As telas são feitas na implementação.'),
+      L('C045', 'Historiador', 'Licença e configuração do banco local que guarda o histórico do processo e reenvia os dados se a internet cair.'),
+      L('C050', 'Alarmes padronizados', 'Revisão dos alarmes no padrão ISA-18.2: prioridade, responsável e resposta de cada um.'),
+      L('PT1', 'Rádios push-to-talk do campo', 'Rádios que falam pela internet, para supervisores e operadores da unidade falarem com a sala do COE. A mensalidade de cada rádio não entra no investimento.')]]] },
+    { k: 'nuvem', n: 4, nome: 'Dados em nuvem', txt: 'O banco de dados do COE, feito uma vez e usado pelas 7 unidades. As assinaturas estão listadas abaixo, sem valor: precisam ser cotadas e não entram no total.', grupos: [['', [
+      L('C039', 'Estabelecimento do banco de dados', 'O banco que recebe tudo: primeiro Império, Evolutize, formulários e clima, depois os dados de cada CCO local. Modelo, catálogo e registro de falhas. Vale para as duas opções.'),
+      C('BL1', 'Servidores do banco (local)', 'Dois servidores em redundância, um assume se o outro falhar, num rack da TI da Holambra.', 2, 'un.', 60000, { op: 'local' }),
+      C('BL2', 'Licença do banco de dados (local)', 'Licença SQL Server Standard para 8 núcleos (cerca de US$ 15,8 mil).', 1, 'pacote', 85000, { op: 'local' }),
+      C('BL3', 'Backup externo (local)', 'Cópia do banco fora da sala dos servidores, com teste de restauração.', 1, 'pacote', 25000, { op: 'local' })]]] },
+    { k: 'sala', n: 5, nome: 'Sala do COE', txt: 'Videowall e a infraestrutura que mantém a sala no ar. Feita uma vez e usada pelas 7 unidades.', grupos: [['', [
+      L('C005', 'Monitores dos indicadores', '12 monitores profissionais de 55" para uso 24 horas: 8 formam o videowall e 4 ficam ao lado, para as câmeras.'),
+      L('S02', 'Painel de controle do videowall', 'Tela de toque fixa na sala, ligada à controladora: quem está na sala troca o layout, amplia uma tela ou coloca uma câmera em destaque.'),
+      L('C007', 'Controladora do videowall', 'Computador dedicado (Windows) com 12 saídas: abre as telas no navegador e as câmeras no software de vídeo e distribui nos 12 monitores.'),
+      L('C017', 'Rádios push-to-talk da sala', 'Rádios que falam pela internet (4G ou wi-fi), para a sala falar com o campo mesmo fora da unidade. A mensalidade de cada rádio não entra no investimento.'),
+      L('C036', 'Sinalização de alarmes', 'Torre luminosa com som na sala, que acende nos alertas críticos.'),
+      L('C013', 'Nobreak', 'Nobreak online de 6 kVA, cerca de 30 minutos de autonomia.'),
+      L('C015', 'Ar-condicionado', 'Dois aparelhos de 24.000 BTU/h, um de reserva.'),
+      L('C030', 'Detecção de fumaça', 'Detector de fumaça e extintor de CO2 da sala.')]]] },
+    { k: 'camera', n: 6, nome: 'Câmeras', txt: 'Cobertura de câmeras de Avaré, com o software de vídeo e o gravador.', grupos: [['', [
+      L('K01', 'Projeto de cobertura das câmeras', 'Levantamento das câmeras atuais e definição de onde faltam.'),
+      L('K02', 'Câmeras IP', 'Câmeras novas e substituições.'),
+      L('K03', 'Instalação das câmeras', 'Cabos, switches PoE e caixas de proteção.'),
+      L('C018', 'Software de vídeo e gravador', 'Licenças do software de vídeo para 32 câmeras e gravador com 30 dias de gravação.')]]] },
+    { k: 'medicao', n: 7, nome: 'Medição nova', txt: 'Medições que ainda não existem em Avaré: volume nos silos, nível nas moegas e ritmo dos secadores.', grupos: [['', [
+      L('C054', 'Scanner 3D nos 8 silos', 'Mede o volume real de grão em cada silo por varredura.'),
+      L('C052', 'Radares de nível nas moegas', 'Um radar em cada moega, de M1 a M6.'),
+      L('C053', 'Radares nos silos pulmão', 'Um radar em cada silo pulmão dos 2 secadores.'),
+      L('C057', 'Balanças de fluxo dos secadores', 'Medem o ritmo de grão (t/h) na saída de cada um dos 2 secadores.'),
+      L('C062', 'Montagem da medição', 'Cabos, caixas, montagem e comissionamento dos scanners e radares. Depressão e corrente já são medidas e entram na integração dos painéis.')]]] },
+    { k: 'imp', n: 8, nome: 'Implementação e gestão do COE', txt: 'Papel da consultoria: governança de todos os blocos e fornecedores, e implementação das telas do SCADA e da sala do COE, de 2027 a 2030.', premissa: 'Premissa: valores estimados, sendo necessária validação concreta e revisão anual, de acordo com o esforço de implementação e o escopo contratado.', grupos: [['', [
+      L('C040', 'Telas da sala do COE e do SCADA', 'Regras de cálculo e de alerta das 416 informações, as 22 telas do videowall, as telas do SCADA no padrão ISA-101 e os alertas ao campo, com testes e documentação.'),
+      L('C002', 'Gestão e governança da implementação', 'Coordena todos os blocos e fornecedores: cronograma, custos, riscos e reporte mensal ao comitê.', { q: 48, un: 'meses' }),
+      L('C042', 'Governança de dados', 'Dono e definição de cada uma das 416 informações, qualidade dos dados e conciliação com o Império.', { q: 48, un: 'meses' }),
+      L('C073', 'Handover para a equipe do COE', 'Passagem de tudo para a equipe da Holambra: documentação, procedimento de cada alerta e acompanhamento das primeiras semanas.'),
+      L('C075', 'Medição dos ganhos', 'Linha de base antes do COE e acompanhamento dos ganhos a cada trimestre.')]]] },
   ];
   const ASS = [
     { id: 'N01', nome: 'Microsoft Fabric: capacidade F32 ou maior', oque: 'Capacidade da nuvem Azure onde ficam o banco do COE e as telas de tempo real, desde o início. Tamanho estimado em Indicadores › Volume de dados. Verificar se o contrato Microsoft atual já inclui.', q: 12, un: 'meses', u: 0 },
@@ -5819,8 +5813,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     { id: 'C041', nome: 'Power BI Pro', oque: 'Licença das telas estratégicas para quem publica e consulta.', q: 15, un: 'pessoas', u: 0 } ];
   const UNI = ['Holambra', 'Takaoka', 'São Manuel', 'Taquarivaí', 'Itaberá', 'Taquarituba'].map((n, i) => ({ id: 'U' + (i + 1), nome: n, q: 1, u: null }));
   CAPS.forEach(c => c.grupos.forEach(g => { g[1] = g[1].filter(Boolean); }));
-  /* valor por unidade = tudo o que é de Avaré: o capítulo da unidade e as licenças da unidade */
-  CAPS.forEach(c => c.grupos.forEach(g => g[1].forEach(l => { l.rep = c.k === 'ava' || (c.k === 'lic' && /^(C044|C045|C018)$/.test(l.id)); })));
+  /* valor por unidade = tudo o que é feito em Avaré (o acesso remoto seguro e a rede da sala valem para as 7) */
+  const POR_UNI = ['paineis', 'rede', 'cco', 'camera', 'medicao'];
+  CAPS.forEach(c => c.grupos.forEach(g => g[1].forEach(l => { l.rep = POR_UNI.includes(c.k) && !/^(C066|N02)$/.test(l.id); })));
   const linhas = CAPS.flatMap(c => c.grupos.flatMap(g => g[1])).concat(ASS);
   linhas.forEach(l => { l.q0 = l.q; l.u0 = l.u; });
   /* valores salvos neste navegador */
@@ -5855,9 +5850,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const capEl = pg.querySelector('[data-tb="capitulos"]'), resEl = pg.querySelector('[data-tb="resumo"]');
   capEl.innerHTML = CAPS.map(c => '<section class="tb-cap" data-k="' + c.k + '" aria-labelledby="tb-' + c.k + '"><div class="tb-cab"><h3 id="tb-' + c.k + '"><span class="tb-n">' + c.n + '</span>' + esc(c.nome) + '</h3><b data-st="' + c.k + '"></b><p>' + esc(c.txt) + '</p>' + (c.premissa ? '<p class="tb-prem">' + esc(c.premissa) + '</p>' : '') + '</div>' +
       '<div class="tb-sc"><table class="tb-t">' + cols + '<tbody>' + c.grupos.map((g, gi) => (g[0] ? '<tr class="tb-g"><td colspan="5">' + esc(g[0]) + '<span data-gt="' + c.k + gi + '"></span></td></tr>' : '') + g[1].map(linha).join('')).join('') + '</tbody></table></div>' +
-      (c.k === 'coe' ? DEC : '') +
-      (c.k === 'lic' ? '<div class="tb-sc"><table class="tb-t">' + cols.replace('Item e o que é', 'Assinaturas · a cotar') + '<tbody>' + ASS.map(l => '<tr><td class="tb-i"><b>' + esc(l.nome) + '</b><small>' + esc(l.oque) + '</small></td><td class="n">' + nf.format(l.q) + '</td><td class="tb-un">' + esc(l.un) + '</td><td class="n tb-cot">a cotar</td><td class="n tb-cot">—</td></tr>').join('') + '</tbody></table></div>' : '') + '</section>').join('') +
-    '<section class="tb-cap" data-k="out" aria-labelledby="tb-out"><div class="tb-cab"><h3 id="tb-out"><span class="tb-n">5</span>Outras 6 unidades</h3><b data-st="out"></b><p>Valor de cada unidade aberto para ajuste. Enquanto não for alterado, segue o valor estimado por unidade de Avaré: painéis, rede, CCO local, câmeras, medição nova e licenças da unidade. 2 unidades por ano, de 2028 a 2030.</p></div>' +
+      (c.k === 'nuvem' ? DEC : '') +
+      (c.k === 'nuvem' ? '<div class="tb-sc"><table class="tb-t">' + cols.replace('Item e o que é', 'Assinaturas · a cotar') + '<tbody>' + ASS.map(l => '<tr><td class="tb-i"><b>' + esc(l.nome) + '</b><small>' + esc(l.oque) + '</small></td><td class="n">' + nf.format(l.q) + '</td><td class="tb-un">' + esc(l.un) + '</td><td class="n tb-cot">a cotar</td><td class="n tb-cot">—</td></tr>').join('') + '</tbody></table></div>' : '') + '</section>').join('') +
+    '<section class="tb-cap" data-k="out" aria-labelledby="tb-out"><div class="tb-cab"><h3 id="tb-out"><span class="tb-n">9</span>Outras 6 unidades</h3><b data-st="out"></b><p>Valor de cada unidade aberto para ajuste. Enquanto não for alterado, segue o valor estimado por unidade de Avaré: painéis, rede, CCO local, câmeras, medição nova e licenças da unidade. 2 unidades por ano, de 2028 a 2030.</p></div>' +
       '<div class="tb-ref">Referência Avaré por unidade: <b data-ref></b></div>' +
       '<div class="tb-sc"><table class="tb-t tb-uni"><colgroup><col><col class="c-v2"><col class="c-t"></colgroup><thead><tr><th>Unidade</th><th class="n">Valor da unidade (R$)</th><th class="n">Diferença da referência</th></tr></thead><tbody>' +
       UNI.map(l => '<tr data-id="' + l.id + '"><td class="tb-i"><b>' + esc(l.nome) + '</b><small>Mesmo escopo de Avaré: painéis, rede, CCO local, câmeras, medição nova e licenças.</small></td>' +
@@ -5874,10 +5869,10 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       if (document.activeElement !== i) i.value = fmt(v); tr.querySelector('[data-rf]').textContent = l.u != null ? 'ajustado · ref. Avaré R$ ' + fmt(ref) : 'igual à referência de Avaré';
       tr.classList.toggle('mud', l.u != null); const d = v - ref; tr.querySelector('[data-d]').textContent = Math.abs(d) < 1 ? '—' : (d > 0 ? '+' : '−') + ' R$ ' + fmt(Math.abs(d)); });
     pg.querySelectorAll('[data-opc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.opc === OPC)));
-    ['coe', 'ava', 'imp', 'lic', 'out'].forEach(k => { pg.querySelector('[data-st="' + k + '"]').innerHTML = curto(st[k]); });
-    const T = st.coe + st.ava + st.imp + st.lic + st.out;
+    CAPS.map(c => c.k).concat('out').forEach(k => { pg.querySelector('[data-st="' + k + '"]').innerHTML = curto(st[k]); });
+    const T = CAPS.reduce((a, c) => a + st[c.k], 0) + st.out;
     const tile = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b>' + (i ? '<i>' + i + '</i>' : '') + '</div>';
-    resEl.innerHTML = tile('1 · COE central', st.coe, 'sala e banco de dados (' + (OPC === 'local' ? 'servidor local' : 'nuvem') + ')') + tile('2 · Unidade Avaré', st.ava, 'painéis, rede, CCO local, câmeras e medição') + tile('3 · Implementação', st.imp, 'governança e telas, 2027 a 2030') + tile('4 · Licenças', st.lic, 'compradas uma vez') + tile('5 · Outras 6 unidades', st.out, 'referência Avaré: R$ ' + (ref / 1e6).toFixed(2).replace('.', ',') + ' mi cada') + tile('Total', T, '7 unidades, 2027 a 2030', 'tb-tot');
+    resEl.innerHTML = CAPS.map(c => tile(c.n + ' · ' + c.nome, st[c.k], '')).join('') + tile('9 · Outras 6 unidades', st.out, 'R$ ' + (ref / 1e6).toFixed(2).replace('.', ',') + ' mi cada') + tile('Total', T, '7 unidades, 2027 a 2030', 'tb-tot');
   };
   pg.addEventListener('click', ev => { const b = ev.target.closest('[data-opc]'); if (!b) return; OPC = b.dataset.opc; salva(); calcula(); });
   pg.addEventListener('change', ev => { const i = ev.target.closest('input[data-c]'); if (!i) return; const id = i.closest('tr').dataset.id, l = porId[id], uni = /^U\d$/.test(id); const v = num(i.value);
