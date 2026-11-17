@@ -2619,6 +2619,15 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .nc-abre::after{content:" ▾"}
 .nc-no[aria-expanded="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
 .nc-no[aria-expanded="true"] .nc-abre::after{content:" ▴"}
+.av-res{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:6px 0 22px}
+.av-res > div{display:grid;gap:6px;align-content:start;padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.av-res small{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.av-res b{font-size:30px;line-height:1.1;color:var(--fg);font-variant-numeric:tabular-nums}
+.av-res span{font-size:13.5px;line-height:1.5;color:var(--texto-2)}
+.av-res .av-tot{border:2px solid var(--accent);background:var(--accent-soft)}
+.av-res .av-tot b{color:var(--accent)}
+#p-viabilidade-investimento-avare .nz-cm,#p-viabilidade-investimento-avare .nz-un{display:none}
+@media (max-width:760px){.av-res{grid-template-columns:1fr}}
 .nc-det{display:grid;gap:10px;padding:18px 20px;border:2px solid var(--accent);border-radius:16px;background:var(--bg)}
 .nc-det-cab{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .nc-det-cab h4{display:flex;align-items:center;gap:10px;margin:0;font-size:19px;font-weight:700}
@@ -4486,6 +4495,17 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   </section>
 </div>
 </article>
+<article class="page" id="p-viabilidade-investimento-avare" hidden>
+<div class="wrap wide">
+  <div><h2>Estimativa de investimento · Avaré</h2></div>
+  <div class="av-res" data-nc="ava-res"></div>
+  <section class="nc-mapa" aria-labelledby="nc-mapa-ava-t">
+    <div class="nc-cab"><h3 id="nc-mapa-ava-t">Investimento estimado para integração de Avaré</h3>
+      <p>Clique em um bloco para ver itens, valores e responsáveis.</p></div>
+    <div data-nc="mapa-ava"></div>
+  </section>
+</div>
+</article>
 <article class="page" id="p-viabilidade-o-que-o-coe-precisa" hidden>
 <div class="wrap wide">
   <div><h2>Estimativa de investimento 2027 a 2030</h2></div>
@@ -4946,7 +4966,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   <ul id="buscaLista"></ul>
 </dialog>
 
-<script id="estrutura" type="application/json">[{"id": "inicio", "nome": "Início", "palavra": "Início", "paginas": [{"id": "objetivo-do-coe", "titulo": "Apresentação do material", "grupo": ""}]}, {"id": "objetivos", "nome": "Objetivos", "palavra": "Objetivos", "paginas": [{"id": "ponto-de-partida-e-objetivos", "titulo": "Objetivos Estratégicos do COE", "grupo": ""}]}, {"id": "desafios", "nome": "Desafios operacionais", "palavra": "Desafios", "paginas": [{"id": "dores-operacionais", "titulo": "Desafios operacionais", "grupo": ""}, {"id": "infraestrutura-atual", "titulo": "Infraestrutura atual", "grupo": ""}, {"id": "fichas", "titulo": "Fichas das automações e sistemas", "grupo": ""}]}, {"id": "indicadores", "nome": "Indicadores do COE", "palavra": "Indicadores", "paginas": [{"id": "telas-do-video-wall-avare", "titulo": "Telas do video wall · Avaré", "grupo": ""}, {"id": "modelo-3d-de-avare", "titulo": "Modelo 3D de Avaré", "grupo": ""}, {"id": "por-sistema", "titulo": "Indicadores por sistema", "grupo": ""}, {"id": "ficha-de-kpi", "titulo": "Ficha de KPI", "grupo": ""}, {"id": "volume-de-dados", "titulo": "Volume de dados", "grupo": ""}]}, {"id": "sala", "nome": "Arquitetura do COE", "palavra": "Arquitetura do COE", "paginas": [{"id": "sala-do-coe", "titulo": "Sala do COE", "grupo": ""}, {"id": "arquitetura-de-ti", "titulo": "Arquitetura de TI", "grupo": ""}]}, {"id": "roadmap", "nome": "Roadmap de implementação", "palavra": "Roadmap", "paginas": [{"id": "passo-a-passo", "titulo": "Passo a passo até o COE", "grupo": ""}, {"id": "solucao-e-contratacao", "titulo": "Escopo da integradora", "grupo": ""}, {"id": "expansao-e-jornada", "titulo": "Jornada de automação", "grupo": ""}, {"id": "ia-e-ml", "titulo": "IA e machine learning", "grupo": ""}]}, {"id": "governanca", "nome": "Governança", "palavra": "Governança", "paginas": [{"id": "modelo-de-governanca", "titulo": "Modelo de governança", "grupo": ""}]}, {"id": "viabilidade", "nome": "Estudo de Viabilidade", "palavra": "Estudo de Viabilidade", "paginas": [{"id": "premissas", "titulo": "Premissas", "grupo": ""}, {"id": "o-que-o-coe-precisa", "titulo": "Investimento", "grupo": ""}, {"id": "tabela-de-investimento", "titulo": "Tabela de investimento", "grupo": ""}]}]</script>
+<script id="estrutura" type="application/json">[{"id": "inicio", "nome": "Início", "palavra": "Início", "paginas": [{"id": "objetivo-do-coe", "titulo": "Apresentação do material", "grupo": ""}]}, {"id": "objetivos", "nome": "Objetivos", "palavra": "Objetivos", "paginas": [{"id": "ponto-de-partida-e-objetivos", "titulo": "Objetivos Estratégicos do COE", "grupo": ""}]}, {"id": "desafios", "nome": "Desafios operacionais", "palavra": "Desafios", "paginas": [{"id": "dores-operacionais", "titulo": "Desafios operacionais", "grupo": ""}, {"id": "infraestrutura-atual", "titulo": "Infraestrutura atual", "grupo": ""}, {"id": "fichas", "titulo": "Fichas das automações e sistemas", "grupo": ""}]}, {"id": "indicadores", "nome": "Indicadores do COE", "palavra": "Indicadores", "paginas": [{"id": "telas-do-video-wall-avare", "titulo": "Telas do video wall · Avaré", "grupo": ""}, {"id": "modelo-3d-de-avare", "titulo": "Modelo 3D de Avaré", "grupo": ""}, {"id": "por-sistema", "titulo": "Indicadores por sistema", "grupo": ""}, {"id": "ficha-de-kpi", "titulo": "Ficha de KPI", "grupo": ""}, {"id": "volume-de-dados", "titulo": "Volume de dados", "grupo": ""}]}, {"id": "sala", "nome": "Arquitetura do COE", "palavra": "Arquitetura do COE", "paginas": [{"id": "sala-do-coe", "titulo": "Sala do COE", "grupo": ""}, {"id": "arquitetura-de-ti", "titulo": "Arquitetura de TI", "grupo": ""}]}, {"id": "roadmap", "nome": "Roadmap de implementação", "palavra": "Roadmap", "paginas": [{"id": "passo-a-passo", "titulo": "Passo a passo até o COE", "grupo": ""}, {"id": "solucao-e-contratacao", "titulo": "Escopo da integradora", "grupo": ""}, {"id": "expansao-e-jornada", "titulo": "Jornada de automação", "grupo": ""}, {"id": "ia-e-ml", "titulo": "IA e machine learning", "grupo": ""}]}, {"id": "governanca", "nome": "Governança", "palavra": "Governança", "paginas": [{"id": "modelo-de-governanca", "titulo": "Modelo de governança", "grupo": ""}]}, {"id": "viabilidade", "nome": "Estudo de Viabilidade", "palavra": "Estudo de Viabilidade", "paginas": [{"id": "premissas", "titulo": "Premissas", "grupo": ""}, {"id": "investimento-avare", "titulo": "Investimento Avaré", "grupo": ""}, {"id": "o-que-o-coe-precisa", "titulo": "Investimento 7 unidades", "grupo": ""}, {"id": "tabela-de-investimento", "titulo": "Tabela de investimento", "grupo": ""}]}]</script>
 <script>if(location.protocol==='file:')document.documentElement.classList.add('offline');</script>
 <script>window.COE_PACOTE_V='20261113b';</script><script src="js/baixar.js?v=pk2"></script>
 <script src="js/indicadores.js?v=nbr2"></script>
@@ -5482,7 +5502,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   const COMUM = new Set(('S01 S02 C005 C006 C007 C034 C035 C008 C033 C036 C017 C022 C013 C014 C015 C030 C028 N02 K04 C020 ' +
     'N01 C037 C038 C039 C041 C078 C066 C040 C042 C002 C073 C082 C075').split(' '));
   const esc2 = x => COMUM.has(x.id) ? '<span class="nz nz-cm">Comum às 7 unidades</span>' : '<span class="nz nz-un">Por unidade</span>';
-  const subs = (its, g) => its.slice().sort((x, y) => y.total - x.total).map(x => '<tr class="nc-sub" data-g="' + g + '" hidden><td class="nc-sub-r">' + fig(x) + '</td><td><b>' + esc(x.item) + '</b><span class="nz-l">' + clsTag(x) + (LIC[x.id] ? '<span class="nz nz-l2">' + esc(LIC[x.id]) + '</span>' : '') + esc2(x) + (x.opex ? '<span class="nz nz-r">depois: ' + curto(x.opex) + '/ano</span>' : '') + '</span><div class="it-box"><dl class="it-dl"><dt>O que é</dt><dd>' + esc(DESC[x.id] || x.espec || '') + ' <i>(' + esc(qtdTxt(x)) + ')</i></dd>' + (ONDE[x.id] ? '<dt>Onde</dt><dd>' + esc(ONDE[x.id][0]) + '</dd><dt>Especificação mínima</dt><dd>' + esc(ONDE[x.id][1]) + '</dd>' : '') + (CLS[x.id] ? '<dt>Por quê</dt><dd>' + esc(CLS[x.id][1]) + '</dd>' : '') + '</dl></div></td><td><span class="dir">' + (x.semValor ? 'licença à parte' : curto(x.total)) + '</span></td><td><span class="dir nc-fx">' + (x.semValor ? '—' : faixa([x])) + '</span></td></tr>').join('');
+  const subs = (its, g) => its.slice().sort((x, y) => y.total - x.total).map(x => '<tr class="nc-sub" data-g="' + g + '" hidden><td class="nc-sub-r">' + fig(x) + '</td><td><b>' + esc(x.item) + '</b><span class="nz-l">' + clsTag(x) + (LIC[x.id] ? '<span class="nz nz-l2">' + esc(LIC[x.id]) + '</span>' : '') + esc2(x) + (x.opex ? '<span class="nz nz-r">depois: ' + curto(x.opex) + '/ano</span>' : '') + '</span><div class="it-box"><dl class="it-dl"><dt>O que é</dt><dd>' + esc(x.desc || DESC[x.id] || x.espec || '') + ' <i>(' + esc(qtdTxt(x)) + ')</i></dd>' + (ONDE[x.id] ? '<dt>Onde</dt><dd>' + esc(ONDE[x.id][0]) + '</dd><dt>Especificação mínima</dt><dd>' + esc(ONDE[x.id][1]) + '</dd>' : '') + (CLS[x.id] ? '<dt>Por quê</dt><dd>' + esc(CLS[x.id][1]) + '</dd>' : '') + '</dl></div></td><td><span class="dir">' + (x.semValor ? 'licença à parte' : curto(x.total)) + '</span></td><td><span class="dir nc-fx">' + (x.semValor ? '—' : faixa([x])) + '</span></td></tr>').join('');
   const linha = (g, nome, ponto, oque, val, fx, its) => '<tr class="nc-gr"><td><button type="button" class="nc-gt" data-gt="' + g + '" aria-expanded="false"><i aria-hidden="true">▸</i><span class="nc-tp-n">' + ponto + esc(nome) + '</span></button></td><td>' + esc(oque) + '</td><td><span class="dir">' + curto(val) + '</span></td><td><span class="dir nc-fx">' + fx + '</span></td></tr>' + subs(its, g);
   const tabela = c => '<div class="tbl"><table class="ln-tab nc-tab-tp"><thead><tr><th>' + (c.kpmg ? 'Frente de trabalho' : 'Categoria') + '</th><th>O que tem</th><th><span class="dir">Valor estimado</span></th><th><span class="dir">Faixa</span></th></tr></thead><tbody>' +
     (c.kpmg
@@ -5496,23 +5516,24 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     '<span class="nc-v">' + curto(c.total) + '<small class="nc-fx">estimado · ' + faixa(c.itens) + '</small></span><span class="nc-abre">Ver detalhe</span></button>';
   const zona = (rot, ids, cls, ultima) => '<section class="nc-zona' + (cls ? ' ' + cls : '') + '"><h4>' + rot + '</h4><div class="nc-nos">' +
     ids.map(id => no(cat(id), !ultima)).join('') + '</div></section>';
-  const mapa = $('[data-nc="mapa"]');
-  if (mapa) {
+  const montaMapa = (mapa, KK, op) => {
+    if (!mapa) return; op = op || {}; const did = op.det || 'nc-det', CUR = op.curto || {};
     mapa.innerHTML = '<div class="nc-cadeia nc-5">' +
       zona('Campo', ['paineis']) + zona('Rede', ['rede']) + zona('Unidade', ['cco']) +
       zona('Nuvem', ['nuvem'], 'nc-nuvem') + zona('Sala do COE', ['sala'], 'nc-sala', true) +
       '</div>' +
-      '<div class="nc-bandas">' + [['camera', 'Do campo à sala · 2027'], ['medicao', 'Campo · 2028 e 2029']].map(([id, rot]) => { const c = cat(id);
-        return '<button type="button" class="nc-kp nc-kp-x" data-f="' + id + '" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">' + c.n + '</span><span class="nc-kp-t"><small>' + rot + '</small><b>' + esc(c.nome) + '</b><span>' + esc(c.curto) + '</span></span>' +
+      '<div class="nc-bandas">' + (op.bandas || [['camera', 'Do campo à sala · 2027'], ['medicao', 'Campo · 2028 e 2029']]).map(([id, rot]) => { const c = cat(id);
+        return '<button type="button" class="nc-kp nc-kp-x" data-f="' + id + '" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">' + c.n + '</span><span class="nc-kp-t"><small>' + rot + '</small><b>' + esc(c.nome) + '</b><span>' + esc(CUR[c.id] || c.curto) + '</span></span>' +
           '<span class="nc-kp-v"><span class="nc-v">' + curto(c.total) + '</span><small class="nc-fx">estimado · ' + faixa(c.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>'; }).join('') + '</div>' +
-      '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">8</span><span class="nc-kp-t"><small>Em todos os blocos</small><b>' + esc(K.nome) + '</b><span>' + esc(K.curto) + '</span></span>' +
-      '<span class="nc-kp-v"><span class="nc-v">' + curto(K.total) + '</span><small class="nc-fx">estimado · ' + faixa(K.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>' +
-      '<div class="nc-det" id="nc-det" hidden></div>';
-    const det = $('#nc-det', mapa);
+      '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det"><span class="nc-n">8</span><span class="nc-kp-t"><small>Em todos os blocos</small><b>' + esc(KK.nome) + '</b><span>' + esc(KK.curto) + '</span></span>' +
+      '<span class="nc-kp-v"><span class="nc-v">' + curto(KK.total) + '</span><small class="nc-fx">estimado · ' + faixa(KK.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>' +
+      '<div class="nc-det" id="' + did + '" hidden></div>';
+    if (did !== 'nc-det') mapa.querySelectorAll('[aria-controls="nc-det"]').forEach(b => b.setAttribute('aria-controls', did));
+    const det = $('#' + did, mapa);
     const abre = id => {
       mapa.querySelectorAll('[data-f]').forEach(b => b.setAttribute('aria-expanded', String(b.dataset.f === id)));
       if (!id) { det.hidden = true; det.innerHTML = ''; return; }
-      const c = id === 'kpmg' ? K : id === 'acion' ? A : cat(id);
+      const c = id === 'kpmg' ? KK : id === 'acion' ? A : cat(id);
       det.innerHTML = '<div class="nc-det-cab"><h4><span class="nc-n">' + c.n + '</span>' + esc(c.nome) + '<b>' + curto(c.total) + '</b><small class="nc-fx">estimado · faixa ' + faixa(c.itens) + '</small></h4><button type="button" class="nc-det-x" data-fecha aria-label="Fechar">×</button></div>' +
         '<p>' + esc(c.oque) + '</p>' + tabela(c);
       const bt = mapa.querySelector('[data-f="' + id + '"]'), kp = mapa.querySelector('.nc-kp[data-f="kpmg"]');
@@ -5527,7 +5548,29 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       const b = ev.target.closest('[data-f]'); if (!b) return;
       abre(b.getAttribute('aria-expanded') === 'true' ? null : b.dataset.f);
     });
-  }
+  };
+  montaMapa($('#p-viabilidade-o-que-o-coe-precisa [data-nc="mapa"]'), K);
+  /* Avaré: blocos como estão, consultoria de R$ 3,0 mi em 2027; tudo em 2027 e a medição nova em 2028 */
+  { const pa = $('#p-viabilidade-investimento-avare');
+    if (pa) {
+      const fK = 3000000 / K.total;
+      const DA = { C002: 'Serviço mensal de gestão do projeto em Avaré, em 2027: cronograma, custos e fornecedores.', C042: 'Serviço mensal de governança em Avaré: dono e definição de cada indicador e conferência dos dados.' };
+      const QA = { C002: 12, C042: 12 };
+      const cl = x => { const y = Object.assign({}, x, { total: Math.round(x.total * fK), baixo: Math.round(x.baixo * fK), alto: Math.round(x.alto * fK), desc: DA[x.id] });
+        if (QA[x.id]) { y.qtd = QA[x.id]; y.unit = Math.round(y.total / QA[x.id]); } else if (x.unit) y.unit = Math.round(x.unit * fK); return y; };
+      const OQ = { 'Gestão da implantação': 'Gestão do projeto de Avaré em 2027: cronograma, custos, fornecedores e riscos' };
+      const KA = Object.assign({}, K, { curto: 'Cálculos, telas, dados e gestão da implementação de Avaré, em 2027. Premissa: valores estimados, com validação concreta conforme o esforço de implementação e o escopo contratado',
+        oque: 'Desenvolvimento das regras de cálculo das 416 informações e das 22 telas do videowall, alertas ao campo, governança e qualidade dos dados e gestão da implementação de Avaré: cronograma, fornecedores, handover e medição dos ganhos.',
+        linhas: K.linhas.map(l => { const its = l.itens.map(cl); return Object.assign({}, l, { itens: its, oque: OQ[l.nome] || l.oque, total: its.reduce((t, x) => t + x.total, 0) }); }) });
+      KA.itens = KA.linhas.flatMap(l => l.itens); KA.total = KA.itens.reduce((t, x) => t + x.total, 0);
+      montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', bandas: [['camera', 'Do campo à sala · 2027'], ['medicao', 'Campo · 2028']],
+        curto: { medicao: 'Sensores e medidas para o que hoje não é medido, em 2028' } });
+      const t27 = CATS.filter(c => c.id !== 'medicao').reduce((t, c) => t + c.total, 0) + KA.total, t28 = cat('medicao').total;
+      const tl = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b><span>' + i + '</span></div>';
+      $('[data-nc="ava-res"]', pa).innerHTML = tl('2027', t27, 'Painéis, rede, CCO local, dados em nuvem, sala do COE, câmeras e consultoria') +
+        tl('2028', t28, 'Medição nova: novos sensores e medidas') + tl('Total Avaré', t27 + t28, '2027 e 2028', 'av-tot');
+    } }
+
 
   /* frontend: quantas informações precisam de atualização rápida */
   const CO = window.COE, por = $('[data-nc="fe-por"]');
