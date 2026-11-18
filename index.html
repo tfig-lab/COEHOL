@@ -5214,7 +5214,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   CATS.forEach(c => { c.sw = c.swAll.filter(x => SW[x.id]); c.swTot = c.sw.reduce((t, x) => t + x.total, 0); });
   const INV = CATS;
   const totInv = INV.reduce((t, c) => t + c.total, 0), essInv = INV.reduce((t, c) => t + c.cl.E, 0);
-  /* implementação e gestão do COE: R$ 2,5 / 1,75 / 1,42 / 1,08 mi de 2027 a 2030 (R$ 6,75 mi; faixa de 6,2 a 7,3 mi). */
+  /* implementação e gestão do COE: R$ 2,8 / 1,96 / 1,59 / 1,21 mi de 2027 a 2030 (R$ 7,56 mi; faixa de 6,9 a 8,2 mi). */
   const K = { id: 'kpmg', n: 8, kpmg: true, nome: 'Implementação e gestão do COE', curto: 'Cálculos, telas, dados e gestão da implementação, de 2027 até o fim de 2030. Premissa: valores estimados, com validação concreta e revisão anual conforme o esforço de implementação e o escopo contratado',
     oque: 'Desenvolvimento das regras de cálculo das 416 informações e das 22 telas do videowall, alertas ao campo, governança e qualidade dos dados e gestão da implementação como um todo até o fim de 2030: cronograma, fornecedores, handover e medição dos ganhos.',
     linhas: [
@@ -5226,8 +5226,8 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   K.linhas.forEach(l => { l.itens = l.ids.map(id => porId[id]).filter(Boolean); l.total = l.itens.reduce((t, x) => t + x.total, 0); });
   K.itens = K.linhas.flatMap(l => l.itens);
   { /* valor do bloco: R$ 5,5 mi, faixa de R$ 5,0 a 6,0 mi, distribuído na proporção dos itens, de 2027 ao fim de 2029 */
-    K.itens.forEach(x => { x.ini = 'A1 Q1'; x.fim = 'A4 Q4'; x.anos = [3.0, 2.1, 1.7, 1.3, 0].map(v => v / 8.1); /* proporção mantida; total ajustado para 2,5 no ano 1 */ });
-    const sm = f => K.itens.reduce((t, x) => t + (x[f] || 0), 0), ft = 6750000 / sm('total'), fb = 6166667 / sm('baixo'), fa = 7333333 / sm('alto');
+    K.itens.forEach(x => { x.ini = 'A1 Q1'; x.fim = 'A4 Q4'; x.anos = [3.0, 2.1, 1.7, 1.3, 0].map(v => v / 8.1); /* proporção mantida; total ajustado para 2,8 no ano 1 */ });
+    const sm = f => K.itens.reduce((t, x) => t + (x[f] || 0), 0), ft = 7560000 / sm('total'), fb = 6906667 / sm('baixo'), fa = 8213333 / sm('alto');
     K.itens.forEach(x => { x.total = Math.round(x.total * ft); x.baixo = Math.round(x.baixo * fb); x.alto = Math.round(x.alto * fa); if (x.unit) x.unit = Math.round(x.unit * ft); });
     K.linhas.forEach(l => { l.total = l.itens.reduce((t, x) => t + x.total, 0); }); }
   K.total = K.itens.reduce((t, x) => t + x.total, 0);
@@ -5593,7 +5593,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   /* Avaré: blocos como estão, consultoria de R$ 3,0 mi em 2027; tudo em 2027 e a medição nova em 2028 */
   { const pa = $('#p-viabilidade-investimento-avare');
     if (pa) {
-      const fK = 2500000 / K.total;
+      const fK = 2800000 / K.total;
       const DA = { C002: 'Serviço mensal de gestão do projeto em Avaré, em 2027: cronograma, custos e fornecedores.', C042: 'Serviço mensal de governança em Avaré: dono e definição de cada indicador e conferência dos dados.' };
       const QA = { C002: 12, C042: 12 };
       const cl = x => { const y = Object.assign({}, x, { total: Math.round(x.total * fK), baixo: Math.round(x.baixo * fK), alto: Math.round(x.alto * fK), desc: DA[x.id] });
