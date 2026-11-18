@@ -2642,8 +2642,16 @@ html[data-theme="dark"] .hm-root .hm-card a:hover { background: #1D4264; border-
 .nc-tab-k .nc-un{display:none!important}
 .nc-tab-k tr:not(.ln-tot) td:nth-child(3) > .dir,.nc-tab-k tr:not(.ln-tot) td:nth-child(4) > .dir{display:none}
 .av-g{display:grid;gap:14px;padding:18px 20px 20px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
-.av-g + .av-g{margin-top:14px}
-.av-g-cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.av-g ~ .av-g{margin-top:14px}
+.av-g-cab{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.av-g.aberto .av-g-cab{padding-bottom:12px;border-bottom:1px solid var(--line)}
+.av-g-tx{flex:1;min-width:0}
+.av-g-seta{width:30px;height:30px;flex:none;border-radius:50%;background:var(--accent-soft);position:relative}
+.av-g-seta::after{content:'';position:absolute;left:50%;top:45%;width:8px;height:8px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:translate(-50%,-50%) rotate(45deg);transition:transform .2s}
+.av-g.aberto .av-g-seta::after{transform:translate(-50%,-25%) rotate(-135deg)}
+.av-g-cab:hover h4{color:var(--accent)}
+.av-g-cab:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:8px}
+.av-g-corpo{margin-top:14px}
 .av-g-cab h4{margin:0;font-size:17px;font-weight:700}
 .av-g-cab p{margin:3px 0 0;font-size:13.5px;color:var(--texto-2)}
 .av-g-cab > b{font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--fg);white-space:nowrap}
@@ -4538,7 +4546,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   <div class="av-res" data-nc="ava-res"></div>
   <section class="nc-mapa" aria-labelledby="nc-mapa-ava-t">
     <div class="nc-cab"><h3 id="nc-mapa-ava-t">Investimento estimado para integração de Avaré</h3>
-      <p>Clique em um bloco para ver itens, valores e responsáveis.</p></div>
+      <p>Clique em um grupo para abrir os blocos e em um bloco para ver itens, valores e responsáveis.</p></div>
     <div data-nc="mapa-ava"></div>
   </section>
 </div>
@@ -5608,7 +5616,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       KA.itens = KA.linhas.flatMap(l => l.itens); KA.total = KA.itens.reduce((t, x) => t + x.total, 0);
       const bl = id => id === 'acion' ? A : cat(id), soma = ids => ids.reduce((t, id) => t + bl(id).total, 0), UNI_IDS = ['paineis', 'rede', 'cco', 'camera', 'medicao', 'acion'];
       KA.curto = 'O COE é construído desde o início pensando na replicabilidade: padrões técnicos, modelo de dados, regras de cálculo, telas e alertas feitos em Avaré são reaproveitados. Nas demais unidades o esforço de implementação é menor e o valor é reduzido.';
-      const grupo = (cls, nome, sub, val, corpo) => '<section class="av-g ' + cls + '"><div class="av-g-cab"><div><h4>' + nome + '</h4><p>' + sub + '</p></div><b>' + val + '</b></div>' + corpo + '</section>';
+      let gi = 0;
+      const grupo = (cls, nome, sub, val, corpo) => { const id = 'av-gc-' + (++gi);
+        return '<section class="av-g ' + cls + '"><button type="button" class="av-g-cab" aria-expanded="false" aria-controls="' + id + '"><span class="av-g-tx"><h4>' + nome + '</h4><p>' + sub + '</p></span><b>' + val + '</b><span class="av-g-seta" aria-hidden="true"></span></button><div class="av-g-corpo" id="' + id + '" hidden>' + corpo + '</div></section>'; };
       const banco = '<div class="nc-no av-banco"><span class="nc-n">B</span><b>Banco de dados do COE</b><small>Recebe os dados de todas as unidades e dos sistemas de gestão</small>' +
         '<em class="nc-q">Microsoft Azure / Fabric · conforme o contrato Microsoft da Holambra</em><span class="nc-v">A definir com a TI<small class="nc-fx">valor não incluído no total</small></span></div>';
       const obra = '<div class="nc-no av-banco"><span class="nc-n">O</span><b>Obra civil da sala do COE</b><small>Adequação do espaço: paredes, piso, forro, elétrica e iluminação</small>' +
@@ -5622,6 +5632,13 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
           '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det-ava"><span class="nc-n">' + KA.n + '</span><span class="nc-kp-t"><b>' + esc(KA.nome) + '</b><span>' + esc(KA.curto) + '</span></span>' +
           '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + '</span><small class="nc-fx">valor anual estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
       montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', html });
+      /* cada grupo abre e fecha pelo cabeçalho; ao fechar, o detalhe aberto do grupo também fecha */
+      pa.querySelectorAll('.av-g-cab').forEach(bt => bt.addEventListener('click', () => {
+        const g = bt.closest('.av-g'), corpo = g.querySelector('.av-g-corpo'), abre = bt.getAttribute('aria-expanded') !== 'true';
+        bt.setAttribute('aria-expanded', String(abre)); corpo.hidden = !abre; g.classList.toggle('aberto', abre);
+        const det = $('#nc-det-ava', pa);
+        if (!abre && det && !det.hidden && det.previousElementSibling === g) { const at = g.querySelector('[aria-expanded="true"][data-f]'); if (at) at.click(); else det.hidden = true; }
+      }));
       const t27 = CATS.filter(c => c.id !== 'medicao').reduce((t, c) => t + c.total, 0) + KA.total, t28 = cat('medicao').total + A.total;
       const tl = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b><span>' + i + '</span></div>';
       $('[data-nc="ava-res"]', pa).innerHTML = tl('2027', t27, 'Painéis, rede, CCO local, sala do COE, câmeras e consultoria') +
