@@ -5142,11 +5142,14 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
     'C001 C046 C048 C049 C061 C063 C064 C065 C066 C067 C076 C077 N02 C016 C043 C044 C045 C050 PT1 C005 C007 S02 C017 C036 C013 C015 C030 K01 K02 K03 C018'.split(' ').forEach(id => {
       const x = porId[id]; if (!x) return; if (x.ini > 'A1 Q4') x.ini = 'A1 Q3'; if (x.fim > 'A1 Q4') x.fim = 'A1 Q4'; });
     'C054 C052 C053 C057 C062'.split(' ').forEach(id => { const x = porId[id]; if (x) { x.ini = 'A2 Q1'; x.fim = 'A2 Q4'; } });
+    /* 2028 em Avaré: medição nova + operação remota = R$ 1,1 mi (redução proporcional nos dois blocos) */
+    window.COE_F28 = 1100000 / 1190500;
     const M = { C017: [2500, 4], PT1: [2500, 10], C044: [100000, 1], C036: [1200, 3], C007: [60000, 1], C005: [6300, 12], C006: [1000, 12], C057: [75000, 2], C054: [50000, 8], C062: [100000, 1], C001: [120000, 1], C020: [6300, 4], C064: [7000, 8], C065: [30000, 2], C043: [45000, 1], C016: [5000, 1], C045: [140000, 1], C013: [15000, 1], C015: [6000, 2] };
     Object.entries(M).forEach(([id, [u, q]]) => { const x = porId[id]; if (!x || !x.total) return; const t = u * q, f = t / x.total;
       x.unit = u; x.qtd = q; x.total = t; if (x.baixo) x.baixo = Math.round(x.baixo * f); if (x.alto) x.alto = Math.round(x.alto * f); });
     /* câmeras: 32 câmeras novas em Avaré, sem o serviço de levantamento */
     if (porId.K02) { const x = porId.K02, f = 32 * 2400 / x.total; x.item = 'Câmeras IP novas'; x.qtd = 32; x.unit = 2400; x.total = 32 * 2400; x.baixo = Math.round(x.baixo * f); x.alto = Math.round(x.alto * f); }
+    'C054 C052 C053 C057 C062'.split(' ').forEach(id => { const x = porId[id]; if (x) ['total', 'baixo', 'alto', 'unit'].forEach(k => { if (x[k]) x[k] = Math.round(x[k] * window.COE_F28); }); });
     /* segundo link de fibra: depende do contrato da Coop Holambra, sem valor no investimento */
     if (porId.C076) Object.assign(porId.C076, { total: 0, baixo: 0, alto: 0, unit: 0, semValor: true, semTxt: 'depende do contrato' });
     if (porId.C041) porId.C041.opexA = Math.round(80.2 * 15 * 12); /* Power BI Pro: R$ 80,20 por usuário por mês, 15 pessoas */
@@ -5243,7 +5246,7 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
   AR.forEach(x => { ['total', 'baixo', 'alto'].forEach(k => { if (x[k]) x[k] = Math.round(x[k] * 0.53); }); x.opex = 0; }); /* versão enxuta: comando só nos equipamentos críticos */
   Object.assign(TIPO, { R01: 'sv', R02: 'sv', R03: 'hw', R04: 'sw', R05: 'sw', R06: 'sv' });
   /* operação remota em 2028; rede, firewall, acesso remoto com MFA e SCADA já estão nos outros blocos */
-  AR.forEach(x => { x.ini = x.id === 'R01' ? 'A2 Q1' : 'A2 Q3'; x.fim = 'A2 Q4'; });
+  AR.forEach(x => { x.ini = x.id === 'R01' ? 'A2 Q1' : 'A2 Q3'; x.fim = 'A2 Q4'; ['total', 'baixo', 'alto'].forEach(k => { if (x[k]) x[k] = Math.round(x[k] * window.COE_F28); }); });
   AR.forEach(x => { if (x.id === 'R05') x.item = 'Cibersegurança para comando: regras de escrita no firewall'; });
   const A = { id: 'acion', n: 7, nome: 'Operação remota', curto: 'Em 2028: comandar os equipamentos críticos de Avaré a partir do CCO e do COE', qtd: 'Matriz de comandos · lógica nos CLPs · chaves local/remoto · telas de comando',
     oque: 'Permite ligar, desligar e ajustar equipamentos a distância, com segurança: análise de riscos, lógica de comando nos CLPs, chave local/remoto e aviso de partida no campo, telas de comando com dupla confirmação e registro, e regras de escrita no firewall. Considera só o que ainda não existe: rede, firewall, acesso remoto com MFA, SCADA e alarmes já estão nos outros blocos. Estimativa preliminar, sem cotação.',
@@ -5615,9 +5618,9 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
           '<div class="av-gg av-gg6">' + UNI_IDS.map(id => no(bl(id), false)).join('') + '</div>') +
         grupo('av-g-c', 'Comum a todas as unidades', 'Feito uma vez, em Avaré, e usado pelas 7 unidades.', curto(cat('sala').total),
           '<div class="av-gg av-gg3">' + banco + obra + no(cat('sala'), false) + '</div>') +
-        grupo('av-g-k', 'Implementação', 'Em todos os blocos. Valor anual.', curto(KA.total) + ' por ano',
+        grupo('av-g-k', 'Implementação', 'Em todos os blocos. Valor anual.', curto(KA.total),
           '<button type="button" class="nc-kp" data-f="kpmg" aria-expanded="false" aria-controls="nc-det-ava"><span class="nc-n">' + KA.n + '</span><span class="nc-kp-t"><b>' + esc(KA.nome) + '</b><span>' + esc(KA.curto) + '</span></span>' +
-          '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + ' por ano</span><small class="nc-fx">valor anual estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
+          '<span class="nc-kp-v"><span class="nc-v">' + curto(KA.total) + '</span><small class="nc-fx">valor anual estimado · ' + faixa(KA.itens) + '</small><span class="nc-abre">Ver detalhe</span></span></button>');
       montaMapa($('[data-nc="mapa-ava"]', pa), KA, { det: 'nc-det-ava', html });
       const t27 = CATS.filter(c => c.id !== 'medicao').reduce((t, c) => t + c.total, 0) + KA.total, t28 = cat('medicao').total + A.total;
       const tl = (r, v, i, c) => '<div' + (c ? ' class="' + c + '"' : '') + '><small>' + r + '</small><b>' + curto(v) + '</b><span>' + i + '</span></div>';
