@@ -584,6 +584,20 @@ td.rc.AR,td.rc.A{color:#fff;background:var(--deep)} td.rc.R{color:var(--accent);
 .mbar .mfs:hover{border-color:var(--accent)}
 .mbar{gap:8px}.mbar .mlink{display:inline-flex;align-items:center;font-size:13.5px;font-weight:700;color:var(--surface);background:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:6px 12px;text-decoration:none}.mbar .mlink:hover{filter:brightness(1.08)}
 .sala-model iframe{height:clamp(560px,calc(100vh - 220px),900px)}
+.sala-lay{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}
+.sala-infra{border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:16px 18px;max-height:clamp(560px,calc(100vh - 220px),900px);overflow:auto}
+.sala-infra h3{margin:0;font-size:17px}
+.sala-infra > p{margin:4px 0 10px;font-size:13px;color:var(--texto-2)}
+.si-g{padding:10px 0;border-top:1px solid var(--line)}
+.si-g h4{margin:0 0 6px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.si-g h4 small{margin-left:4px;font-size:11px;font-weight:600;letter-spacing:0;text-transform:none;color:#9a6a17}
+.si-g ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.si-g li{display:grid;gap:1px;padding-left:12px;position:relative}
+.si-g li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.si-g b{font-size:13.5px;font-weight:600;color:var(--fg)}
+.si-g span{font-size:12.5px;line-height:1.4;color:var(--texto-2)}
+@media (max-width:1100px){.sala-lay{grid-template-columns:1fr}.sala-infra{max-height:none}}
+
 .sala-recursos{list-style:none;margin:18px 0 22px;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .sala-recursos li{padding:14px 16px;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:8px;background:var(--soft);font-size:13.5px;line-height:1.5;color:var(--dim)}
 .sala-recursos b{display:block;color:var(--fg);font-size:14px;margin-bottom:2px}
@@ -4364,7 +4378,10 @@ html.offline .rodape-dl,html.offline #btBaixar{display:none}
       <li><b>Sala técnica</b><span>racks, nobreak e climatização, junto aos banheiros</span></li>
     </ul>
     <div class="mbar"><button type="button" class="mfs">⛶ Sala em tela cheia</button></div>
+    <div class="sala-lay">
     <div class="model sala-model"><iframe data-src="sala-coe-3d/index.html?v=10m" title="Modelo 3D da sala do COE da Cooperativa Holambra" allowfullscreen></iframe><div class="cap"><span>Modelo conceitual · videowall com as telas do painel, dados demonstrativos</span><a href="sala-coe-3d/index.html?v=10m" target="_blank" rel="noopener">Abrir sala em outra janela</a></div></div>
+    <aside class="sala-infra" aria-labelledby="sala-infra-t"><h3 id="sala-infra-t">Infraestrutura física</h3><p>O que a sala precisa para operar 24 horas.</p><div class="si-g"><h4>Obra e acabamento <small>Cotação da Holambra</small></h4><ul><li><b>Adequação civil</b><span>demolições, forro, pintura, portas e layout</span></li><li><b>Piso elevado técnico</b><span>passagem de cabos de energia e dados</span></li><li><b>Iluminação LED indireta</b><span>dimerizável, sem reflexo nas telas</span></li><li><b>Tratamento acústico</b><span>painéis nas paredes laterais e de fundo</span></li><li><b>Identidade visual</b><span>parede com a marca Holambra</span></li></ul></div><div class="si-g"><h4>Energia</h4><ul><li><b>Quadro elétrico dedicado</b><span>circuitos da sala, DPS e aterramento</span></li><li><b>Nobreak online 6 kVA</b><span>cerca de 30 minutos de autonomia</span></li><li><b>Gerador</b><span>só se a unidade não tiver gerador dedicado</span></li></ul></div><div class="si-g"><h4>Climatização</h4><ul><li><b>Ar-condicionado N+1</b><span>um aparelho reserva e monitoramento de temperatura</span></li></ul></div><div class="si-g"><h4>Segurança</h4><ul><li><b>Detecção de fumaça</b><span>central e detectores na sala e na sala técnica</span></li><li><b>Extintores de CO₂</b><span>próprios para equipamentos elétricos</span></li></ul></div><div class="si-g"><h4>Videowall e postos</h4><ul><li><b>12 monitores 55" 24x7</b><span>8 de indicadores e 4 de câmeras</span></li><li><b>Controladora e painel de controle</b><span>troca de telas pelo operador</span></li><li><b>Consoles e cadeiras 24x7</b><span>ergonomia NR-17, 18 lugares</span></li></ul></div><div class="si-g"><h4>Rede e comunicação</h4><ul><li><b>Rack e cabeamento estruturado</b><span>patch panels e identificação</span></li><li><b>Rede da sala</b><span>switch e firewall</span></li><li><b>Dois links de fibra</b><span>principal e redundante, conforme contrato</span></li><li><b>Rádios push-to-talk</b><span>sala falando com o campo</span></li></ul></div><div class="si-g"><h4>Apoio</h4><ul><li><b>Sala executiva e reuniões</b><span>TV, videoconferência e mesas</span></li><li><b>Armários e apoio ao turno</b><span>manuais, rádios e copa</span></li><li><b>Relógio sincronizado</b><span>hora oficial da operação</span></li></ul></div></aside>
+    </div>
     <p class="note">Proposta visual para discussão. Medidas aproximadas, tiradas da imagem de satélite: não é planta executiva e não tem conexão com sistemas em tempo real.</p>
   </section>
 
